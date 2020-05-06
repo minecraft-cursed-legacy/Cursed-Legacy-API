@@ -4,11 +4,13 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AccessorDimensionFile",
+    "AccessorTileItem",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinOldLevelStorage",
     "MixinResourceDownloadThread",
     "MixinTile",
+    "MixinTileItem",
     "MixinTitleScreen"
   ],
   "client": [

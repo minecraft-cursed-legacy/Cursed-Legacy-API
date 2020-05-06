@@ -47,7 +47,7 @@ public class Registry<T> {
 	 * @param value the value to register to the registry.
 	 * @return the value registered to the registry.
 	 */
-	public <E extends T> E register(Id id, E value) {
+	public <E extends T> E registerValue(Id id, E value) {
 		if (locked) {
 			throw new RuntimeException("Registry is locked!");
 		}
@@ -174,24 +174,34 @@ public class Registry<T> {
 		}
 
 		// re-add new values to the registry
-		int serialisedId = this.getStartSerialisedId() - 1;
-
-		for (Entry<Id, T> entry : unmapped) {
-			if (this.bySerialisedId.get(++serialisedId) != null) {
-				T value = entry.getValue();
-				// readd to registry
-				this.bySerialisedId.put(serialisedId, value);
-				// add to tag
-				tag.put(entry.getKey().toString(), serialisedId);
-				this.onRemap(value, serialisedId);
-			}
-		}
+		this.addNewValues(unmapped, tag);
 
 		// post remap
 		this.postRemap();
 
 		// return updated tag
 		return tag;
+	}
+
+	/**
+	 * Called to add new values to the registry during remapping. (i.e. values that were not previously in the remapper).
+	 */
+	protected void addNewValues(List<Entry<Id, T>> unmapped, CompoundTag tag) {
+		int serialisedId = this.getStartSerialisedId();
+
+		for (Entry<Id, T> entry : unmapped) {
+			T value = entry.getValue();
+
+			while (this.bySerialisedId.get(serialisedId) != null) {
+				++serialisedId;
+			}
+
+			// readd to registry
+			this.bySerialisedId.put(serialisedId, value);
+			// add to tag
+			tag.put(entry.getKey().toString(), serialisedId);
+			this.onRemap(value, serialisedId);
+		}
 	}
 
 	/**

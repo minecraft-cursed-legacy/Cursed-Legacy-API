@@ -6,24 +6,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.util.io.AbstractTag;
 import net.minecraft.util.io.CompoundTag;
 
 public class RegistryRemapper {
-	private static final Map<Id, Registry<?>> REGISTRIES = new HashMap<>();
+	private static final List<Registry<?>> REGISTRIES = new ArrayList<>();
 
 	public static void addRegistry(Registry<?> registry) {
-		REGISTRIES.put(registry.getRegistryName(), registry);
+		REGISTRIES.add(registry);
 	}
 
 	public static void remap(File file) {
@@ -41,7 +40,8 @@ public class RegistryRemapper {
 				}
 
 				CompoundTag newData = new CompoundTag();
-				Iterator<Registry<?>> iter = REGISTRIES.values().iterator();
+
+				Iterator<Registry<?>> iter = REGISTRIES.iterator();
 
 				// remap and add new data
 				LOGGER.info("Remapping Registries.");
@@ -66,9 +66,10 @@ public class RegistryRemapper {
 
 				// add data
 				LOGGER.info("Collecting Registry Data.");
-				REGISTRIES.values().forEach(registry -> {
+
+				for (Registry<?> registry : REGISTRIES) {
 					data.put(registry.getRegistryName().toString(), registry.toTag());
-				});
+				}
 
 				// write
 				LOGGER.info("Writing Registry Data.");
@@ -82,7 +83,7 @@ public class RegistryRemapper {
 	}
 
 	public static Stream<Registry<?>> registries() {
-		return REGISTRIES.values().stream();
+		return REGISTRIES.stream();
 	}
 
 	static final Logger LOGGER = Logger.getLogger("Cursed Legacy API");
