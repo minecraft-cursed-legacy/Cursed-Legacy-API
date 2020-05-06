@@ -74,6 +74,18 @@ public class RegistryImpl implements ModInitializer {
 			return nextItemTypeId();
 		}
 
+		@Override
+		protected void beforeRemap() {
+			int size = ItemType.byId.length;
+			System.arraycopy(new ItemType[size], 0, ItemType.byId, 0, size);
+		}
+
+		@Override
+		protected void onRemap(ItemType remappedValue, int newSerialisedId) {
+			ItemType.byId[newSerialisedId] = remappedValue;
+			((IdSetter) remappedValue).setId(newSerialisedId);
+		}
+
 		private void addTileItem(Id id, Tile tile) {
 			TileItem item = new TileItem(tile.id - 256, tile);
 			this.byRegistryId.put(id, item);
@@ -109,6 +121,18 @@ public class RegistryImpl implements ModInitializer {
 		@Override
 		protected void onRegister(int serialisedId, Id id, Tile value) {
 			((ItemTypeRegistry) Registry.ITEM_TYPE).addTileItem(id, value);
+		}
+
+		@Override
+		protected void beforeRemap() {
+			int size = Tile.BY_ID.length;
+			System.arraycopy(new Tile[size], 0, Tile.BY_ID, 0, size);
+		}
+
+		@Override
+		protected void onRemap(Tile remappedValue, int newSerialisedId) {
+			Tile.BY_ID[newSerialisedId] = remappedValue;
+			((IdSetter) remappedValue).setId(newSerialisedId);
 		}
 	}
 

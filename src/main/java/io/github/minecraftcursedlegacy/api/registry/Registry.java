@@ -155,6 +155,7 @@ public class Registry<T> {
 	 */
 	public final CompoundTag remap(CompoundTag tag) {
 		// prepare
+		this.beforeRemap();
 		List<Entry<Id, T>> unmapped = new ArrayList<>();
 		Set<Entry<Id, T>> toMap = this.byRegistryId.entrySet();
 		this.bySerialisedId.clear();
@@ -203,6 +204,13 @@ public class Registry<T> {
 		}
 
 		return tag;
+	}
+
+	/**
+	 * Called before registry remapping for this registry.
+	 * Override this to add additional preparations for registry remapping.
+	 */
+	protected void beforeRemap() {
 	}
 
 	/**
