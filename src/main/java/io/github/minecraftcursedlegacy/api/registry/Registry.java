@@ -189,6 +189,9 @@ public class Registry<T> {
 			}
 		}
 
+		// post remap
+		this.postRemap();
+
 		// return updated tag
 		return tag;
 	}
@@ -211,6 +214,13 @@ public class Registry<T> {
 	 * Override this to add additional preparations for registry remapping.
 	 */
 	protected void beforeRemap() {
+	}
+
+	/**
+	 * Called before registry remapping for this registry.
+	 * Override this to add finalisations for after registry remapping.
+	 */
+	protected void postRemap() {
 	}
 
 	/**

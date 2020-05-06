@@ -25,6 +25,7 @@ public class RegistryRemapper {
 				CompoundTag data = null;
 
 				// read
+				LOGGER.info("Reading Registry Data.");
 				try (DataInputStream dis = new DataInputStream(new GZIPInputStream(new FileInputStream(file)))) {
 					data = (CompoundTag) AbstractTag.readTag(dis);
 				}
@@ -33,6 +34,7 @@ public class RegistryRemapper {
 				Iterator<Registry<?>> iter = RegistryImpl.registries().iterator();
 
 				// remap and add new data
+				LOGGER.info("Remapping Registries.");
 				while (iter.hasNext()) {
 					Registry<?> registry = iter.next();
 					String key = registry.getRegistryName().toString();
@@ -44,6 +46,7 @@ public class RegistryRemapper {
 					}
 				}
 
+				LOGGER.info("Writing Registry Data.");
 				// write
 				try (DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
 					AbstractTag.writeTag(newData, dos);
@@ -52,11 +55,13 @@ public class RegistryRemapper {
 				CompoundTag data = new CompoundTag();
 
 				// add data
+				LOGGER.info("Collecting Registry Data.");
 				RegistryImpl.registries().forEach(registry -> {
 					data.put(registry.getRegistryName().toString(), registry.toTag());
 				});
 
 				// write
+				LOGGER.info("Writing Registry Data.");
 				try (DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
 					AbstractTag.writeTag(data, dos);
 				}

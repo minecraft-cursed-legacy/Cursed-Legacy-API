@@ -86,6 +86,12 @@ public class RegistryImpl implements ModInitializer {
 			((IdSetter) remappedValue).setId(newSerialisedId);
 		}
 
+		@Override
+		protected void postRemap() {
+			// TODO Auto-generated method stub
+			super.postRemap();
+		}
+
 		private void addTileItem(Id id, Tile tile) {
 			TileItem item = new TileItem(tile.id - 256, tile);
 			this.byRegistryId.put(id, item);
