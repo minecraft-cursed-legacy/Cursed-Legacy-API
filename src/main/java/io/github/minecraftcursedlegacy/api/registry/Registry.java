@@ -1,5 +1,9 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.IntFunction;
 
 import javax.annotation.Nullable;
@@ -10,6 +14,7 @@ import com.google.common.collect.HashBiMap;
 import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 /**
  * Registry for game content.
@@ -32,7 +37,7 @@ public class Registry<T> {
 	private final Id registryName;
 	@Nullable
 	private final T defaultValue;
-	private int nextId = 0;
+	private int nextId = this.getStartSerialisedId();
 	/**
 	 * Whether the registry is locked, and values can no longer be registered to it.
 	 */
@@ -130,10 +135,82 @@ public class Registry<T> {
 	}
 
 	/**
-	 * @return the next serialised id to use.
+	 * @return the next serialised id to use, in the initial registry adding phase.
 	 */
 	protected int getNextSerialisedId() {
 		return this.nextId++;
+	}
+
+	/**
+	 * @return the first serialised id to use.
+	 */
+	protected int getStartSerialisedId() {
+		return 0;
+	}
+
+	/**
+	 * Remaps the registry based on the provided nbt data.
+	 * @param tag the data for the remapper.
+	 * @return the input compound tag, with updated data for new entries.
+	 */
+	public final CompoundTag remap(CompoundTag tag) {
+		// prepare
+		List<Entry<Id, T>> unmapped = new ArrayList<>();
+		Set<Entry<Id, T>> toMap = this.byRegistryId.entrySet();
+		this.bySerialisedId.clear();
+
+		// remap serialised ids
+		for (Entry<Id, T> entry : toMap) {
+			String key = entry.getKey().toString();
+
+			if (tag.containsKey(key)) {
+				T value = entry.getValue();
+
+				int newSerialisedId = tag.getInt(key);
+				this.bySerialisedId.put(newSerialisedId, value);
+				this.onRemap(value, newSerialisedId);
+			} else {
+				unmapped.add(entry);
+			}
+		}
+
+		// re-add new values to the registry
+		int serialisedId = this.getStartSerialisedId() - 1;
+
+		for (Entry<Id, T> entry : unmapped) {
+			if (this.bySerialisedId.get(++serialisedId) != null) {
+				T value = entry.getValue();
+				// readd to registry
+				this.bySerialisedId.put(serialisedId, value);
+				// add to tag
+				tag.put(entry.getKey().toString(), serialisedId);
+				this.onRemap(value, serialisedId);
+			}
+		}
+
+		// return updated tag
+		return tag;
+	}
+
+	/**
+	 * @return a tag of all the mappings, for serialisation.
+	 */
+	public final CompoundTag toTag() {
+		CompoundTag tag = new CompoundTag();
+
+		for (Entry<Id, T> entry : this.byRegistryId.entrySet()) {
+			tag.put(entry.getKey().toString(), this.bySerialisedId.inverse().get(entry.getValue()));
+		}
+
+		return tag;
+	}
+
+	/**
+	 * Called when a serialised id is remapped.
+	 * @param remappedValue the value that has been remapped.
+	 * @param newSerialisedId the new serialised id of the value.
+	 */
+	protected void onRemap(T remappedValue, int newSerialisedId) {
 	}
 
 	/**

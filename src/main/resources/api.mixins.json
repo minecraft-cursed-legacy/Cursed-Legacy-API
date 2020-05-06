@@ -1,8 +1,13 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.api.mixin",
+  "package": "io.github.minecraftcursedlegacy.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AccessorDimensionFile",
+    "MixinMcRegionLevelStorage",
+    "MixinOldLevelStorage",
+    "MixinResourceDownloadThread",
+    "MixinTitleScreen"
   ],
   "client": [
   ],
