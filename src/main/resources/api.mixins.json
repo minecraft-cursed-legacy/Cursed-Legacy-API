@@ -3,8 +3,6 @@
   "package": "io.github.minecraftcursedlegacy.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "AccessorDimensionFile",
-    "AccessorTileItem",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinOldLevelStorage",

@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.accessor;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

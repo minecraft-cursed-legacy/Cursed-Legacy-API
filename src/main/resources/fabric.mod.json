@@ -23,6 +23,7 @@
     ]
   },
   "mixins": [
+    "api.accessors.json",
     "api.mixins.json"
   ],
 

@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.accessor;
 
 import java.io.File;
 
