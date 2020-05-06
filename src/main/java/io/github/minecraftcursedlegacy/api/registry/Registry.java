@@ -11,9 +11,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
-import net.minecraft.item.ItemType;
-import net.minecraft.tile.Tile;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
 import net.minecraft.util.io.CompoundTag;
 
 /**
@@ -29,7 +27,7 @@ public class Registry<T> {
 	public Registry(Class<T> clazz, Id registryName, @Nullable T defaultValue) {
 		this.registryName = registryName;
 		this.defaultValue = defaultValue;
-		RegistryImpl.addRegistry(this);
+		RegistryRemapper.addRegistry(this);
 	}
 
 	protected final BiMap<Id, T> byRegistryId = HashBiMap.create();
@@ -235,15 +233,6 @@ public class Registry<T> {
 	 * Locks all registries. Used by the implementation.
 	 */
 	public static void lockAll() {
-		RegistryImpl.registries().forEach(r -> r.locked = true);
+		RegistryRemapper.registries().forEach(r -> r.locked = true);
 	}
-
-	/**
-	 * Registry for Item Types.
-	 */
-	public static Registry<ItemType> ITEM_TYPE = RegistryImpl.createItemTypeRegistry(new Id("api:item_type"));
-	/**
-	 * Registry for Tiles. Automatically adds an associated item type.
-	 */
-	public static Registry<Tile> TILE = RegistryImpl.createTileRegistry(new Id("api:tile"));
 }

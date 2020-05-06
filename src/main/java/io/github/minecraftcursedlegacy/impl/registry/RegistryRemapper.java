@@ -6,16 +6,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.util.io.AbstractTag;
 import net.minecraft.util.io.CompoundTag;
 
 public class RegistryRemapper {
+	private static final Map<Id, Registry<?>> REGISTRIES = new HashMap<>();
+
+	public static void addRegistry(Registry<?> registry) {
+		REGISTRIES.put(registry.getRegistryName(), registry);
+	}
+
 	public static void remap(File file) {
 		// just in case
 		file.getParentFile().mkdirs();
@@ -31,7 +41,7 @@ public class RegistryRemapper {
 				}
 
 				CompoundTag newData = new CompoundTag();
-				Iterator<Registry<?>> iter = RegistryImpl.registries().iterator();
+				Iterator<Registry<?>> iter = REGISTRIES.values().iterator();
 
 				// remap and add new data
 				LOGGER.info("Remapping Registries.");
@@ -56,7 +66,7 @@ public class RegistryRemapper {
 
 				// add data
 				LOGGER.info("Collecting Registry Data.");
-				RegistryImpl.registries().forEach(registry -> {
+				REGISTRIES.values().forEach(registry -> {
 					data.put(registry.getRegistryName().toString(), registry.toTag());
 				});
 
@@ -69,6 +79,10 @@ public class RegistryRemapper {
 		} catch (IOException e) {
 			throw new RuntimeException("[Cursed Legacy API] Error while running registry remapper", e);
 		}
+	}
+
+	public static Stream<Registry<?>> registries() {
+		return REGISTRIES.values().stream();
 	}
 
 	static final Logger LOGGER = Logger.getLogger("Cursed Legacy API");

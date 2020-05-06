@@ -1,9 +1,5 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.impl.Hacks;
@@ -15,11 +11,6 @@ import net.minecraft.tile.Tile;
 public class RegistryImpl implements ModInitializer {
 	private static int currentItemtypeId = 0;
 	private static int currentTileId = 0;
-	private static final Map<Id, Registry<?>> REGISTRIES = new HashMap<>();
-
-	public static Stream<Registry<?>> registries() {
-		return REGISTRIES.values().stream();
-	}
 
 	private static int nextItemTypeId() {
 		while (ItemType.byId[currentItemtypeId + 256] != null) {
@@ -37,18 +28,6 @@ public class RegistryImpl implements ModInitializer {
 		return currentTileId;
 	}
 
-	public static void addRegistry(Registry<?> registry) {
-		REGISTRIES.put(registry.getRegistryName(), registry);
-	}
-
-	public static Registry<Tile> createTileRegistry(Id registryName) {
-		return new TileRegistry(registryName);
-	}
-
-	public static Registry<ItemType> createItemTypeRegistry(Id registryName) {
-		return new ItemTypeRegistry(registryName);
-	}
-
 	private static class ItemTypeRegistry extends Registry<ItemType> {
 		private ItemTypeRegistry(Id registryName) {
 			super(ItemType.class, registryName, null);
@@ -58,7 +37,15 @@ public class RegistryImpl implements ModInitializer {
 				ItemType value = ItemType.byId[i];
 
 				if (value != null) {
-					this.byRegistryId.put(new Id(value.getTranslationKey().substring(5)), value);
+					String idPart = value.getTranslationKey();
+
+					if (idPart == null) {
+						idPart = "itemtype";
+					} else {
+						idPart = idPart.substring(5);
+					}
+
+					this.byRegistryId.put(new Id(idPart + "_" + i), value);
 					this.bySerialisedId.put(i, value);
 				}
 			}
@@ -108,7 +95,15 @@ public class RegistryImpl implements ModInitializer {
 				Tile value = Tile.BY_ID[i];
 
 				if (value != null) {
-					this.byRegistryId.put(new Id(value.getName()), value);
+					String idPart = value.method_1597();
+
+					if (idPart == null) {
+						idPart = "tile";
+					} else {
+						idPart = idPart.substring(5);
+					}
+
+					this.byRegistryId.put(new Id(idPart + "_" + i), value);
 					this.bySerialisedId.put(i, value);
 				}
 			}
@@ -126,7 +121,7 @@ public class RegistryImpl implements ModInitializer {
 
 		@Override
 		protected void onRegister(int serialisedId, Id id, Tile value) {
-			((ItemTypeRegistry) Registry.ITEM_TYPE).addTileItem(id, value);
+			((ItemTypeRegistry) ITEM_TYPE).addTileItem(id, value);
 		}
 
 		@Override
@@ -145,5 +140,13 @@ public class RegistryImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Hacks.hack = Registry::lockAll;
+	}
+
+	public static Registry<ItemType> ITEM_TYPE;
+	public static Registry<Tile> TILE;
+
+	static {
+		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
+		TILE = new TileRegistry(new Id("api:tile"));
 	}
 }
