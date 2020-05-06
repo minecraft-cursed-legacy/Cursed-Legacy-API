@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.example.mixin",
+  "package": "io.github.minecraftcursedlegacy.api.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
   "client": [
-    "ExampleMixin"
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

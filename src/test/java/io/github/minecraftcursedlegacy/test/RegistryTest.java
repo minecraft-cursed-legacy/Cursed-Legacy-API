@@ -1,8 +1,8 @@
-package io.github.minecraftcursedlegacy.example;
+package io.github.minecraftcursedlegacy.test;
 
 import net.fabricmc.api.ModInitializer;
 
-public class ExampleMod implements ModInitializer {
+public class RegistryTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.

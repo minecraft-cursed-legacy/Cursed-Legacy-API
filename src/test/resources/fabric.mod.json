@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "api",
+  "id": "modid",
   "version": "${version}",
 
-  "name": "Minecraft Cursed Legacy API",
-  "description": "A set of useful hooks and features to be used by modders.",
+  "name": "Test Mod",
+  "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "The Cursed Legacy Team"
   ],
@@ -14,20 +14,18 @@
   },
 
   "license": "MIT",
-  "icon": "assets/api/icon.png",
+  "icon": "assets/modid/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl"
+      "io.github.minecraftcursedlegacy.test.RegistryTest"
     ]
   },
-  "mixins": [
-    "api.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": "*",
+    "api": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
