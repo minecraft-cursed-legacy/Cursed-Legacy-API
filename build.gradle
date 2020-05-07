@@ -55,7 +55,7 @@ dependencies {
 	mappings files("mcpomf-b1.7.3+build.4.jar")
 
 	// for config api
-	api "tk.valoeghese:ZoesteriaConfig:1.3.0"
+	compile "tk.valoeghese:ZoesteriaConfig:1.3.0"
 
 	modImplementation "com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}"
 }
