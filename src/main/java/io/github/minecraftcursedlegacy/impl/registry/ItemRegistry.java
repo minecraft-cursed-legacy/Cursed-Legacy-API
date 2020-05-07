@@ -144,7 +144,6 @@ class ItemTypeRegistry extends Registry<ItemType> {
 				// only remap if necessary
 				if (result.itemId != newId) {
 					result.itemId = newId;
-					((IdSetter) recipe).setId(newId);
 				}
 			}
 		}
