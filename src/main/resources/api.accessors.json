@@ -6,6 +6,7 @@
     "AccessorDimensionFile",
     "AccessorRecipeRegistry",
     "AccessorShapedRecipe",
+    "AccessorShapelessRecipe",
     "AccessorTileItem"
   ],
   "client": [
