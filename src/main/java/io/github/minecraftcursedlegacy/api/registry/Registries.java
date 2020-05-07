@@ -11,9 +11,9 @@ public final class Registries {
 	/**
 	 * Registry for Item Types.
 	 */
-	public static Registry<ItemType> ITEM_TYPE = RegistryImpl.ITEM_TYPE;
+	public static final Registry<ItemType> ITEM_TYPE = RegistryImpl.ITEM_TYPE;
 	/**
-	 * Registry for Tiles. Automatically adds an associated item type.
+	 * Registry for Tiles.
 	 */
-	public static Registry<Tile> TILE = RegistryImpl.TILE;
+	public static final Registry<Tile> TILE = RegistryImpl.TILE;
 }

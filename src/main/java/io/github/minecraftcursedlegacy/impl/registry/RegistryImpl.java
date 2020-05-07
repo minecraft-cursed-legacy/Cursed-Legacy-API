@@ -106,8 +106,8 @@ public class RegistryImpl implements ModInitializer {
 		Hacks.hack = Registry::lockAll;
 	}
 
-	public static Registry<ItemType> ITEM_TYPE;
-	public static Registry<Tile> TILE;
+	public static final Registry<ItemType> ITEM_TYPE;
+	public static final Registry<Tile> TILE;
 
 	static {
 		Tile.BED.hashCode(); // make sure tiles are initialised

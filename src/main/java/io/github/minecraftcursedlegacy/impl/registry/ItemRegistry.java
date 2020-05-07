@@ -1,18 +1,22 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
 import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
 import io.github.minecraftcursedlegacy.accessor.AccessorShapedRecipe;
+import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.TileItem;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeRegistry;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.tile.Tile;
 
 class ItemTypeRegistry extends Registry<ItemType> {
@@ -42,7 +46,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		}
 	}
 
-	private ItemType[] oldItemTypes;
+	private ItemType[] oldItemTypes = new ItemType[ItemType.byId.length];
 
 	@Override
 	public <E extends ItemType> E registerValue(Id id, E value) {
@@ -87,33 +91,61 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		// Remap Recipes
 		RegistryRemapper.LOGGER.info("Remapping recipes.");
 
-		for (ShapedRecipe recipe : ((AccessorRecipeRegistry) RecipeRegistry.getInstance()).getRecipes()) {
-			// remap recipe ingredients
-			ItemInstance[] ingredients = ((AccessorShapedRecipe) recipe).getIngredients();
+		for (Recipe recipe : ((AccessorRecipeRegistry) RecipeRegistry.getInstance()).getRecipes()) {
+			if (recipe instanceof ShapedRecipe) {
+				// remap recipe ingredients
+				ItemInstance[] ingredients = ((AccessorShapedRecipe) recipe).getIngredients();
 
-			for (int i = 0; i < ingredients.length; ++i) {
-				ItemInstance instance = ingredients[i];
+				for (int i = 0; i < ingredients.length; ++i) {
+					ItemInstance instance = ingredients[i];
 
-				if (instance != null) {
-					int oldId = instance.itemId;
-					int newId = this.oldItemTypes[oldId].id;
+					if (instance != null) {
+						int oldId = instance.itemId;
+						int newId = this.oldItemTypes[oldId].id;
 
-					// only remap if necessary
-					if (oldId != newId) {
-						// set new id
-						instance.itemId = newId;
+						// only remap if necessary
+						if (oldId != newId) {
+							// set new id
+							instance.itemId = newId;
+						}
 					}
 				}
-			}
 
-			// recompute output id
-			ItemInstance result = ((AccessorShapedRecipe) recipe).getOutput();
-			int newId = this.oldItemTypes[result.itemId].id;
+				// recompute output id
+				ItemInstance result = ((AccessorShapedRecipe) recipe).getOutput();
+				int newId = this.oldItemTypes[result.itemId].id;
 
-			// only remap if necessary
-			if (result.itemId != newId) {
-				result.itemId = newId;
-				((IdSetter) recipe).setId(newId);
+				// only remap if necessary
+				if (result.itemId != newId) {
+					result.itemId = newId;
+					((IdSetter) recipe).setId(newId);
+				}
+			} else if (recipe instanceof ShapelessRecipe) {
+				// remap recipe ingredients
+				List<ItemInstance> ingredients = ((AccessorShapelessRecipe) recipe).getInput();
+
+				for (ItemInstance instance : ingredients) {
+					if (instance != null) {
+						int oldId = instance.itemId;
+						int newId = this.oldItemTypes[oldId].id;
+
+						// only remap if necessary
+						if (oldId != newId) {
+							// set new id
+							instance.itemId = newId;
+						}
+					}
+				}
+
+				// recompute output id
+				ItemInstance result = ((AccessorShapelessRecipe) recipe).getOutput();
+				int newId = this.oldItemTypes[result.itemId].id;
+
+				// only remap if necessary
+				if (result.itemId != newId) {
+					result.itemId = newId;
+					((IdSetter) recipe).setId(newId);
+				}
 			}
 		}
 	}
