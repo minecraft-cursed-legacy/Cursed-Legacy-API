@@ -1,6 +1,7 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
@@ -18,6 +19,7 @@ import net.minecraft.recipe.RecipeRegistry;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 class ItemTypeRegistry extends Registry<ItemType> {
 	ItemTypeRegistry(Id registryName) {
@@ -82,11 +84,6 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	}
 
 	@Override
-	protected int getStartSerialisedId() {
-		return 1;
-	}
-
-	@Override
 	protected void postRemap() {
 		// Remap Recipes
 		RegistryRemapper.LOGGER.info("Remapping recipes.");
@@ -145,6 +142,38 @@ class ItemTypeRegistry extends Registry<ItemType> {
 				if (result.itemId != newId) {
 					result.itemId = newId;
 				}
+			}
+		}
+	}
+
+	@Override
+	protected void addNewValues(List<Entry<Id, ItemType>> unmapped, CompoundTag tag) {
+		int serialisedTileId = 1;
+		int serialisedItemId = 256;
+
+		for (Entry<Id, ItemType> entry : unmapped) {
+			ItemType value = entry.getValue();
+
+			if (value instanceof TileItem) {
+				while (this.bySerialisedId.get(serialisedTileId) != null) {
+					++serialisedTileId;
+				}
+
+				// readd to registry
+				this.bySerialisedId.put(serialisedTileId, value);
+				// add to tag
+				tag.put(entry.getKey().toString(), serialisedTileId);
+				this.onRemap(value, serialisedTileId);
+			} else {
+				while (this.bySerialisedId.get(serialisedItemId) != null) {
+					++serialisedItemId;
+				}
+
+				// readd to registry
+				this.bySerialisedId.put(serialisedItemId, value);
+				// add to tag
+				tag.put(entry.getKey().toString(), serialisedItemId);
+				this.onRemap(value, serialisedItemId);
 			}
 		}
 	}
