@@ -6,6 +6,7 @@
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinOldLevelStorage",
+    "MixinOverlay",
     "MixinResourceDownloadThread",
     "MixinShapedRecipe",
     "MixinTile",
