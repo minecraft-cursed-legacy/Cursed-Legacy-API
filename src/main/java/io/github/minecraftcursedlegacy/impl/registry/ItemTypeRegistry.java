@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
+import io.github.minecraftcursedlegacy.accessor.AccessorPlaceableTileItem;
 import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
 import io.github.minecraftcursedlegacy.accessor.AccessorShapedRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
@@ -30,8 +31,10 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		for (int i = 0; i < ItemType.byId.length; ++i) {
 			ItemType value = ItemType.byId[i];
 
-			if (value instanceof TileItem || value instanceof PlaceableTileItem) {
+			if (value instanceof TileItem) {
 				RegistryImpl.T_2_TI.put(Tile.BY_ID[((AccessorTileItem) value).getTileId()], (TileItem) value);
+			} else if (value instanceof PlaceableTileItem) {
+				RegistryImpl.T_2_TI.put(Tile.BY_ID[((AccessorPlaceableTileItem) value).getTileId()], (PlaceableTileItem) value);
 			}
 
 			if (value != null) {
