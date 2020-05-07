@@ -14,10 +14,9 @@ import net.minecraft.tile.Tile;
 
 public class RegistryImpl implements ModInitializer {
 	private static int currentItemtypeId = 256;
-	private static int currentTileId = 0;
-	private static int currentTileItemId = 0;
+	private static int currentTileId = 1;
 
-	static final Map<Tile, TileItem> T_2_TI = new HashMap<>();
+	static final Map<Tile, ItemType> T_2_TI = new HashMap<>();
 
 	static int nextItemTypeId() {
 		while (ItemType.byId[currentItemtypeId] != null) {
@@ -25,14 +24,6 @@ public class RegistryImpl implements ModInitializer {
 		}
 
 		return currentItemtypeId;
-	}
-
-	static int nextTileItemId() {
-		while (ItemType.byId[currentTileItemId] != null) {
-			++currentTileItemId;
-		}
-
-		return currentTileItemId - 256;
 	}
 
 	private static int nextTileId() {
@@ -93,7 +84,7 @@ public class RegistryImpl implements ModInitializer {
 			((IdSetter) remappedValue).setId(newSerialisedId);
 
 			// tile item
-			TileItem tileItem = T_2_TI.get(remappedValue);
+			ItemType tileItem = T_2_TI.get(remappedValue);
 
 			if (tileItem != null) {
 				((ParentIdSetter) tileItem).setParentId(newSerialisedId);

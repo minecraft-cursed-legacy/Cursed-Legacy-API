@@ -13,6 +13,7 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
+import net.minecraft.item.PlaceableTileItem;
 import net.minecraft.item.TileItem;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeRegistry;
@@ -29,7 +30,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		for (int i = 0; i < ItemType.byId.length; ++i) {
 			ItemType value = ItemType.byId[i];
 
-			if (value instanceof TileItem) {
+			if (value instanceof TileItem || value instanceof PlaceableTileItem) {
 				RegistryImpl.T_2_TI.put(Tile.BY_ID[((AccessorTileItem) value).getTileId()], (TileItem) value);
 			}
 
@@ -179,7 +180,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	}
 
 	TileItem addTileItem(Id id, Tile tile, BiFunction<Integer, Tile, TileItem> constructor) {
-		TileItem item = constructor.apply(RegistryImpl.nextTileItemId() - 256, tile);
+		TileItem item = constructor.apply(tile.id - 256, tile);
 		this.byRegistryId.put(id, item);
 		this.bySerialisedId.put(item.id, item);
 		return item;

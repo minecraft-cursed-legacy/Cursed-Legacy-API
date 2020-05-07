@@ -30,7 +30,7 @@ public final class Id {
 		return this.namespace;
 	}
 
-	public String getIdentifier() {
+	public String getName() {
 		return this.name;
 	}
 
