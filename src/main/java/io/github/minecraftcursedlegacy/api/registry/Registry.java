@@ -152,6 +152,8 @@ public class Registry<T> {
 	 * @return the input compound tag, with updated data for new entries.
 	 */
 	public final CompoundTag remap(CompoundTag tag) {
+		CompoundTag result = new CompoundTag(); // don't copy potentially missing entries
+
 		// prepare
 		this.beforeRemap();
 		List<Entry<Id, T>> unmapped = new ArrayList<>();
@@ -168,19 +170,20 @@ public class Registry<T> {
 				int newSerialisedId = tag.getInt(key);
 				this.bySerialisedId.put(newSerialisedId, value);
 				this.onRemap(value, newSerialisedId);
+				result.put(key, newSerialisedId); // add to new tag
 			} else {
 				unmapped.add(entry);
 			}
 		}
 
 		// re-add new values to the registry
-		this.addNewValues(unmapped, tag);
+		this.addNewValues(unmapped, result);
 
 		// post remap
 		this.postRemap();
 
 		// return updated tag
-		return tag;
+		return result;
 	}
 
 	/**
