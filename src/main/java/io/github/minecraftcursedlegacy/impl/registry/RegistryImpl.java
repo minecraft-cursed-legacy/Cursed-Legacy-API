@@ -93,7 +93,11 @@ public class RegistryImpl implements ModInitializer {
 			((IdSetter) remappedValue).setId(newSerialisedId);
 
 			// tile item
-			((ParentIdSetter) T_2_TI.get(remappedValue)).setParentId(newSerialisedId);
+			TileItem tileItem = T_2_TI.get(remappedValue);
+
+			if (tileItem != null) {
+				((ParentIdSetter) tileItem).setParentId(newSerialisedId);
+			}
 		}
 	}
 
