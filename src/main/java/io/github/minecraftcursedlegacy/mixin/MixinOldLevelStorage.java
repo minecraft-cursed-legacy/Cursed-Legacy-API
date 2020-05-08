@@ -21,7 +21,7 @@ public class MixinOldLevelStorage {
 	@Final
 	private File path;
 
-	@Inject(at = @At("RETURN"), method = "method_1009")
+	@Inject(at = @At("RETURN"), method = "createDimensionFile")
 	private void addRemapping(String string, boolean flag, CallbackInfoReturnable<DimensionData> info) {
 		DimensionFile data = (DimensionFile) info.getReturnValue();
 		RegistryRemapper.remap(new File(((AccessorDimensionFile) data).getParentFolder(), "pomf_registry.dat"));
