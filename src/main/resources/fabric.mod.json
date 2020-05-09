@@ -19,7 +19,11 @@
   "environment": "*",
   "entrypoints": {
     "init": [
+      "io.github.minecraftcursedlegacy.impl.levelgen.LevelGenImpl",
       "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl"
+    ],
+    "postInit": [
+      "io.github.minecraftcursedlegacy.impl.event.BiomeRecomputer"
     ]
   },
   "mixins": [

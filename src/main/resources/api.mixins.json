@@ -3,10 +3,12 @@
   "package": "io.github.minecraftcursedlegacy.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinBiome",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinOldLevelStorage",
     "MixinOverlay",
+    "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
     "MixinResourceDownloadThread",
     "MixinShapedRecipe",
