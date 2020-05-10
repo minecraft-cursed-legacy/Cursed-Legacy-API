@@ -9,3 +9,6 @@ build
 *.launch
 bin
 run
+
+#VSCode
+.vscode
