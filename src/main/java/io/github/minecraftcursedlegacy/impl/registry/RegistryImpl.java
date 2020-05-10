@@ -13,7 +13,7 @@ import net.minecraft.item.TileItem;
 import net.minecraft.tile.Tile;
 
 public class RegistryImpl implements ModInitializer {
-	private static int currentItemtypeId = 256;
+	private static int currentItemtypeId = Tile.BY_ID.length;
 	private static int currentTileId = 1;
 
 	static final Map<Tile, ItemType> T_2_TI = new HashMap<>();
