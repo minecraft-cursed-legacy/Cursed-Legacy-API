@@ -64,7 +64,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	 */
 	@Override
 	public <E extends ItemType> E register(Id id, IntFunction<E> valueProvider) {
-		return super.register(id, rawSID -> valueProvider.apply(rawSID - 256));
+		return super.register(id, rawSID -> valueProvider.apply(rawSID - Tile.BY_ID.length));
 	}
 
 	@Override
@@ -153,7 +153,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	@Override
 	protected void addNewValues(List<Entry<Id, ItemType>> unmapped, CompoundTag tag) {
 		int serialisedTileId = 1;
-		int serialisedItemId = 256;
+		int serialisedItemId = Tile.BY_ID.length;
 
 		for (Entry<Id, ItemType> entry : unmapped) {
 			ItemType value = entry.getValue();
@@ -183,7 +183,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	}
 
 	TileItem addTileItem(Id id, Tile tile, BiFunction<Integer, Tile, TileItem> constructor) {
-		TileItem item = constructor.apply(tile.id - 256, tile);
+		TileItem item = constructor.apply(tile.id - Tile.BY_ID.length, tile);
 		this.byRegistryId.put(id, item);
 		this.bySerialisedId.put(item.id, item);
 		return item;
