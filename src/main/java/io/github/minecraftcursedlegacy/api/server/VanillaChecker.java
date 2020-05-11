@@ -4,7 +4,7 @@ import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
 import net.minecraft.entity.player.Player;
 
 public final class VanillaChecker {
-	private VanillaChecker(){
+	private VanillaChecker() {
 	}
 
 	/**
