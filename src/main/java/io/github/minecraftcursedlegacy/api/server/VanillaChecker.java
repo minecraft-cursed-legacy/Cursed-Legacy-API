@@ -4,7 +4,8 @@ import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
 import net.minecraft.entity.player.Player;
 
 public final class VanillaChecker {
-	private VanillaChecker(){/*No Constructor*/}
+	private VanillaChecker(){
+	}
 
 	/**
 	 * Checks if a player is using a Vanilla Client
