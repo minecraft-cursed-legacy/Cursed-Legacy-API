@@ -20,7 +20,8 @@
     "MixinHandshakeC2SClient"
   ],
   "server": [
-    "MixinPendingConnection"
+    "MixinPendingConnection",
+    "MixinClass_11"
   ],
   "injectors": {
     "defaultRequire": 1
