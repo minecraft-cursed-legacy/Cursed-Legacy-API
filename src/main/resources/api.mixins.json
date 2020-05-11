@@ -17,8 +17,11 @@
     "MixinTitleScreen"
   ],
   "client": [
+    "MixinHandshakeC2SClient"
   ],
   "server": [
+    "MixinPendingConnection",
+    "MixinClass_11"
   ],
   "injectors": {
     "defaultRequire": 1
