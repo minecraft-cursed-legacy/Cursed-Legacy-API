@@ -12,6 +12,9 @@ public class PluginMessagePacket extends AbstractPacket {
 	public String channel;
 	public byte[] data;
 
+	public PluginMessagePacket() {
+	}
+
 	public PluginMessagePacket(String channel, byte[] data) {
 		this.channel = channel;
 		this.data = data;
