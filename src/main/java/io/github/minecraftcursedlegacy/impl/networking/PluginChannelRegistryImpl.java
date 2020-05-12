@@ -12,7 +12,7 @@ public class PluginChannelRegistryImpl {
 	private static HashMap<String, PluginChannel> channelMap = new HashMap<>();
 	
 	public static void registerPluginChannel(PluginChannel channel) {
-		channelMap.put(channel.getChannelIdentifier(), channel);
+		channelMap.put(channel.getChannelIdentifier().toString(), channel);
 	}
 
 	protected static void handlePacket(PacketHandler arg, PluginMessagePacket packet) {
