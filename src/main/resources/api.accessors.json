@@ -8,7 +8,8 @@
     "AccessorRecipeRegistry",
     "AccessorShapedRecipe",
     "AccessorShapelessRecipe",
-    "AccessorTileItem"
+    "AccessorTileItem",
+    "AccessorAbstractPacket"
   ],
   "client": [
   ],

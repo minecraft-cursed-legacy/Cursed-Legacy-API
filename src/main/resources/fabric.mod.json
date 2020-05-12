@@ -20,7 +20,8 @@
   "entrypoints": {
     "init": [
       "io.github.minecraftcursedlegacy.impl.levelgen.LevelGenImpl",
-      "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl"
+      "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl",
+      "io.github.minecraftcursedlegacy.impl.networking.NetworkingImpl"
     ],
     "postInit": [
       "io.github.minecraftcursedlegacy.impl.event.BiomeRecomputer"
