@@ -247,19 +247,43 @@ public class Registry<T> implements Iterable<T> {
 		RegistryRemapper.registries().forEach(r -> r.locked = true);
 	}
 
+	/**
+	 *
+	 * @return all objects stored in this registry.
+	 */
+	public Set<T> values() {
+		return this.byRegistryId.values();
+	}
+
+	/**
+	 *
+	 * @return the ids of all objects stored in this registry.
+	 */
+	public Set<Id> ids() {
+		return this.byRegistryId.keySet();
+	}
+
+	/**
+	 *
+	 * @return the serialised ids of all objects stored in this registry
+	 */
+	public Set<Integer> serialisedIds() {
+		return this.bySerialisedId.keySet();
+	}
+
 	@Override
 	@Nonnull
 	public Iterator<T> iterator() {
-		return this.byRegistryId.values().iterator();
+		return values().iterator();
 	}
 
 	@Override
 	public void forEach(Consumer<? super T> consumer) {
-		this.byRegistryId.values().forEach(consumer);
+		values().forEach(consumer);
 	}
 
 	@Override
 	public Spliterator<T> spliterator() {
-		return this.byRegistryId.values().spliterator();
+		return values().spliterator();
 	}
 }
