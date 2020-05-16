@@ -265,7 +265,7 @@ public class Registry<T> implements Iterable<T> {
 
 	/**
 	 *
-	 * @return the serialised ids of all objects stored in this registry
+	 * @return the serialised ids of all objects stored in this registry.
 	 */
 	public Set<Integer> serialisedIds() {
 		return this.bySerialisedId.keySet();
@@ -274,16 +274,16 @@ public class Registry<T> implements Iterable<T> {
 	@Override
 	@Nonnull
 	public Iterator<T> iterator() {
-		return values().iterator();
+		return this.values().iterator();
 	}
 
 	@Override
 	public void forEach(Consumer<? super T> consumer) {
-		values().forEach(consumer);
+		this.values().forEach(consumer);
 	}
 
 	@Override
 	public Spliterator<T> spliterator() {
-		return values().spliterator();
+		return this.values().spliterator();
 	}
 }
