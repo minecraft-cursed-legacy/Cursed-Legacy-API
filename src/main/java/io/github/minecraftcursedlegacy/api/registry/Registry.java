@@ -1,18 +1,16 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
+import net.minecraft.util.io.CompoundTag;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
-import net.minecraft.util.io.CompoundTag;
 
 /**
  * Registry for game content.
@@ -88,7 +86,7 @@ public class Registry<T> implements Iterable<T> {
 	}
 
 	/**
-	 * Looks up the id in the registy.
+	 * Looks up the id in the registry.
 	 * @param id the specified id to look up in the registry.
 	 * @return the value specified by the id in the registry, if it exists. Otherwise returns the default value.
 	 */
@@ -98,8 +96,8 @@ public class Registry<T> implements Iterable<T> {
 	}
 
 	/**
-	 * Looks up the id of the value in the registy.
-	 * @param id the specified id to look up in the registry.
+	 * Looks up the id of the value in the registry.
+	 * @param value the specified value to find the id of.
 	 * @return the id of the value in the registry, if it exists. Otherwise returns null.
 	 */
 	@Nullable
@@ -108,7 +106,7 @@ public class Registry<T> implements Iterable<T> {
 	}
 
 	/**
-	 * Looks up the int serialised id in the registy.
+	 * Looks up the int serialised id in the registry.
 	 * @param serialisedId the specified serialised id to look up in the registry.
 	 * @return the value specified by the serialised id in the registry, if it exists. Otherwise returns the default value.
 	 */
@@ -117,8 +115,8 @@ public class Registry<T> implements Iterable<T> {
 	}
 
 	/**
-	 * Looks up the int serialised id of the value in the registy.
-	 * @param id the specified serialised id to look up in the registry.
+	 * Looks up the int serialised id of the value in the registry.
+	 * @param value the specified value to find the serialised id of.
 	 * @return the int serialised id of the value in the registry, if it exists. Otherwise returns null.
 	 */
 	public int getSerialisedId(T value) {
