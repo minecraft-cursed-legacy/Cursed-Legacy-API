@@ -1,11 +1,11 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.IntFunction;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.BiMap;
@@ -17,7 +17,7 @@ import net.minecraft.util.io.CompoundTag;
 /**
  * Registry for game content.
  */
-public class Registry<T> {
+public class Registry<T> implements Iterable<T> {
 	/**
 	 * Creates a new registry object.
 	 * @param clazz the class of the values in this registry.
@@ -247,5 +247,21 @@ public class Registry<T> {
 	 */
 	public static void lockAll() {
 		RegistryRemapper.registries().forEach(r -> r.locked = true);
+	}
+
+	@Override
+	@Nonnull
+	public Iterator<T> iterator() {
+		return this.byRegistryId.values().iterator();
+	}
+
+	@Override
+	public void forEach(Consumer<? super T> consumer) {
+		this.byRegistryId.values().forEach(consumer);
+	}
+
+	@Override
+	public Spliterator<T> spliterator() {
+		return this.byRegistryId.values().spliterator();
 	}
 }
