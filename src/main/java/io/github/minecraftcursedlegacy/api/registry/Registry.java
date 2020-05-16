@@ -1,23 +1,21 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.function.IntFunction;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-
 import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
 import net.minecraft.util.io.CompoundTag;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
 
 /**
  * Registry for game content.
  */
-public class Registry<T> {
+public class Registry<T> implements Iterable<T> {
 	/**
 	 * Creates a new registry object.
 	 * @param clazz the class of the values in this registry.
@@ -88,7 +86,7 @@ public class Registry<T> {
 	}
 
 	/**
-	 * Looks up the id in the registy.
+	 * Looks up the id in the registry.
 	 * @param id the specified id to look up in the registry.
 	 * @return the value specified by the id in the registry, if it exists. Otherwise returns the default value.
 	 */
@@ -98,8 +96,8 @@ public class Registry<T> {
 	}
 
 	/**
-	 * Looks up the id of the value in the registy.
-	 * @param id the specified id to look up in the registry.
+	 * Looks up the id of the value in the registry.
+	 * @param value the specified value to find the id of.
 	 * @return the id of the value in the registry, if it exists. Otherwise returns null.
 	 */
 	@Nullable
@@ -108,7 +106,7 @@ public class Registry<T> {
 	}
 
 	/**
-	 * Looks up the int serialised id in the registy.
+	 * Looks up the int serialised id in the registry.
 	 * @param serialisedId the specified serialised id to look up in the registry.
 	 * @return the value specified by the serialised id in the registry, if it exists. Otherwise returns the default value.
 	 */
@@ -117,8 +115,8 @@ public class Registry<T> {
 	}
 
 	/**
-	 * Looks up the int serialised id of the value in the registy.
-	 * @param id the specified serialised id to look up in the registry.
+	 * Looks up the int serialised id of the value in the registry.
+	 * @param value the specified value to find the serialised id of.
 	 * @return the int serialised id of the value in the registry, if it exists. Otherwise returns null.
 	 */
 	public int getSerialisedId(T value) {
@@ -247,5 +245,45 @@ public class Registry<T> {
 	 */
 	public static void lockAll() {
 		RegistryRemapper.registries().forEach(r -> r.locked = true);
+	}
+
+	/**
+	 *
+	 * @return all objects stored in this registry.
+	 */
+	public Set<T> values() {
+		return this.byRegistryId.values();
+	}
+
+	/**
+	 *
+	 * @return the ids of all objects stored in this registry.
+	 */
+	public Set<Id> ids() {
+		return this.byRegistryId.keySet();
+	}
+
+	/**
+	 *
+	 * @return the serialised ids of all objects stored in this registry.
+	 */
+	public Set<Integer> serialisedIds() {
+		return this.bySerialisedId.keySet();
+	}
+
+	@Override
+	@Nonnull
+	public Iterator<T> iterator() {
+		return this.values().iterator();
+	}
+
+	@Override
+	public void forEach(Consumer<? super T> consumer) {
+		this.values().forEach(consumer);
+	}
+
+	@Override
+	public Spliterator<T> spliterator() {
+		return this.values().spliterator();
 	}
 }
