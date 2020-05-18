@@ -1,11 +1,11 @@
 package io.github.minecraftcursedlegacy.impl.networking;
 
+import net.minecraft.network.PacketHandler;
+import net.minecraft.packet.AbstractPacket;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
-import net.minecraft.network.PacketHandler;
-import net.minecraft.packet.AbstractPacket;
 
 //Similar to Plugin Message but supports 
 public class PluginMessagePacket extends AbstractPacket {
@@ -29,6 +29,7 @@ public class PluginMessagePacket extends AbstractPacket {
 			for (int i = 0; i < channellength; i++) {
 				buffer.append(dataInputStream.readChar());
 			}
+
 			channel = buffer.toString();
 
 			int datalength = dataInputStream.readInt();
@@ -60,5 +61,4 @@ public class PluginMessagePacket extends AbstractPacket {
 	public int length() {
 		return 2 /* short length */ + channel.length() + 2 /* short length */ + data.length;
 	}
-	
 }

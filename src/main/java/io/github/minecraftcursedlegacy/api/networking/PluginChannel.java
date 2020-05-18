@@ -38,5 +38,4 @@ public abstract class PluginChannel {
 	public void send(byte[] data, Minecraft mc) {
 		mc.method_2145().sendPacket(new PluginMessagePacket(getChannelIdentifier().toString(), data));
 	}
-
 }
