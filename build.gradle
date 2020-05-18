@@ -16,6 +16,10 @@ buildscript {
 	}
 }
 
+plugins {
+    id 'checkstyle'
+}
+
 apply plugin: "fabric-loom"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
