@@ -1,4 +1,8 @@
-on: pull_request
+name: Java CI
+
+on:
+  push:
+  pull_request:
 
 jobs:
   checkstyle:
