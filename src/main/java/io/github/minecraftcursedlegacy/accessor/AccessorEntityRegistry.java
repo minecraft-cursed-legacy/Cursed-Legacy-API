@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.accessor;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityRegistry;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.Map;
 
 @Mixin(EntityRegistry.class)
-public interface MixinEntityRegistry {
+public interface AccessorEntityRegistry {
 	@Accessor("ID_TO_CLASS")
 	static Map<Integer, Class<? extends Entity>> getID_TO_CLASS() {
 		throw new AssertionError("mixin");

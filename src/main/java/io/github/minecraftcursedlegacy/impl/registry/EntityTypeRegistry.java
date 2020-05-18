@@ -1,8 +1,8 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
+import io.github.minecraftcursedlegacy.accessor.AccessorEntityRegistry;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
-import io.github.minecraftcursedlegacy.mixin.MixinEntityRegistry;
 import net.minecraft.entity.Entity;
 
 import java.util.HashMap;
@@ -20,9 +20,9 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 		super(EntityType.class, registryName, null);
 
 		// add vanilla entities
-		MixinEntityRegistry.getID_TO_CLASS().forEach((intId, clazz) -> {
+		AccessorEntityRegistry.getID_TO_CLASS().forEach((intId, clazz) -> {
 			if (clazz != null) {
-				String idPart = MixinEntityRegistry.getCLASS_TO_STRING_ID().get(clazz);
+				String idPart = AccessorEntityRegistry.getCLASS_TO_STRING_ID().get(clazz);
 
 				EntityType type = new EntityType(clazz, idPart == null ? "entity" : idPart);
 				if (idPart == null) {
@@ -39,7 +39,7 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 
 	@Override
 	protected int getNextSerialisedId() {
-		Map<Integer, Class<? extends Entity>> idToClass = MixinEntityRegistry.getID_TO_CLASS();
+		Map<Integer, Class<? extends Entity>> idToClass = AccessorEntityRegistry.getID_TO_CLASS();
 		while (idToClass.containsKey(currentId)) {
 			++currentId;
 		}
@@ -54,14 +54,14 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 
 	@Override
 	protected void beforeRemap() {
-		MixinEntityRegistry.setID_TO_CLASS(new HashMap<>());
-		MixinEntityRegistry.setCLASS_TO_ID(new HashMap<>());
-		MixinEntityRegistry.setSTRING_ID_TO_CLASS(new HashMap<>());
-		MixinEntityRegistry.setCLASS_TO_STRING_ID(new HashMap<>());
+		AccessorEntityRegistry.setID_TO_CLASS(new HashMap<>());
+		AccessorEntityRegistry.setCLASS_TO_ID(new HashMap<>());
+		AccessorEntityRegistry.setSTRING_ID_TO_CLASS(new HashMap<>());
+		AccessorEntityRegistry.setCLASS_TO_STRING_ID(new HashMap<>());
 	}
 
 	@Override
 	protected void onRemap(EntityType remappedValue, int newSerialisedId) {
-		MixinEntityRegistry.callRegister(remappedValue.getClazz(), remappedValue.getVanillaRegistryStringId(), newSerialisedId);
+		AccessorEntityRegistry.callRegister(remappedValue.getClazz(), remappedValue.getVanillaRegistryStringId(), newSerialisedId);
 	}
 }

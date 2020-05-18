@@ -9,7 +9,8 @@
     "AccessorShapedRecipe",
     "AccessorShapelessRecipe",
     "AccessorTileItem",
-    "AccessorAbstractPacket"
+    "AccessorAbstractPacket",
+    "AccessorEntityRegistry"
   ],
   "client": [
   ],
