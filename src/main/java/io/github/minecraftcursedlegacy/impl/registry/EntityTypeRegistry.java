@@ -20,9 +20,9 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 		super(EntityType.class, registryName, null);
 
 		// add vanilla entities
-		AccessorEntityRegistry.getID_TO_CLASS().forEach((intId, clazz) -> {
+		AccessorEntityRegistry.getIdToClassMap().forEach((intId, clazz) -> {
 			if (clazz != null) {
-				String idPart = AccessorEntityRegistry.getCLASS_TO_STRING_ID().get(clazz);
+				String idPart = AccessorEntityRegistry.getClassToStringIdMap().get(clazz);
 
 				EntityType type = new EntityType(clazz, idPart == null ? "entity" : idPart);
 				if (idPart == null) {
@@ -39,7 +39,7 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 
 	@Override
 	protected int getNextSerialisedId() {
-		Map<Integer, Class<? extends Entity>> idToClass = AccessorEntityRegistry.getID_TO_CLASS();
+		Map<Integer, Class<? extends Entity>> idToClass = AccessorEntityRegistry.getIdToClassMap();
 		while (idToClass.containsKey(currentId)) {
 			++currentId;
 		}
@@ -54,10 +54,10 @@ public class EntityTypeRegistry extends Registry<EntityType> {
 
 	@Override
 	protected void beforeRemap() {
-		AccessorEntityRegistry.setID_TO_CLASS(new HashMap<>());
-		AccessorEntityRegistry.setCLASS_TO_ID(new HashMap<>());
-		AccessorEntityRegistry.setSTRING_ID_TO_CLASS(new HashMap<>());
-		AccessorEntityRegistry.setCLASS_TO_STRING_ID(new HashMap<>());
+		AccessorEntityRegistry.setIdToClassMap(new HashMap<>());
+		AccessorEntityRegistry.setClassToIdMap(new HashMap<>());
+		AccessorEntityRegistry.setStringIdToClassMap(new HashMap<>());
+		AccessorEntityRegistry.setClassToStringIdMap(new HashMap<>());
 	}
 
 	@Override

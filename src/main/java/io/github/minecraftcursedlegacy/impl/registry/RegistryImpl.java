@@ -109,7 +109,7 @@ public class RegistryImpl implements ModInitializer {
 	static {
 		//noinspection ResultOfMethodCallIgnored
 		Tile.BED.hashCode(); // make sure tiles are initialised
-		AccessorEntityRegistry.getID_TO_CLASS(); // make sure entities are initialised
+		AccessorEntityRegistry.getIdToClassMap(); // make sure entities are initialised
 		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
 		TILE = new TileRegistry(new Id("api:tile"));
 		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
