@@ -17,11 +17,6 @@ public class EntityType {
 		this.vanillaRegistryStringId = vanillaRegistryStringId;
 	}
 
-	/**
-	 * Use this constructor for your own entities.
-	 * @param clazz the entity class.
-	 * @param id the identifier used in the EntityType registry.
-	 */
 	public EntityType(Class<? extends Entity> clazz, Id id) {
 		this.clazz = clazz;
 		this.vanillaRegistryStringId = id.toString();
