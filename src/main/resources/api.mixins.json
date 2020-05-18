@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinBiome",
+    "MixinEntityRegistry",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinOldLevelStorage",
@@ -20,8 +21,8 @@
     "MixinHandshakeC2SClient"
   ],
   "server": [
-    "MixinPendingConnection",
-    "MixinClass_11"
+    "MixinClass_11",
+    "MixinPendingConnection"
   ],
   "injectors": {
     "defaultRequire": 1

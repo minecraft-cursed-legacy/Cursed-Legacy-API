@@ -1,16 +1,17 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
-
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.impl.Hacks;
+import io.github.minecraftcursedlegacy.mixin.MixinEntityRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.TileItem;
 import net.minecraft.tile.Tile;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public class RegistryImpl implements ModInitializer {
 	private static int currentItemtypeId = Tile.BY_ID.length;
@@ -103,10 +104,14 @@ public class RegistryImpl implements ModInitializer {
 
 	public static final Registry<ItemType> ITEM_TYPE;
 	public static final Registry<Tile> TILE;
+	public static final Registry<EntityType> ENTITY_TYPE;
 
 	static {
+		//noinspection ResultOfMethodCallIgnored
 		Tile.BED.hashCode(); // make sure tiles are initialised
+		MixinEntityRegistry.getID_TO_CLASS(); // make sure entities are initialised
 		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
 		TILE = new TileRegistry(new Id("api:tile"));
+		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
 	}
 }
