@@ -8,7 +8,7 @@ public final class VanillaChecker {
 	}
 
 	/**
-	 * Checks if a player is using a Vanilla Client
+	 * Checks if a player is using a Vanilla Client.
 	 */
 	public static boolean isVanilla(Player player) {
 		return VanillaCheckerImpl.playermap.get(player.name);

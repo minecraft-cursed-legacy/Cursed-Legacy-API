@@ -1,5 +1,6 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
+import io.github.minecraftcursedlegacy.impl.registry.EntityType;
 import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
@@ -16,4 +17,9 @@ public final class Registries {
 	 * Registry for Tiles.
 	 */
 	public static final Registry<Tile> TILE = RegistryImpl.TILE;
+
+	/**
+	 * Registry for Entity types.
+	 */
+	public static final Registry<EntityType> ENTITY_TYPE = RegistryImpl.ENTITY_TYPE;
 }
