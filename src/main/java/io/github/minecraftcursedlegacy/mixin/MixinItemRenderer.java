@@ -41,6 +41,7 @@ public class MixinItemRenderer {
             System.out.println(">> Texture height: "+texture.getTextureHeight());
             System.out.println(">> Texture ID: "+texture.getTextureID());
             arg1.bindTexture(texture.getTextureID());
+            GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
             method_1483(i, j, arg2.method_725() % 16 * 16, arg2.method_725() / 16 * 16, 16, 16); //Don't ask
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(2884);
