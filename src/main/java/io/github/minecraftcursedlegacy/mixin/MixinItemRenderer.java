@@ -49,7 +49,6 @@ public class MixinItemRenderer {
             GL11.glBindTexture(3553, TextureRegistryImpl.getTexture(arg.item.itemId).getTextureID());
             TextureRegistryImpl.vertexHacksEnabled = true;
             TextureRegistryImpl.var4hack = arg.item.method_725();
-            System.out.println("e");
         }
     }
     @Inject(at = @At("TAIL"), method = "method_1484")
