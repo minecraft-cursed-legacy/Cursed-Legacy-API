@@ -7,7 +7,7 @@ public class TextureRegistry {
 	}
 
 	/**
-	 * Sets a custom texture for an item id
+	 * Sets a custom texture for an item id.
 	 * Eg:
 	 * io.github.minecraftcursedlegacy.api.client.TextureRegistry.addCustomTexture(280, "assets/modid/tbgn3p08.png"); //280 is the stick id
 	 * @param itemID Id of the item you want to change

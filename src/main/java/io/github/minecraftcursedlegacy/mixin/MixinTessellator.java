@@ -23,19 +23,23 @@ public class MixinTessellator {
 			float var7 = ((float)(var4 / 16 * 16) + 0.0F) / 256.0F;
 			float var8 = ((float)(var4 / 16 * 16) + 15.99F) / 256.0F;
 			float var8_2 = ((float)(var4 / 16 * 16) + 16F) / 256.0F;
+
 			if (d3 == (double)var6 || d3 == (double)var6_2) {
 				texture1 = 1D;
 			} else if (d3 == (double)var5) {
 				texture1 = 0D;
 			}
+
 			if (d4 == (double)var8 || d4 == (double)var8_2) {
 				texture2 = 1D;
 			} else if (d4 == (double)var7) {
 				texture2 = 0D;
 			}
+
 			if (d2 == 0F) {
 				d2 = -0.03125F;
 			}
+			
 			if (d2 == -0.0625F) {
 				d2 = -0.03125F;
 			}

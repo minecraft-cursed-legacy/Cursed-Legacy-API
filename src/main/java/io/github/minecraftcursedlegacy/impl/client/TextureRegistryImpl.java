@@ -41,6 +41,7 @@ public class TextureRegistryImpl {
 					System.exit(1); // No Clue What To Do Here
 				}
 			}
+
 			try {
 				texturemap.put(itemID,
 						TextureLoader.getTexture(texturePath.substring(texturePath.length() - 3).toUpperCase(Locale.US), ResourceLoader.getResourceAsStream(texturePath)));
@@ -48,6 +49,7 @@ public class TextureRegistryImpl {
 				e.printStackTrace();
 				System.exit(1); // No Clue What To Do Here
 			}
+
 			Texture texture = texturemap.get(itemID);
 			System.out.println("Texture loaded: "+texture);
 			System.out.println(">> Image width: "+texture.getImageWidth());
@@ -61,10 +63,12 @@ public class TextureRegistryImpl {
 	public static Texture getTexture(int itemID) {
 		if (!canOpenGl) {
 			canOpenGl = true;
+			
 			for (int key : texturelimbo.keySet()) {
 				String e = texturelimbo.get(key);
 				doTexture(key, e);
 			}
+			
 			return texturemap.get(itemID);
 		} else {
 			return texturemap.get(itemID);

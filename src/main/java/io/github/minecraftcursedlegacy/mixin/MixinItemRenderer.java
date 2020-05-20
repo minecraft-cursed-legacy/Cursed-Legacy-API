@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -43,6 +42,7 @@ public class MixinItemRenderer {
 			bruh.cancel();
 		}
 	}
+
 	@Inject(at = @At(value="FIELD", target="Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode=Opcodes.GETSTATIC), method = "method_1484", cancellable = true)
 	public void method_1484_0(ItemEntity arg, double d, double d1, double d2, float f, float f1, CallbackInfo bruh) {
 		if ((arg.item != null) && (TextureRegistryImpl.getTexture(arg.item.itemId) != null)) {
@@ -51,6 +51,7 @@ public class MixinItemRenderer {
 			TextureRegistryImpl.var4hack = arg.item.method_725();
 		}
 	}
+	
 	@Inject(at = @At("TAIL"), method = "method_1484")
 	public void method_1484_1(ItemEntity arg, double d, double d1, double d2, float f, float f1, CallbackInfo bruh) {
 		TextureRegistryImpl.vertexHacksEnabled = false;
