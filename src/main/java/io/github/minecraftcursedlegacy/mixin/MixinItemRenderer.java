@@ -42,7 +42,15 @@ public class MixinItemRenderer {
             System.out.println(">> Texture ID: "+texture.getTextureID());
             arg1.bindTexture(texture.getTextureID());
             GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-            method_1483(i, j, arg2.method_725() % 16 * 16, arg2.method_725() / 16 * 16, 16, 16); //Don't ask
+            //method_1483(i, j, arg2.method_725() % 16 * 16, arg2.method_725() / 16 * 16, 16, 16); //Don't ask
+            Tessellator var3 = Tessellator.INSTANCE;
+            var3.start();
+            Double z = 0D;
+		    var3.vertex(i, j+16, z, 0.0D, 1.0D);
+		    var3.vertex(i+16, j+16, z, 1.0D, 1.0D);
+		    var3.vertex(i+16, j, z, 1.0D, 0.0D);
+		    var3.vertex(i, j, z, 0.0D, 0.0D);
+		    var3.draw();
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(2884);
             bruh.cancel();
