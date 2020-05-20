@@ -9,6 +9,9 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class TextureRegistryImpl {
+    public static boolean vertexHacksEnabled = false;
+    public static int var4hack;
+
     private static boolean hacksEnabled = false;
     private static boolean canOpenGl = false;
     private static HashMap<Integer, Texture> texturemap = new HashMap<Integer, Texture>();

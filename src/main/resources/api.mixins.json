@@ -18,7 +18,9 @@
   ],
   "client": [
     "MixinHandshakeC2SClient",
-    "MixinItemRenderer"
+    "MixinItemRenderer",
+    "MixinClass_556",
+    "MixinTessellator"
   ],
   "server": [
     "MixinClass_11",
