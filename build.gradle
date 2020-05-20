@@ -34,6 +34,9 @@ repositories {
 		name = "Jitpack"
 		url "https://jitpack.io/"
 	}
+	flatDir {
+       dirs 'libs'
+    }
 }
 
 minecraft {
@@ -60,6 +63,9 @@ dependencies {
 
 	// for config api
 	compile "tk.valoeghese:ZoesteriaConfig:1.3.0"
+
+	implementation name: "slick-util"
+	include name: "slick-util"
 
 	modImplementation "com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}"
 }

@@ -17,7 +17,8 @@
     "MixinTitleScreen"
   ],
   "client": [
-    "MixinHandshakeC2SClient"
+    "MixinHandshakeC2SClient",
+    "MixinItemRenderer"
   ],
   "server": [
     "MixinClass_11",
