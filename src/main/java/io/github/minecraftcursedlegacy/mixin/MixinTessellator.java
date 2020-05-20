@@ -39,14 +39,16 @@ public class MixinTessellator {
 			if (d2 == 0F) {
 				d2 = -0.03125F;
 			}
-			
+
 			if (d2 == -0.0625F) {
 				d2 = -0.03125F;
 			}
+
 			if (texture1 != null && texture2 != null) {
 				((Tessellator)(Object)this).size(texture1, texture2); //Actually Texture Cords
 				((Tessellator)(Object)this).pos(d, d1, d2);
 			}
+			
 			bruh.cancel();
 		}
 	}

@@ -51,10 +51,9 @@ public class MixinItemRenderer {
 			TextureRegistryImpl.var4hack = arg.item.method_725();
 		}
 	}
-	
+
 	@Inject(at = @At("TAIL"), method = "method_1484")
 	public void method_1484_1(ItemEntity arg, double d, double d1, double d2, float f, float f1, CallbackInfo bruh) {
 		TextureRegistryImpl.vertexHacksEnabled = false;
 	}
-
 }
