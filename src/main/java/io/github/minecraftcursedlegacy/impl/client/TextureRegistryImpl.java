@@ -9,6 +9,9 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class TextureRegistryImpl {
+	private TextureRegistryImpl(){
+	}
+
 	public static boolean vertexHacksEnabled = false;
 	public static int var4hack;
 
