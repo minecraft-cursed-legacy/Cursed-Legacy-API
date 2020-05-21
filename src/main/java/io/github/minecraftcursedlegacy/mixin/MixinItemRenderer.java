@@ -21,15 +21,13 @@ abstract class MixinItemRenderer extends Renderer {
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)
 	) //This is an overload of render
 	private void fixAtlas(ItemEntity entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo info) {
-		String atlas = AtlasMapper.getAtlas(entity.item.itemId, entity.item.getDamage());
-		if (atlas != null) bindTexture(atlas);
+		AtlasMapper.getAtlas(dispatcher.textureManager, entity.item.itemId, entity.item.getDamage()).ifPresent(dispatcher.textureManager::bindTexture);
 	}
 
 	@Inject(method = "method_1486",
 			at = @At(value = "FIELD", target = "Lnet/minecraft/item/ItemType;byId:[Lnet/minecraft/item/ItemType;", opcode = Opcodes.GETSTATIC)
 	)
 	private void fixAtlas(TextManager textManager, TextureManager textureManager, int itemID, int meta, int texturePosition, int x, int y, CallbackInfo info) {
-		String atlas = AtlasMapper.getAtlas(itemID, meta);
-		if (atlas != null) textureManager.bindTexture(textureManager.getTextureId(atlas));
+		AtlasMapper.getAtlas(textureManager, itemID, meta).ifPresent(textureManager::bindTexture);
 	}
 }

@@ -1,7 +1,5 @@
 package io.github.minecraftcursedlegacy.mixin;
 
-import org.lwjgl.opengl.GL11;
-
 import org.objectweb.asm.Opcodes;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +24,6 @@ abstract class MixinClass_556 {
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)
 	)
 	private void fixAtlas(LivingEntity entity, ItemInstance item, CallbackInfo info) {
-		String atlas = AtlasMapper.getAtlas(item.itemId, item.getDamage());
-		if (atlas != null) GL11.glBindTexture(GL11.GL_TEXTURE_2D, field_2401.textureManager.getTextureId(atlas));
+		AtlasMapper.getAtlas(field_2401.textureManager, item.itemId, item.getDamage()).ifPresent(field_2401.textureManager::bindTexture);
 	}
 }

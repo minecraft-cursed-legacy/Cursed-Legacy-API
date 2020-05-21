@@ -1,7 +1,13 @@
 package io.github.minecraftcursedlegacy.api.client;
 
+import java.util.OptionalInt;
+
+import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
 
@@ -68,25 +74,90 @@ public final class AtlasMap {
 	}
 
 	/**
+	 * Register the given sprite for use with the {@link ItemType} corresponding to the given 
+	 * {@link ItemInstance#itemId} when it has the given {@link ItemInstance#getDamage()}
+	 *
+	 * @param stack The item type and damage which uses the given sprite
+	 * @param sprite The location of the custom sprite
+	 *
+	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}
+	 *
+	 * @throws NullPointerException If sprite is null
+	 */
+	public static int registerSprite(ItemInstance stack, String sprite) {
+		return registerSprite(stack.itemId, stack.getDamage(), sprite);
+	}
+
+	/**
+	 * Register the given sprite for use with the given {@link ItemType},
+	 * regardless of what {@link ItemInstance#getDamage()} on an instance of it returns
+	 *
+	 * @param item The item which uses the given sprite
+	 * @param sprite The location of the custom sprite
+	 *
+	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}
+	 *
+	 * @throws NullPointerException If sprite is null
+	 */
+	public static int registerSprite(ItemType item, String sprite) {
+		return registerSprite(item.id, sprite);
+	}
+
+	/**
+	 * Register the given sprite for use with the {@link ItemType} corresponding to the given ID
+	 * when {@link ItemInstance#getDamage()} on an instance of it is the same as the given meta
+	 *
+	 * @param itemID The ID of the item which uses the given sprite
+	 * @param meta The damage value an instance must have to use this sprite
+	 * @param sprite The location of the custom sprite
+	 *
+	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}
+	 *
+	 * @throws NullPointerException If sprite is null
+	 */
+	public static int registerSprite(int itemID, int meta, String sprite) {
+		return AtlasMapper.registerSprite(itemID, meta, sprite);
+	}
+
+	/**
+	 * Register the given sprite for use with the {@link ItemType} corresponding to the given ID,
+	 * regardless of what {@link ItemInstance#getDamage()} on an instance of it returns
+	 *
+	 * @param itemID The ID of the item which uses the given sprite
+	 * @param sprite The location of the custom sprite
+	 *
+	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}
+	 *
+	 * @throws NullPointerException If sprite is null
+	 */
+	public static int registerSprite(int itemID, String sprite) {
+		return AtlasMapper.registerDefaultSprite(itemID, sprite);
+	}
+
+	/**
 	 * Get the atlas the given {@link ItemType} corresponding to the given ID has
 	 *
+	 * @param manager The texture manager rendering the atlas
 	 * @param itemID The ID of the item
 	 *
-	 * @return The location of the custom atlas or <code>null</code> if it uses the default one
+	 * @return The texture ID of the custom atlas or {@link OptionalInt#empty()} if it uses the default one
 	 */
-	public static String getAtlas(int itemID) {
-		return getAtlas(itemID, 0);
+	@Environment(EnvType.CLIENT)
+	public static OptionalInt getAtlas(TextureManager manager, int itemID) {
+		return getAtlas(manager, itemID, 0);
 	}
 
 	/**
 	 * Get the atlas the given {@link ItemType} corresponding to the given ID has with the given damage 
 	 *
+	 * @param manager The texture manager rendering the atlas
 	 * @param itemID The ID of the item
 	 * @param meta The damage of an {@link ItemInstance}
 	 *
-	 * @return The location of the custom atlas or <code>null</code> if it uses the default one
+	 * @return The texture ID of the custom atlas or {@link OptionalInt#empty()} if it uses the default one
 	 */
-	public static String getAtlas(int itemID, int meta) {
-		return AtlasMapper.getAtlas(itemID, meta);
+	@Environment(EnvType.CLIENT)
+	public static OptionalInt getAtlas(TextureManager manager, int itemID, int meta) {
+		return AtlasMapper.getAtlas(manager, itemID, meta);
 	}
 }
