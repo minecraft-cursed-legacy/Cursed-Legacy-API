@@ -12,7 +12,7 @@ import net.fabricmc.api.Environment;
 import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
 
 /**
- * Utility methods for having {@link ItemType}s which use textures from other than the main item atlas
+ * Utility methods for {@link ItemType}s which use textures from other than the main item atlas.
  *
  * @author Chocohead
  */
