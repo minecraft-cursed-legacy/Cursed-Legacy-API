@@ -12,7 +12,7 @@ buildscript {
 		}
 	}
 	dependencies {
-        classpath 'com.github.Chocohead:Fabric-Loom:97d30fb'
+        classpath 'com.github.Chocohead:Fabric-Loom:b61d0c8'
 	}
 }
 
