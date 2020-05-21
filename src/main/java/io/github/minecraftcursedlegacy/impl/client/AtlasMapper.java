@@ -21,6 +21,7 @@ public class AtlasMapper {
 		final Map<Integer, Atlas> atlas = new HashMap<>();
 		Atlas defaultAtlas;
 	}
+
 	private static final Map<Integer, ItemAtlasUsage> ATLAS_MAP = new HashMap<>();
 	private static final List<CustomAtlas> CUSTOM_ATLASI = new ArrayList<>();
 	private static final Logger LOGGER = LogManager.getLogger("Atlas Mapper");
