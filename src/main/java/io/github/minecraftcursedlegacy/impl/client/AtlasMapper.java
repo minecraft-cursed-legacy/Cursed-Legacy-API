@@ -9,7 +9,10 @@ import java.util.OptionalInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.primitives.Ints;
+
 import net.minecraft.client.texture.TextureManager;
+import net.minecraft.item.ItemType;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -109,5 +112,19 @@ public class AtlasMapper {
 
 		Atlas atlas = itemAtlas.atlas.getOrDefault(meta, itemAtlas.defaultAtlas);
 		return atlas != null ? OptionalInt.of(atlas.getTextureID(manager)) : OptionalInt.empty();
+	}
+
+	public static void onRegistryRemap(ItemType[] oldToItem) {
+		Map<Integer, ItemAtlasUsage> displaced = new HashMap<>();
+
+		for (int id : Ints.toArray(ATLAS_MAP.keySet())) {
+			int remappedID = oldToItem[id].id;
+
+			if (id != remappedID) {
+				displaced.put(remappedID, ATLAS_MAP.remove(id));
+			}
+		}
+
+		ATLAS_MAP.putAll(displaced);
 	}
 }

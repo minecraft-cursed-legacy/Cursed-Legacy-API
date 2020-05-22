@@ -12,6 +12,8 @@ import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
+import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
+
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;
@@ -148,6 +150,9 @@ class ItemTypeRegistry extends Registry<ItemType> {
 				}
 			}
 		}
+
+		RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
+		AtlasMapper.onRegistryRemap(oldItemTypes);
 	}
 
 	@Override
