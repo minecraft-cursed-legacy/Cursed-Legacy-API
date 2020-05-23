@@ -51,8 +51,8 @@ public final class Translations {
 
 	/**
 	 * Add a translation for an {@link Achievement} with the given name.
-	 * <p>
-	 * Make sure to call this <i>before</i> the Achievement is constructed!
+	 *
+	 * <p>Make sure to call this <i>before</i> the Achievement is constructed!
 	 *
 	 * @param key The name of the achievement as given to the constructor 
 	 * @param translation The translated name for the achievement
@@ -65,8 +65,8 @@ public final class Translations {
 
 	/**
 	 * Add a translation for an {@link Achievement}'s description with the given name.
-	 * <p>
-	 * Make sure to call this <i>before</i> the Achievement is constructed!
+	 *
+	 * <p>Make sure to call this <i>before</i> the Achievement is constructed!
 	 *
 	 * @param key The name of the achievement as given to the constructor 
 	 * @param translation The translated name for the achievement's description
