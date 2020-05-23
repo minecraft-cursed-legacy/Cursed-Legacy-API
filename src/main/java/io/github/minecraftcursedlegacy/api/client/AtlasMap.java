@@ -14,7 +14,7 @@ import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
 /**
  * Utility methods for {@link ItemType}s which use textures from other than the main item atlas.
  *
- * @since 0.4.2
+ * @since 0.5.0
  *
  * @author Chocohead
  */
