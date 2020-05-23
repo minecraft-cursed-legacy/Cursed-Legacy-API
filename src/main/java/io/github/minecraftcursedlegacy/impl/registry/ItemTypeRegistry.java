@@ -186,6 +186,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		I item = constructor.apply(tile.id - Tile.BY_ID.length);
 		this.byRegistryId.put(id, item);
 		this.bySerialisedId.put(item.id, item);
+		RegistryImpl.T_2_TI.put(tile, item);
 		return item;
 	}
 }
