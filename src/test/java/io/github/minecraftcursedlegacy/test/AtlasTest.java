@@ -10,6 +10,7 @@ import io.github.minecraftcursedlegacy.api.client.AtlasMap;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.api.registry.Translations;
 
 public class AtlasTest implements ModInitializer {
 	private static ItemType item, alsoItem;
@@ -27,5 +28,8 @@ public class AtlasTest implements ModInitializer {
 
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);
+
+		Translations.addItemTranslation(item, "Example Item");
+		Translations.addItemTranslation(alsoItem, "Example Item Too");
 	}
 }
