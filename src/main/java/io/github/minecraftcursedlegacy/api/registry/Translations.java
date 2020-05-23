@@ -16,6 +16,7 @@ import io.github.minecraftcursedlegacy.accessor.AccessorTranslationStorage;
  * Utilities for adding translations for things.
  *
  * @see I18n Accessing the translations
+ * @since 0.4.1
  *
  * @author Chocohead
  */

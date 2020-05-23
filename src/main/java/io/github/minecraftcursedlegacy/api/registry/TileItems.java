@@ -34,6 +34,8 @@ public class TileItems {
 	 * @param tile The tile the item is for
 	 *
 	 * @return An item for the given tile
+	 *
+	 * @since 0.4.1
 	 */
 	public static ItemType registerTileItem(Id id, Tile tile) {
 		return registerTileItem(id, tile, PlaceableTileItem::new);
@@ -47,6 +49,8 @@ public class TileItems {
 	 * @param itemFactory A factory for creating the item, given the item ID to use
 	 *
 	 * @return An item for the given tile
+	 *
+	 * @since 0.4.1
 	 */
 	public static <I extends PlaceableTileItem> I registerTileItem(Id id, Tile tile, IntFunction<I> itemFactory) {
 		return RegistryImpl.addTileItem(id, tile, itemFactory);
