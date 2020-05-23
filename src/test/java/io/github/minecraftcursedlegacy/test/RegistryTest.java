@@ -18,7 +18,7 @@ public class RegistryTest implements ModInitializer {
 				i -> new BasicItem(i).setTexturePosition(5, 0).setName("exampleItem"));
 		tile = Registries.TILE.register(new Id("modid:tile"),
 				i -> new BasicTile(i).setName("exampleBlock"));
-		tileItem = TileItems.addRegisteredTileItem(new Id("modid:tile"), tile);
+		tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
 
 		Recipes.addShapelessRecipe(new ItemInstance(item, 2), Tile.DIRT, Tile.SAND);
 		Recipes.addShapedRecipe(new ItemInstance(tile), "##", '#', Tile.DIRT);

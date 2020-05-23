@@ -2,16 +2,8 @@ package io.github.minecraftcursedlegacy.impl.registry;
 
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
-import io.github.minecraftcursedlegacy.accessor.AccessorPlaceableTileItem;
-import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
-import io.github.minecraftcursedlegacy.accessor.AccessorShapedRecipe;
-import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
-import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
-import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;
@@ -22,6 +14,14 @@ import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
 import net.minecraft.tile.Tile;
 import net.minecraft.util.io.CompoundTag;
+
+import io.github.minecraftcursedlegacy.accessor.AccessorPlaceableTileItem;
+import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
+import io.github.minecraftcursedlegacy.accessor.AccessorShapedRecipe;
+import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
+import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
+import io.github.minecraftcursedlegacy.api.registry.Id;
+import io.github.minecraftcursedlegacy.api.registry.Registry;
 
 class ItemTypeRegistry extends Registry<ItemType> {
 	ItemTypeRegistry(Id registryName) {
@@ -182,8 +182,8 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		}
 	}
 
-	TileItem addTileItem(Id id, Tile tile, BiFunction<Integer, Tile, TileItem> constructor) {
-		TileItem item = constructor.apply(tile.id - Tile.BY_ID.length, tile);
+	<I extends ItemType> I addTileItem(Id id, Tile tile, IntFunction<I> constructor) {
+		I item = constructor.apply(tile.id - Tile.BY_ID.length);
 		this.byRegistryId.put(id, item);
 		this.bySerialisedId.put(item.id, item);
 		return item;
