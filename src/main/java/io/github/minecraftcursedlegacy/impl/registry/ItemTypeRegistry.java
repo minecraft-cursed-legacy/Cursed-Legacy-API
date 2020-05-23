@@ -22,6 +22,7 @@ import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
+import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
 
 class ItemTypeRegistry extends Registry<ItemType> {
 	ItemTypeRegistry(Id registryName) {
@@ -148,6 +149,9 @@ class ItemTypeRegistry extends Registry<ItemType> {
 				}
 			}
 		}
+
+		RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
+		AtlasMapper.onRegistryRemap(oldItemTypes);
 	}
 
 	@Override

@@ -20,7 +20,8 @@
   "entrypoints": {
     "init": [
       "io.github.minecraftcursedlegacy.test.RegistryTest",
-      "io.github.minecraftcursedlegacy.test.LevelGenTest"
+      "io.github.minecraftcursedlegacy.test.LevelGenTest",
+      "io.github.minecraftcursedlegacy.test.AtlasTest"
     ]
   },
 
