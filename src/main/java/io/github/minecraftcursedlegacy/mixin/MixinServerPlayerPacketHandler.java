@@ -6,12 +6,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
-import net.minecraft.class_11;
 import net.minecraft.entity.player.ServerPlayer;
+import net.minecraft.server.network.ServerPlayerPacketHandler;
 
-@Mixin(class_11.class)
-public class MixinClass_11 {
+import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
+
+@Mixin(ServerPlayerPacketHandler.class)
+public class MixinServerPlayerPacketHandler {
 	@Shadow
 	private ServerPlayer field_920;
 

@@ -22,7 +22,7 @@
     "MixinClass_556"
   ],
   "server": [
-    "MixinClass_11",
+    "ServerPlayerPacketHandler",
     "MixinPendingConnection"
   ],
   "injectors": {

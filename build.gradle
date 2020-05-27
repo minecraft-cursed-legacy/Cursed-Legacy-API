@@ -12,7 +12,7 @@ buildscript {
 		}
 	}
 	dependencies {
-        classpath 'com.github.Chocohead:Fabric-Loom:b61d0c8'
+        classpath 'com.github.Chocohead:Fabric-Loom:0a9a7cf'
 	}
 }
 
@@ -56,7 +56,9 @@ dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	mappings files("plasma-b1.7.3+build.7.jar")
+	mappings loom.fromCommit("minecraft-cursed-legacy/Plasma", "ff0e1e5") {spec ->
+		spec.version = "b1.7.3-10"
+	}
 
 	// for config api
 	compile "tk.valoeghese:ZoesteriaConfig:1.3.0"
