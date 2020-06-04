@@ -6,6 +6,7 @@
     "MixinBiome",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
+    "MixinNetherLevelSource",
     "MixinOldLevelStorage",
     "MixinOverlay",
     "MixinOverworldLevelSource",
@@ -17,13 +18,15 @@
     "MixinTitleScreen"
   ],
   "client": [
+    "MixinClass_556",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
-    "MixinClass_556"
+    "MixinMinecraft"
   ],
   "server": [
-    "ServerPlayerPacketHandler",
-    "MixinPendingConnection"
+    "MixinMinecraftServer",
+    "MixinPendingConnection",
+    "MixinServerPlayerPacketHandler"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -13,21 +13,21 @@ public abstract class PluginChannel {
 	 * @return Channel Identifier
 	 */
 	public abstract Id getChannelIdentifier();
-	
+
 	/**
-	 * Called when this channel recieves a packet.
+	 * Called when this channel receives a packet.
 	 * @param arg The local PacketHandler
 	 * @param data The data of the packet
 	 */
-	public abstract void onRecieve(PacketHandler arg, byte[] data);
-	
+	public abstract void onReceive(PacketHandler arg, byte[] data);
+
 	/**
 	 * Server packet send method.
 	 * @param data The data to send
 	 * @param player The player to send the data to
 	 */
 	public void send(byte[] data, ServerPlayer player) {
-		player.field_255.method_835(new PluginMessagePacket(getChannelIdentifier().toString(), data));
+		player.packetHandler.send(new PluginMessagePacket(getChannelIdentifier().toString(), data));
 	}
 
 	/**
