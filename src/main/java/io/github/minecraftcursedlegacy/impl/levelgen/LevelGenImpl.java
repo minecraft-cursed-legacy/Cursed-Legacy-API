@@ -8,7 +8,7 @@ import net.minecraft.level.structure.Feature;
 public class LevelGenImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		ChunkDecorateCallback.EVENT.register((level, biome, rand, x, z) -> {
+		ChunkDecorateCallback decoration = (level, biome, rand, x, z) -> {
 			if (biome instanceof ExtendedBiome) {
 				ExtendedBiome eBiome = (ExtendedBiome) biome;
 
@@ -20,6 +20,9 @@ public class LevelGenImpl implements ModInitializer {
 					var18.generate(level, rand, xToGen, level.getHeight(xToGen, zToGen), zToGen);
 				}
 			}
-		});
+		};
+
+		ChunkDecorateCallback.OVERWORLD.register(decoration);
+		ChunkDecorateCallback.NETHER.register(decoration);
 	}
 }

@@ -9,7 +9,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.minecraftcursedlegacy.api.event.ChunkDecorateCallback;
+import io.github.minecraftcursedlegacy.api.event.ChunkShapeCallback;
 import net.minecraft.level.Level;
+import net.minecraft.level.biome.Biome;
 import net.minecraft.level.source.LevelSource;
 import net.minecraft.level.source.OverworldLevelSource;
 
@@ -26,11 +28,16 @@ public class MixinOverworldLevelSource {
 		// but for some reason it doesn't seem to affect this
 		x *= 16;
 		z *= 16;
-		ChunkDecorateCallback.EVENT.invoker().onDecorate(
+		ChunkDecorateCallback.OVERWORLD.invoker().onDecorate(
 				this.level,
 				this.level.getBiomeSource().getBiome(x + 16, z + 16),
 				this.rand,
 				x,
 				z);
+	}
+
+	@Inject(at = @At("RETURN"), method = "shapeChunk")
+	private void shapeChunk(int chunkX, int chunkZ, byte[] tiles, Biome[] biomes, double[] temperatures, CallbackInfo info) {
+		ChunkShapeCallback.OVERWORLD.invoker().onShape(chunkX, chunkZ, tiles, biomes, temperatures);
 	}
 }

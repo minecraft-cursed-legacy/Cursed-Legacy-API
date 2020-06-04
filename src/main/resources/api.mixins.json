@@ -6,6 +6,7 @@
     "MixinBiome",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
+    "MixinNetherLevelSource",
     "MixinOldLevelStorage",
     "MixinOverlay",
     "MixinOverworldLevelSource",
