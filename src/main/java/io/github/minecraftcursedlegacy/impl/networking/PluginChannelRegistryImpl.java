@@ -16,6 +16,6 @@ public class PluginChannelRegistryImpl {
 	}
 
 	protected static void handlePacket(PacketHandler arg, PluginMessagePacket packet) {
-		channelMap.get(packet.channel).onRecieve(arg, packet.data);
+		channelMap.get(packet.channel).onReceive(arg, packet.data);
 	}
 }
