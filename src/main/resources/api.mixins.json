@@ -11,13 +11,13 @@
     "MixinOverlay",
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
-    "MixinResourceDownloadThread",
     "MixinShapedRecipe",
     "MixinTile",
     "MixinTileItem",
     "MixinTitleScreen"
   ],
   "client": [
+    "MixinResourceDownloadThread",
     "MixinClass_556",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
