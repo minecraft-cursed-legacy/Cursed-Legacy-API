@@ -12,6 +12,7 @@
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
     "MixinShapedRecipe",
+    "MixinSmeltingRecipeRegistry",
     "MixinTile",
     "MixinTileItem",
     "MixinTitleScreen"

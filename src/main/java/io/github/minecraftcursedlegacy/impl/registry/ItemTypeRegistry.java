@@ -1,19 +1,10 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.IntFunction;
-
-import net.minecraft.item.ItemInstance;
-import net.minecraft.item.ItemType;
-import net.minecraft.item.PlaceableTileItem;
-import net.minecraft.item.TileItem;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeRegistry;
-import net.minecraft.recipe.ShapedRecipe;
-import net.minecraft.recipe.ShapelessRecipe;
-import net.minecraft.tile.Tile;
-import net.minecraft.util.io.CompoundTag;
 
 import io.github.minecraftcursedlegacy.accessor.AccessorPlaceableTileItem;
 import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
@@ -23,6 +14,17 @@ import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
+import net.minecraft.item.ItemInstance;
+import net.minecraft.item.ItemType;
+import net.minecraft.item.PlaceableTileItem;
+import net.minecraft.item.TileItem;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeRegistry;
+import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.ShapelessRecipe;
+import net.minecraft.recipe.SmeltingRecipeRegistry;
+import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 class ItemTypeRegistry extends Registry<ItemType> {
 	ItemTypeRegistry(Id registryName) {
@@ -88,10 +90,11 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		((IdSetter) remappedValue).setId(newSerialisedId);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void postRemap() {
 		// Remap Recipes
-		RegistryRemapper.LOGGER.info("Remapping recipes.");
+		RegistryRemapper.LOGGER.info("Remapping Crafting Recipes.");
 
 		for (Recipe recipe : ((AccessorRecipeRegistry) RecipeRegistry.getInstance()).getRecipes()) {
 			if (recipe instanceof ShapedRecipe) {
@@ -150,8 +153,29 @@ class ItemTypeRegistry extends Registry<ItemType> {
 			}
 		}
 
+		RegistryRemapper.LOGGER.info("Remapping Smelting Recipes.");
+
+		SmeltingRecipeRegistry smelting = SmeltingRecipeRegistry.getInstance();
+		Map<Integer, ItemInstance> newRecipes = new HashMap<>();
+
+		smelting.getRecipes().forEach((oldInputId, output) -> {
+			int newInputId = this.oldItemTypes[(Integer) oldInputId].id;
+
+			ItemInstance result = (ItemInstance) output;
+			int newResultId = this.oldItemTypes[result.itemId].id;
+
+			// only remap if necessary
+			if (result.itemId != newResultId) {
+				result.itemId = newResultId;
+			}
+
+			newRecipes.put(newInputId, result);
+		});
+
+		((SmeltingRecipeSetter) smelting).setRecipes(newRecipes);
+
 		RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
-		AtlasMapper.onRegistryRemap(oldItemTypes);
+		AtlasMapper.onRegistryRemap(this.oldItemTypes);
 	}
 
 	@Override
