@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.impl.data.DataStorage;
+import net.minecraft.item.ItemInstance;
 
 /**
  * Manager for data which can be attached to various vanilla objects, such as items and blocks. See specific implementations for more details.
@@ -25,7 +26,7 @@ public final class ModdedDataManager<T> {
 		return id.apply(((DataStorage) object).getModdedData(id.id, () -> this.moddedDataFactories.get(id.id).apply(object)));
 	}
 
-	public static final ModdedDataManager ITEM_INSTANCE = new ModdedDataManager<>();
+	public static final ModdedDataManager<ItemInstance> ITEM_INSTANCE = new ModdedDataManager<>();
 
 	public static final class ModdedDataKey<T extends ModdedData> {
 		private ModdedDataKey(Id id) {
