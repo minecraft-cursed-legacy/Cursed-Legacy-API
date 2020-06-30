@@ -9,7 +9,7 @@ import io.github.minecraftcursedlegacy.impl.data.DataStorage;
 import net.minecraft.item.ItemInstance;
 
 /**
- * Manager for data which can be attached to various vanilla objects, such as items and blocks. See specific implementations for more details.
+ * Manager for data which can be attached to various vanilla objects, such as items and blocks.
  */
 public final class ModdedDataManager<T> {
 	private ModdedDataManager() {
@@ -17,11 +17,18 @@ public final class ModdedDataManager<T> {
 
 	private final Map<Id, Function<T, ? extends ModdedData>> moddedDataFactories = new HashMap<>();
 
+	/**
+	 * Adds the specified modded data to the manager instance. This data can later be accessed on an instance of the object via {@link #getModdedData}.
+	 * @return a key to use to retrieve the modded data from an object.
+	 */
 	public <E extends ModdedData> ModdedDataKey<E> addModdedData(Id id, Function<T, E> dataProvider) {
 		this.moddedDataFactories.put(id, dataProvider);
 		return new ModdedDataKey<>(id);
 	}
 
+	/**
+	 * Retrieves the specified modded data from the object.
+	 */
 	public <E extends ModdedData> E getModdedData(T object, ModdedDataKey<E> id) throws ClassCastException {
 		return id.apply(((DataStorage) object).getModdedData(id.id, () -> this.moddedDataFactories.get(id.id).apply(object)));
 	}
