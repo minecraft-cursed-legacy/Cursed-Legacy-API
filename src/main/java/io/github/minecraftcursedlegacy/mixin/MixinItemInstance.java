@@ -22,7 +22,11 @@ public abstract class MixinItemInstance implements DataStorage {
 
 	@Inject(at = @At("RETURN"), method = "copy")
 	private void api_copyData(CallbackInfoReturnable<ItemInstance> info) {
-		((DataStorage) (Object) info.getReturnValue()).setModdedTag(this.api_data);
+		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
+
+		this.api_moddedDataMap.forEach((id, data) -> {
+			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
+		});
 	}
 
 	@Inject(at = @At("RETURN"), method = "toTag")
@@ -47,8 +51,8 @@ public abstract class MixinItemInstance implements DataStorage {
 	}
 
 	@Override
-	public CompoundTag setModdedTag(CompoundTag tag) {
-		return this.api_data = tag;
+	public void putModdedData(Id id, ModdedData data) {
+		this.api_moddedDataMap.put(id, data);
 	}
 
 	@Override

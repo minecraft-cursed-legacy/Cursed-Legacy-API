@@ -20,4 +20,8 @@ public interface ModdedData {
 	 * @param tag the tag from which to load data.
 	 */
 	void fromTag(CompoundTag tag);
+	/**
+	 * Creates a deep copy of this {@link ModdedData}, similar to the recommendations for {@link Object#clone}.
+	 */
+	ModdedData copy();
 }
