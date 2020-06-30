@@ -8,6 +8,7 @@ import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
+import net.minecraft.recipe.SmeltingRecipeRegistry;
 import net.minecraft.tile.Tile;
 
 public class RegistryTest implements ModInitializer {
@@ -17,11 +18,13 @@ public class RegistryTest implements ModInitializer {
 		item = Registries.ITEM_TYPE.register(new Id("modid:item"),
 				i -> new BasicItem(i).setTexturePosition(5, 0).setName("exampleItem"));
 		tile = Registries.TILE.register(new Id("modid:tile"),
-				i -> new BasicTile(i).setName("exampleBlock"));
+				i -> new BasicTile(i, false).setName("exampleBlock"));
 		tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
 
 		Recipes.addShapelessRecipe(new ItemInstance(item, 2), Tile.DIRT, Tile.SAND);
 		Recipes.addShapedRecipe(new ItemInstance(tile), "##", '#', Tile.DIRT);
+
+		SmeltingRecipeRegistry.getInstance().addSmeltingRecipe(item.id, new ItemInstance(tile));
 
 		Translations.addTileTranslation(tile, "Example Block");
 		Translations.addItemTranslation(item, "Example Item");

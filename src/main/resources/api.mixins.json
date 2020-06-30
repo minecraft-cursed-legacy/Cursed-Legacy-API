@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinBiome",
+    "MixinItemInstance",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinNetherLevelSource",
@@ -11,13 +12,14 @@
     "MixinOverlay",
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
-    "MixinResourceDownloadThread",
     "MixinShapedRecipe",
+    "MixinSmeltingRecipeRegistry",
     "MixinTile",
     "MixinTileItem",
     "MixinTitleScreen"
   ],
   "client": [
+    "MixinResourceDownloadThread",
     "MixinClass_556",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
