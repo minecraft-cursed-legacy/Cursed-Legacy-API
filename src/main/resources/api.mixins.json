@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinBiome",
+    "MixinItemEntity",
     "MixinItemInstance",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
@@ -12,7 +13,6 @@
     "MixinOverlay",
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
-    "MixinPlayerContainer",
     "MixinShapedRecipe",
     "MixinSmeltingRecipeRegistry",
     "MixinTile",

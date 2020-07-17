@@ -37,7 +37,7 @@ public abstract class MixinItemInstance implements DataStorage {
 	}
 
 	@Inject(at = @At("RETURN"), method = "split")
-	private void split(int countToTake, CallbackInfoReturnable<ItemInstance> info) {
+	private void api_copySplitData(int countToTake, CallbackInfoReturnable<ItemInstance> info) {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
 		this.api_moddedDataMap.forEach((id, data) -> {
