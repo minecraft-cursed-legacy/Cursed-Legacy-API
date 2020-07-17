@@ -2,11 +2,13 @@ package io.github.minecraftcursedlegacy.api.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.impl.data.DataStorage;
 import net.minecraft.item.ItemInstance;
+import net.minecraft.util.io.CompoundTag;
 
 /**
  * Manager for data which can be attached to various vanilla objects, such as items and blocks.
@@ -31,6 +33,24 @@ public final class ModdedDataManager<T> {
 	 */
 	public <E extends ModdedData> E getModdedData(T object, ModdedDataKey<E> id) throws ClassCastException {
 		return id.apply(((DataStorage) object).getModdedData(id.id, () -> this.moddedDataFactories.get(id.id).apply(object)));
+	}
+
+	/**
+	 * Used by the implementation.
+	 * @return a {@linkplain Set set} of all {@linkplain Id ids} of {@link ModdedData} instances registered to this manager.
+	 */
+	public Set<Id> getDataKeys() {
+		return this.moddedDataFactories.keySet();
+	}
+
+	/**
+	 * Used by the implementation.
+	 * @return a modded data instance of the given type constructed by the given tag.
+	 */
+	public ModdedData deserialize(T object, Id id, CompoundTag data) {
+		ModdedData result = this.moddedDataFactories.get(id).apply(object);
+		result.fromTag(data);
+		return result;
 	}
 
 	public static final ModdedDataManager<ItemInstance> ITEM_INSTANCE = new ModdedDataManager<>();

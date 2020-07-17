@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.minecraftcursedlegacy.api.data.ModdedData;
+import io.github.minecraftcursedlegacy.api.data.ModdedDataManager;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.impl.data.DataStorage;
 import net.minecraft.item.ItemInstance;
@@ -26,7 +27,6 @@ public abstract class MixinItemInstance implements DataStorage {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
 		this.api_moddedDataMap.forEach((id, data) -> {
-			System.out.println(id);
 			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
 		});
 	}
@@ -41,6 +41,13 @@ public abstract class MixinItemInstance implements DataStorage {
 		if (tag.containsKey("moddedData")) {
 			this.api_data = tag.getCompoundTag("moddedData");
 		}
+
+		// Load Data
+		ModdedDataManager.ITEM_INSTANCE.getDataKeys().forEach(id -> {
+			if (this.api_data.containsKey(id.toString())) {
+				this.putModdedData(id, ModdedDataManager.ITEM_INSTANCE.deserialize((ItemInstance) (Object) this, id, this.api_data.getCompoundTag(id.toString())));
+			}
+		});
 	}
 
 	@Override
