@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.github.minecraftcursedlegacy.api.data.ModdedData;
-import io.github.minecraftcursedlegacy.api.data.ModdedDataManager;
+import io.github.minecraftcursedlegacy.api.data.AttachedData;
+import io.github.minecraftcursedlegacy.api.data.DataManager;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.impl.data.DataStorage;
 import net.minecraft.item.ItemInstance;
@@ -20,7 +20,7 @@ import net.minecraft.util.io.CompoundTag;
 @Mixin(ItemInstance.class)
 public abstract class MixinItemInstance implements DataStorage {
 	private CompoundTag api_data = new CompoundTag();
-	private Map<Id, ModdedData> api_moddedDataMap = new HashMap<>();
+	private Map<Id, AttachedData> api_moddedDataMap = new HashMap<>();
 
 	@Inject(at = @At("RETURN"), method = "copy")
 	private void api_copyData(CallbackInfoReturnable<ItemInstance> info) {
@@ -52,9 +52,9 @@ public abstract class MixinItemInstance implements DataStorage {
 		}
 
 		// Load Data
-		ModdedDataManager.ITEM_INSTANCE.getDataKeys().forEach(id -> {
+		DataManager.ITEM_INSTANCE.getDataKeys().forEach(id -> {
 			if (this.api_data.containsKey(id.toString())) {
-				this.putModdedData(id, ModdedDataManager.ITEM_INSTANCE.deserialize((ItemInstance) (Object) this, id, this.api_data.getCompoundTag(id.toString())));
+				this.putModdedData(id, DataManager.ITEM_INSTANCE.deserialize((ItemInstance) (Object) this, id, this.api_data.getCompoundTag(id.toString())));
 			}
 		});
 	}
@@ -69,12 +69,12 @@ public abstract class MixinItemInstance implements DataStorage {
 	}
 
 	@Override
-	public void putModdedData(Id id, ModdedData data) {
+	public void putModdedData(Id id, AttachedData data) {
 		this.api_moddedDataMap.put(id, data);
 	}
 
 	@Override
-	public ModdedData getModdedData(Id id, Supplier<ModdedData> supplier) {
+	public AttachedData getModdedData(Id id, Supplier<AttachedData> supplier) {
 		return this.api_moddedDataMap.computeIfAbsent(id, i -> supplier.get());
 	}
 }

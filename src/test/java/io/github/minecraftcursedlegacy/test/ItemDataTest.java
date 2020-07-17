@@ -2,9 +2,9 @@ package io.github.minecraftcursedlegacy.test;
 
 import javax.annotation.Nullable;
 
-import io.github.minecraftcursedlegacy.api.data.ModdedData;
-import io.github.minecraftcursedlegacy.api.data.ModdedDataManager;
-import io.github.minecraftcursedlegacy.api.data.ModdedDataManager.ModdedDataKey;
+import io.github.minecraftcursedlegacy.api.data.AttachedData;
+import io.github.minecraftcursedlegacy.api.data.DataManager;
+import io.github.minecraftcursedlegacy.api.data.DataManager.DataKey;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import io.github.minecraftcursedlegacy.api.event.TileInteractionCallback;
 import io.github.minecraftcursedlegacy.api.registry.Id;
@@ -18,11 +18,11 @@ import net.minecraft.util.io.CompoundTag;
 public class ItemDataTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		test_axe = ModdedDataManager.ITEM_INSTANCE.addModdedData(TestAxeData.ID, item -> new TestAxeData(null));
+		test_axe = DataManager.ITEM_INSTANCE.addModdedData(TestAxeData.ID, item -> new TestAxeData(null));
 
 		TileInteractionCallback.EVENT.register((player, level, item, tile, x, y, z, i1) -> {
 			if (tile != null && item.getType() == ItemType.hatchetWood) {
-				TestAxeData data = ModdedDataManager.ITEM_INSTANCE.getModdedData(item, test_axe);
+				TestAxeData data = DataManager.ITEM_INSTANCE.getModdedData(item, test_axe);
 
 				if (data.tile == null) {
 					data.tile = Registries.TILE.getId(tile);
@@ -35,9 +35,9 @@ public class ItemDataTest implements ModInitializer {
 		});
 	}
 
-	public static ModdedDataKey<TestAxeData> test_axe;
+	public static DataKey<TestAxeData> test_axe;
 
-	public static class TestAxeData implements ModdedData {
+	public static class TestAxeData implements AttachedData {
 		public TestAxeData(Id tileId) {
 			this.tile = tileId;
 		}
@@ -68,7 +68,7 @@ public class ItemDataTest implements ModInitializer {
 		}
 
 		@Override
-		public ModdedData copy() {
+		public AttachedData copy() {
 			return new TestAxeData(this.tile);
 		}
 

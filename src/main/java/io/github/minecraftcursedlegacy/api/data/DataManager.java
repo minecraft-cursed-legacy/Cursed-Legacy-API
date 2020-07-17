@@ -13,31 +13,31 @@ import net.minecraft.util.io.CompoundTag;
 /**
  * Manager for data which can be attached to various vanilla objects, such as items and blocks.
  */
-public final class ModdedDataManager<T> {
-	private ModdedDataManager() {
+public final class DataManager<T> {
+	private DataManager() {
 	}
 
-	private final Map<Id, Function<T, ? extends ModdedData>> moddedDataFactories = new HashMap<>();
+	private final Map<Id, Function<T, ? extends AttachedData>> moddedDataFactories = new HashMap<>();
 
 	/**
 	 * Adds the specified modded data to the manager instance. This data can later be accessed on an instance of the object via {@link #getModdedData}.
 	 * @return a key to use to retrieve the modded data from an object.
 	 */
-	public <E extends ModdedData> ModdedDataKey<E> addModdedData(Id id, Function<T, E> dataProvider) {
+	public <E extends AttachedData> DataKey<E> addModdedData(Id id, Function<T, E> dataProvider) {
 		this.moddedDataFactories.put(id, dataProvider);
-		return new ModdedDataKey<>(id);
+		return new DataKey<>(id);
 	}
 
 	/**
 	 * Retrieves the specified modded data from the object.
 	 */
-	public <E extends ModdedData> E getModdedData(T object, ModdedDataKey<E> id) throws ClassCastException {
+	public <E extends AttachedData> E getModdedData(T object, DataKey<E> id) throws ClassCastException {
 		return id.apply(((DataStorage) object).getModdedData(id.id, () -> this.moddedDataFactories.get(id.id).apply(object)));
 	}
 
 	/**
 	 * Used by the implementation.
-	 * @return a {@linkplain Set set} of all {@linkplain Id ids} of {@link ModdedData} instances registered to this manager.
+	 * @return a {@linkplain Set set} of all {@linkplain Id ids} of {@link AttachedData} instances registered to this manager.
 	 */
 	public Set<Id> getDataKeys() {
 		return this.moddedDataFactories.keySet();
@@ -47,16 +47,16 @@ public final class ModdedDataManager<T> {
 	 * Used by the implementation.
 	 * @return a modded data instance of the given type constructed by the given tag.
 	 */
-	public ModdedData deserialize(T object, Id id, CompoundTag data) {
-		ModdedData result = this.moddedDataFactories.get(id).apply(object);
+	public AttachedData deserialize(T object, Id id, CompoundTag data) {
+		AttachedData result = this.moddedDataFactories.get(id).apply(object);
 		result.fromTag(data);
 		return result;
 	}
 
-	public static final ModdedDataManager<ItemInstance> ITEM_INSTANCE = new ModdedDataManager<>();
+	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
 
-	public static final class ModdedDataKey<T extends ModdedData> {
-		private ModdedDataKey(Id id) throws NullPointerException {
+	public static final class DataKey<T extends AttachedData> {
+		private DataKey(Id id) throws NullPointerException {
 			if (id == null) {
 				throw new NullPointerException("ModdedDataKey cannot store a null ID!");
 			}
@@ -67,7 +67,7 @@ public final class ModdedDataManager<T> {
 		private final Id id;
 
 		@SuppressWarnings("unchecked")
-		private T apply(ModdedData data) throws ClassCastException {
+		private T apply(AttachedData data) throws ClassCastException {
 			return (T) data;
 		}
 	}

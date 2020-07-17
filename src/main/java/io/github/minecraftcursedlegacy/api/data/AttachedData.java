@@ -5,9 +5,9 @@ import net.minecraft.util.io.CompoundTag;
 
 /**
  * Data which can be attached to various vanilla objects, such as items and blocks.
- * @see {@link ModdedDataManager}.
+ * @see {@link DataManager}.
  */
-public interface ModdedData {
+public interface AttachedData {
 	/**
 	 * @return the id of this modded data.
 	 */
@@ -21,7 +21,7 @@ public interface ModdedData {
 	 */
 	void fromTag(CompoundTag tag);
 	/**
-	 * Creates a deep copy of this {@link ModdedData}, similar to the recommendations for {@link Object#clone}.
+	 * Creates a deep copy of this {@link AttachedData}, similar to the recommendations for {@link Object#clone}.
 	 */
-	ModdedData copy();
+	AttachedData copy();
 }
