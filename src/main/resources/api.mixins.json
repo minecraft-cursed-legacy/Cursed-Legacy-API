@@ -19,13 +19,15 @@
     "MixinTitleScreen"
   ],
   "client": [
-    "MixinResourceDownloadThread",
     "MixinClass_556",
+    "MixinClientInteractionManager",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "MixinResourceDownloadThread"
   ],
   "server": [
+    "MixinClass_70",
     "MixinMinecraftServer",
     "MixinPendingConnection",
     "MixinServerPlayerPacketHandler"

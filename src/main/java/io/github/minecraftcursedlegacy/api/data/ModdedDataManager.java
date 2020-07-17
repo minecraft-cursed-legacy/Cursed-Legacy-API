@@ -36,7 +36,11 @@ public final class ModdedDataManager<T> {
 	public static final ModdedDataManager<ItemInstance> ITEM_INSTANCE = new ModdedDataManager<>();
 
 	public static final class ModdedDataKey<T extends ModdedData> {
-		private ModdedDataKey(Id id) {
+		private ModdedDataKey(Id id) throws NullPointerException {
+			if (id == null) {
+				throw new NullPointerException("ModdedDataKey cannot store a null ID!");
+			}
+
 			this.id = id;
 		}
 

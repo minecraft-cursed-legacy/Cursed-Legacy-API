@@ -1,5 +1,6 @@
 package io.github.minecraftcursedlegacy.mixin;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -17,14 +18,15 @@ import net.minecraft.util.io.CompoundTag;
 
 @Mixin(ItemInstance.class)
 public abstract class MixinItemInstance implements DataStorage {
-	private CompoundTag api_data;
-	private Map<Id, ModdedData> api_moddedDataMap;
+	private CompoundTag api_data = new CompoundTag();
+	private Map<Id, ModdedData> api_moddedDataMap = new HashMap<>();
 
 	@Inject(at = @At("RETURN"), method = "copy")
 	private void api_copyData(CallbackInfoReturnable<ItemInstance> info) {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
 		this.api_moddedDataMap.forEach((id, data) -> {
+			System.out.println(id);
 			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
 		});
 	}
