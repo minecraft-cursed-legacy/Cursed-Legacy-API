@@ -22,7 +22,7 @@ public class ItemDataTest implements ModInitializer {
 
 		TileInteractionCallback.EVENT.register((player, level, item, tile, x, y, z, i1) -> {
 			if (tile != null && item.getType() == ItemType.hatchetWood) {
-				TestAxeData data = DataManager.ITEM_INSTANCE.getModdedData(item, test_axe);
+				TestAxeData data = DataManager.ITEM_INSTANCE.getAttachedData(item, test_axe);
 
 				if (data.tile == null) {
 					data.tile = Registries.TILE.getId(tile);

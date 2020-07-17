@@ -20,8 +20,8 @@ public final class DataManager<T> {
 	private final Map<Id, Function<T, ? extends AttachedData>> moddedDataFactories = new HashMap<>();
 
 	/**
-	 * Adds the specified modded data to the manager instance. This data can later be accessed on an instance of the object via {@link #getModdedData}.
-	 * @return a key to use to retrieve the modded data from an object.
+	 * Adds the specified attached data to the {@link DataManager} instance. This data can later be accessed on an instance of the object via {@link #getAttachedData}.
+	 * @return a key to use to retrieve the attached data from an object.
 	 */
 	public <E extends AttachedData> DataKey<E> addModdedData(Id id, Function<T, E> dataProvider) {
 		this.moddedDataFactories.put(id, dataProvider);
@@ -29,9 +29,9 @@ public final class DataManager<T> {
 	}
 
 	/**
-	 * Retrieves the specified modded data from the object.
+	 * Retrieves the specified attached data from the object.
 	 */
-	public <E extends AttachedData> E getModdedData(T object, DataKey<E> id) throws ClassCastException {
+	public <E extends AttachedData> E getAttachedData(T object, DataKey<E> id) throws ClassCastException {
 		return id.apply(((DataStorage) object).getModdedData(id.id, () -> this.moddedDataFactories.get(id.id).apply(object)));
 	}
 
@@ -45,7 +45,7 @@ public final class DataManager<T> {
 
 	/**
 	 * Used by the implementation.
-	 * @return a modded data instance of the given type constructed by the given tag.
+	 * @return an attached data instance of the given type constructed by the given tag.
 	 */
 	public AttachedData deserialize(T object, Id id, CompoundTag data) {
 		AttachedData result = this.moddedDataFactories.get(id).apply(object);
@@ -58,7 +58,7 @@ public final class DataManager<T> {
 	public static final class DataKey<T extends AttachedData> {
 		private DataKey(Id id) throws NullPointerException {
 			if (id == null) {
-				throw new NullPointerException("ModdedDataKey cannot store a null ID!");
+				throw new NullPointerException("DataKey cannot store a null ID!");
 			}
 
 			this.id = id;
