@@ -36,6 +36,15 @@ public abstract class MixinItemInstance implements DataStorage {
 		tag.put("moddedData", this.getModdedTag());
 	}
 
+	@Inject(at = @At("RETURN"), method = "split")
+	private void split(int countToTake, CallbackInfoReturnable<ItemInstance> info) {
+		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
+
+		this.api_moddedDataMap.forEach((id, data) -> {
+			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
+		});
+	}
+
 	@Inject(at = @At("RETURN"), method = "fromTag")
 	private void api_readData(CompoundTag tag, CallbackInfo info) {
 		if (tag.containsKey("moddedData")) {
