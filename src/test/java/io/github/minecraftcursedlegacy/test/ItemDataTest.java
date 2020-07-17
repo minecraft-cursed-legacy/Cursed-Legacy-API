@@ -18,7 +18,7 @@ import net.minecraft.util.io.CompoundTag;
 public class ItemDataTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		test_axe = DataManager.ITEM_INSTANCE.addModdedData(TestAxeData.ID, item -> new TestAxeData(null));
+		test_axe = DataManager.ITEM_INSTANCE.addAttachedData(TestAxeData.ID, item -> new TestAxeData(null));
 
 		TileInteractionCallback.EVENT.register((player, level, item, tile, x, y, z, i1) -> {
 			if (tile != null && item.getType() == ItemType.hatchetWood) {

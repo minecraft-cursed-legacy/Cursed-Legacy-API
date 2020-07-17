@@ -8,6 +8,6 @@ import net.minecraft.util.io.CompoundTag;
 
 public interface DataStorage {
 	CompoundTag getModdedTag();
-	void putModdedData(Id id, AttachedData data);
-	AttachedData getModdedData(Id id, Supplier<AttachedData> supplier);
+	void putAttachedData(Id id, AttachedData data);
+	AttachedData getAttachedData(Id id, Supplier<AttachedData> supplier);
 }

@@ -20,14 +20,14 @@ import net.minecraft.util.io.CompoundTag;
 @Mixin(ItemInstance.class)
 public abstract class MixinItemInstance implements DataStorage {
 	private CompoundTag api_data = new CompoundTag();
-	private Map<Id, AttachedData> api_moddedDataMap = new HashMap<>();
+	private Map<Id, AttachedData> api_attachedDataMap = new HashMap<>();
 
 	@Inject(at = @At("RETURN"), method = "copy")
 	private void api_copyData(CallbackInfoReturnable<ItemInstance> info) {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
-		this.api_moddedDataMap.forEach((id, data) -> {
-			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
+		this.api_attachedDataMap.forEach((id, data) -> {
+			ds.putAttachedData(id, this.api_attachedDataMap.get(id).copy());
 		});
 	}
 
@@ -40,8 +40,8 @@ public abstract class MixinItemInstance implements DataStorage {
 	private void api_copySplitData(int countToTake, CallbackInfoReturnable<ItemInstance> info) {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
-		this.api_moddedDataMap.forEach((id, data) -> {
-			ds.putModdedData(id, this.api_moddedDataMap.get(id).copy());
+		this.api_attachedDataMap.forEach((id, data) -> {
+			ds.putAttachedData(id, this.api_attachedDataMap.get(id).copy());
 		});
 	}
 
@@ -54,14 +54,14 @@ public abstract class MixinItemInstance implements DataStorage {
 		// Load Data
 		DataManager.ITEM_INSTANCE.getDataKeys().forEach(id -> {
 			if (this.api_data.containsKey(id.toString())) {
-				this.putModdedData(id, DataManager.ITEM_INSTANCE.deserialize((ItemInstance) (Object) this, id, this.api_data.getCompoundTag(id.toString())));
+				this.putAttachedData(id, DataManager.ITEM_INSTANCE.deserialize((ItemInstance) (Object) this, id, this.api_data.getCompoundTag(id.toString())));
 			}
 		});
 	}
 
 	@Override
 	public CompoundTag getModdedTag() {
-		this.api_moddedDataMap.forEach((id, data) -> {
+		this.api_attachedDataMap.forEach((id, data) -> {
 			this.api_data.put(id.toString(), data.toTag(new CompoundTag()));
 		});
 
@@ -69,12 +69,12 @@ public abstract class MixinItemInstance implements DataStorage {
 	}
 
 	@Override
-	public void putModdedData(Id id, AttachedData data) {
-		this.api_moddedDataMap.put(id, data);
+	public void putAttachedData(Id id, AttachedData data) {
+		this.api_attachedDataMap.put(id, data);
 	}
 
 	@Override
-	public AttachedData getModdedData(Id id, Supplier<AttachedData> supplier) {
-		return this.api_moddedDataMap.computeIfAbsent(id, i -> supplier.get());
+	public AttachedData getAttachedData(Id id, Supplier<AttachedData> supplier) {
+		return this.api_attachedDataMap.computeIfAbsent(id, i -> supplier.get());
 	}
 }
