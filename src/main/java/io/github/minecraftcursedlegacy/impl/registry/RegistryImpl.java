@@ -1,18 +1,17 @@
 package io.github.minecraftcursedlegacy.impl.registry;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.IntFunction;
-
-import net.minecraft.item.ItemType;
-import net.minecraft.tile.Tile;
-
-import net.fabricmc.api.ModInitializer;
-
 import io.github.minecraftcursedlegacy.accessor.AccessorEntityRegistry;
+import io.github.minecraftcursedlegacy.accessor.AccessorTileEntity;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.impl.Hacks;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.item.ItemType;
+import net.minecraft.tile.Tile;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.IntFunction;
 
 public class RegistryImpl implements ModInitializer {
 	private static int currentItemtypeId = Tile.BY_ID.length;
@@ -106,13 +105,16 @@ public class RegistryImpl implements ModInitializer {
 	public static final Registry<ItemType> ITEM_TYPE;
 	public static final Registry<Tile> TILE;
 	public static final Registry<EntityType> ENTITY_TYPE;
+	public static final Registry<TileEntityType> TILE_ENTITY_TYPE;
 
 	static {
 		//noinspection ResultOfMethodCallIgnored
 		Tile.BED.hashCode(); // make sure tiles are initialised
 		AccessorEntityRegistry.getIdToClassMap(); // make sure entities are initialised
+		AccessorTileEntity.getIdToClassMap(); // make sure tile entities are initialised
 		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
 		TILE = new TileRegistry(new Id("api:tile"));
 		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
+		TILE_ENTITY_TYPE = new TileEntityTypeRegistry(new Id("api:tile_entity_type"));
 	}
 }
