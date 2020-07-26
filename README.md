@@ -1,6 +1,6 @@
-# Minecraft Cursed Legacy Example Mod
+# Minecraft Cursed Legacy API
 
-The (unofficial) [Fabric](https://fabricmc.net/) home for 1.2.5 and Beta 1.7.3 - if you want the newer versions see [here](https://github.com/FabricMC/fabric-example-mod).
+The (unofficial) [Fabric](https://fabricmc.net/) home for 1.2.5 and Beta 1.7.3 - if you want the newer versions see [here](https://github.com/FabricMC/fabric).
 
 ## Setup
 1. Edit build.gradle and mod.json to suit your needs.
@@ -25,4 +25,4 @@ Once your mod is complete and ready for use it can be compiled and reobfuscated 
 ```
 
 ## License
-This template is available under the MIT license. Feel free to learn from it and incorporate it in your own projects.
+This API is available under the MIT license. Feel free to learn from it and incorporate it in your own projects.
