@@ -31,8 +31,8 @@ public final class DataManager<T> {
 	/**
 	 * Retrieves the specified attached data from the object.
 	 */
-	public <E extends AttachedData> E getAttachedData(T object, DataKey<E> id) throws ClassCastException {
-		return id.apply(((DataStorage) object).getAttachedData(id.id, () -> this.attachedDataFactories.get(id.id).apply(object)));
+	public <E extends AttachedData> E getAttachedData(T object, DataKey<E> key) throws ClassCastException {
+		return key.apply(((DataStorage) object).getAttachedData(key.id, () -> this.attachedDataFactories.get(key.id).apply(object)));
 	}
 
 	/**

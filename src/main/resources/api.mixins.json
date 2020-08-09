@@ -13,6 +13,7 @@
     "MixinOverlay",
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
+    "MixinPlayerInventory",
     "MixinShapedRecipe",
     "MixinSmeltingRecipeRegistry",
     "MixinTile",
