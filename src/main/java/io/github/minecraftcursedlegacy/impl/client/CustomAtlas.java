@@ -6,11 +6,10 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-import net.minecraft.client.texture.TextureManager;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.texture.TextureManager;
 
 class CustomAtlas implements Atlas {
 	private static final short MAX_SLOTS = 16 * 16;
@@ -65,7 +64,7 @@ class CustomAtlas implements Atlas {
 	@Environment(EnvType.CLIENT)
 	public int getTextureID(TextureManager manager) {
 		if (textureID < 0) {
-			textureID = manager.method_1088(image);
+			textureID = manager.glLoadImage(image);
 			needsRefresh = false;
 		} else if (needsRefresh) {
 			needsRefresh = false;

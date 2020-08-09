@@ -2,6 +2,8 @@ package io.github.minecraftcursedlegacy.mixin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +29,7 @@ public abstract class MixinItemInstance implements DataStorage {
 		DataStorage ds = ((DataStorage) (Object) info.getReturnValue());
 
 		this.api_attachedDataMap.forEach((id, data) -> {
-			ds.putAttachedData(id, this.api_attachedDataMap.get(id).copy());
+			ds.putAttachedData(id, data.copy());
 		});
 	}
 
@@ -66,6 +68,11 @@ public abstract class MixinItemInstance implements DataStorage {
 		});
 
 		return this.api_data;
+	}
+
+	@Override
+	public Set<Entry<Id,AttachedData>> getAllAttachedData() {
+		return this.api_attachedDataMap.entrySet();
 	}
 
 	@Override

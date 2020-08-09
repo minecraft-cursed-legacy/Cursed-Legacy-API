@@ -13,7 +13,7 @@ import net.minecraft.level.Level;
 
 @Mixin(ClientInteractionManager.class)
 public class MixinClientInteractionManager {
-	@Inject(at = @At("HEAD"), method = "method_1713", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "useItemOnTile", cancellable = true)
 	private void onTileInteract(Player player, Level level, ItemInstance item, int x, int y, int z, int i1, CallbackInfoReturnable<Boolean> info) {
 		TileInteractionImpl.onTileInteract(player, level, item, x, y, z, i1, info);
 	}
