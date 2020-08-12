@@ -14,9 +14,6 @@ import net.minecraft.util.io.CompoundTag;
  * Manager for data which can be attached to various vanilla objects, such as items and blocks.
  */
 public final class DataManager<T> {
-	private DataManager() {
-	}
-
 	private final Map<Id, Function<T, ? extends AttachedData>> attachedDataFactories = new HashMap<>();
 
 	/**
@@ -51,6 +48,21 @@ public final class DataManager<T> {
 		AttachedData result = this.attachedDataFactories.get(id).apply(object);
 		result.fromTag(data);
 		return result;
+	}
+
+	/**
+	 * Used by the implementation.
+	 * @param from the object to use the data of.
+	 * @param to the object to receive the data.
+	 */
+	public void copyData(T from, T to) {
+		DataStorage to_ = (DataStorage) (Object) to;
+
+		((DataStorage) (Object) from).getAllAttachedData().forEach(entry -> {
+			Id dataId = entry.getKey();
+			AttachedData data = entry.getValue();
+			to_.putAttachedData(dataId, data.copy());
+		});
 	}
 
 	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
