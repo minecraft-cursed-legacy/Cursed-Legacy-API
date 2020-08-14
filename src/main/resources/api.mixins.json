@@ -20,17 +20,17 @@
     "MixinTitleScreen"
   ],
   "client": [
-    "MixinClass_556",
     "MixinClientInteractionManager",
+    "MixinHandItemRenderer",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
     "MixinMinecraft",
     "MixinResourceDownloadThread"
   ],
   "server": [
-    "MixinClass_70",
     "MixinMinecraftServer",
     "MixinPendingConnection",
+    "MixinServerInteractionManager",
     "MixinServerPlayerPacketHandler"
   ],
   "injectors": {

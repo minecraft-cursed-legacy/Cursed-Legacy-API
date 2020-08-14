@@ -14,7 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemInstance;
 
 @Mixin(HandItemRenderer.class)
-abstract class MixinClass_556 {
+abstract class MixinHandItemRenderer {
 	@Shadow
 	private Minecraft field_2401;
 
