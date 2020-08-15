@@ -21,7 +21,8 @@
     "init": [
       "io.github.minecraftcursedlegacy.test.RegistryTest",
       "io.github.minecraftcursedlegacy.test.LevelGenTest",
-      "io.github.minecraftcursedlegacy.test.AtlasTest"
+      "io.github.minecraftcursedlegacy.test.AtlasTest",
+      "io.github.minecraftcursedlegacy.test.ItemDataTest"
     ]
   },
 
@@ -29,5 +30,9 @@
     "fabricloader": "*",
     "api": "*",
     "minecraft": "1.0.0-beta.7.3"
-  }
+  },
+  
+  "mixins": [
+    "test.mixins.json"
+  ]
 }

@@ -16,7 +16,7 @@ public class LevelGenImpl implements ModInitializer {
 					int xToGen = x + rand.nextInt(16) + 8;
 					int zToGen = z + rand.nextInt(16) + 8;
 					Feature var18 = biome.getTree(rand);
-					var18.method_1143(1.0D, 1.0D, 1.0D);
+					var18.setupTreeGeneration(1.0D, 1.0D, 1.0D);
 					var18.generate(level, rand, xToGen, level.getHeight(xToGen, zToGen), zToGen);
 				}
 			}

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinBiome",
+    "MixinItemInstance",
     "MixinItemType",
     "MixinMcRegionLevelStorage",
     "MixinNetherLevelSource",
@@ -11,6 +12,7 @@
     "MixinOverlay",
     "MixinOverworldLevelSource",
     "MixinPlaceableTileItem",
+    "MixinPlayerInventory",
     "MixinShapedRecipe",
     "MixinSmeltingRecipeRegistry",
     "MixinTile",
@@ -18,15 +20,17 @@
     "MixinTitleScreen"
   ],
   "client": [
-    "MixinResourceDownloadThread",
-    "MixinClass_556",
+    "MixinClientInteractionManager",
+    "MixinHandItemRenderer",
     "MixinHandshakeC2SClient",
     "MixinItemRenderer",
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "MixinResourceDownloadThread"
   ],
   "server": [
     "MixinMinecraftServer",
     "MixinPendingConnection",
+    "MixinServerInteractionManager",
     "MixinServerPlayerPacketHandler"
   ],
   "injectors": {
