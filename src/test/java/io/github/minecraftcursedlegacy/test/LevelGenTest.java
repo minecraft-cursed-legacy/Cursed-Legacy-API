@@ -1,7 +1,7 @@
 package io.github.minecraftcursedlegacy.test;
 
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
-import io.github.minecraftcursedlegacy.api.event.BiomePlacementCallback;
+import io.github.minecraftcursedlegacy.api.levelgen.BiomePlacementCallback;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.level.biome.Biome;
 

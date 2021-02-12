@@ -1,6 +1,6 @@
 package io.github.minecraftcursedlegacy.impl.levelgen;
 
-import io.github.minecraftcursedlegacy.api.event.ChunkDecorateCallback;
+import io.github.minecraftcursedlegacy.api.levelgen.ChunkDecorateCallback;
 import io.github.minecraftcursedlegacy.api.levelgen.ExtendedBiome;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.level.structure.Feature;

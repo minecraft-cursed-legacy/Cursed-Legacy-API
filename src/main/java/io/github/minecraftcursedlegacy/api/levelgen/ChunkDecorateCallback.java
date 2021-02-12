@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.api.event;
+package io.github.minecraftcursedlegacy.api.levelgen;
 
 import java.util.Random;
 

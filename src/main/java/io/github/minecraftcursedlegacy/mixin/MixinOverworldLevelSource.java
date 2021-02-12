@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.api.event.ChunkDecorateCallback;
-import io.github.minecraftcursedlegacy.api.event.ChunkShapeCallback;
+import io.github.minecraftcursedlegacy.api.levelgen.ChunkDecorateCallback;
+import io.github.minecraftcursedlegacy.api.levelgen.ChunkShapeCallback;
 import net.minecraft.level.Level;
 import net.minecraft.level.biome.Biome;
 import net.minecraft.level.source.LevelSource;

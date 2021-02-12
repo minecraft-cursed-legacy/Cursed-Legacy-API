@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.api.event.DedicatedServerTickCallback;
+import io.github.minecraftcursedlegacy.api.event.lifecycle.DedicatedServerTickCallback;
 import net.minecraft.server.MinecraftServer;
 
 @Mixin(MinecraftServer.class)

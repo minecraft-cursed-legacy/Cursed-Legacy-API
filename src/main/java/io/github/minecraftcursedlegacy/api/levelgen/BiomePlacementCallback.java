@@ -1,10 +1,12 @@
-package io.github.minecraftcursedlegacy.api.event;
+package io.github.minecraftcursedlegacy.api.levelgen;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.level.biome.Biome;
 
 import java.util.function.Consumer;
+
+import io.github.minecraftcursedlegacy.api.event.ActionResult;
 
 /**
  * Callback for biome placement. Add a hook for this in the {@link net.fabricmc.api.ModInitializer init} stage, as the biomes are calculated in postinit.

@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.api.event;
+package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;

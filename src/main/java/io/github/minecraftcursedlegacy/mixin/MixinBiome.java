@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
-import io.github.minecraftcursedlegacy.api.event.BiomePlacementCallback;
+import io.github.minecraftcursedlegacy.api.levelgen.BiomePlacementCallback;
 import io.github.minecraftcursedlegacy.impl.event.Wrapper;
 import net.minecraft.level.biome.Biome;
 
