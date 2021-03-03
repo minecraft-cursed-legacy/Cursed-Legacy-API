@@ -3,9 +3,8 @@ package io.github.minecraftcursedlegacy.test;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.api.registry.TileEntityTypes;
 import io.github.minecraftcursedlegacy.api.registry.TileItems;
-import io.github.minecraftcursedlegacy.impl.registry.TileEntityType;
-import io.github.minecraftcursedlegacy.impl.registry.TileEntityTypeRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.TileEntity;
 import net.minecraft.item.ItemInstance;
@@ -21,7 +20,7 @@ public class TileEntityTest implements ModInitializer {
                 i -> new TestTileWithEntity(i).setName("TileWithEntity"));
         TileItems.registerTileItem(new Id("test:tileWithEntity"), tile);
 
-        Registries.TILE_ENTITY_TYPE.register(new Id("test:tileEntity"), i -> new TileEntityType(TestTileEntity.class, new Id("test:tileEntity")));
+        Registries.TILE_ENTITY_TYPE.register(new Id("test:tileEntity"), i -> TileEntityTypes.create(TestTileEntity.class, new Id("test:tileEntity")));
 
         ItemType tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
         Recipes.addShapelessRecipe(new ItemInstance(tileItem), Tile.DIRT, Tile.SAND);

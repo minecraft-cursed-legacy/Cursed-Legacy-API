@@ -9,7 +9,7 @@ public class TileEntityTypes {
 	 * @param clazz the tile entity class.
 	 * @param id the identifier used in the TileEntityType registry.
 	 */
-	public static TileEntityType createTileEntityType(Class<? extends TileEntity> clazz, Id id) {
+	public static TileEntityType create(Class<? extends TileEntity> clazz, Id id) {
 		return new TileEntityType(clazz, id);
 	}
 }

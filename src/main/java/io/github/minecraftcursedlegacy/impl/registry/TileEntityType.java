@@ -17,6 +17,9 @@ public class TileEntityType {
 		this.vanillaRegistryStringId = vanillaRegistryStringId;
 	}
 
+	/**
+	 * Prefer use of {@link io.github.minecraftcursedlegacy.api.registry.TileEntityTypes#create}
+	 */
 	public TileEntityType(Class<? extends TileEntity> clazz, Id id) {
 		this.clazz = clazz;
 		this.vanillaRegistryStringId = id.toString();
