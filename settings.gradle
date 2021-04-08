@@ -1,0 +1,24 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+		mavenLocal()
+    }
+}
+
+rootProject.name = "cursed-legacy-api"
+
+include 'legacy-api-base'
+
+include 'legacy-attached-data-v0'
+include 'legacy-config-v0'
+include 'legacy-lifecycle-events-v0'
+include 'legacy-networking-v0'
+include 'legacy-recipes-v0'
+include 'legacy-registries-v0'
+include 'legacy-terrain-v0'
+include 'legacy-translations-v0'
