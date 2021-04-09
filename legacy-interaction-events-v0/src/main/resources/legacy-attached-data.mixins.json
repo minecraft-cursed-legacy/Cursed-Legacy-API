@@ -1,10 +1,9 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.attacheddata.mixin",
+  "package": "io.github.minecraftcursedlegacy.events.interaction.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinItemInstance",
-    "MixinPlayerInventory"
+    "MixinItemInstance"
   ],
   "injectors": {
     "defaultRequire": 1

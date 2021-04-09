@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.github.minecraftcursedlegacy.impl.event.TileInteractionImpl;
+import io.github.minecraftcursedlegacy.events.interaction.impl.TileInteractionImpl;
 import net.minecraft.client.ClientInteractionManager;
 import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemInstance;
