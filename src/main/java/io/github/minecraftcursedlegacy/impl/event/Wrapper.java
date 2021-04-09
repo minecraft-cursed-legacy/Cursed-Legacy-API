@@ -2,6 +2,7 @@ package io.github.minecraftcursedlegacy.impl.event;
 
 /**
  * For bypassing lambda restrictions.
+ * TODO move to AtomicReference, maybe. Might be slower though?
  */
 public class Wrapper<T> {
 	private T value;

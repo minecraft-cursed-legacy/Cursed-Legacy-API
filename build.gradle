@@ -27,11 +27,13 @@ def getSubprojectVersion(project, ver) {
 
 dependencies {
 	// Root project setup nonsense
-	// Also afaik we have to manually fatjar the code on build which is stupid
+	// Remind me to add include shit too
 	implementation project(":legacy-api-base")
 	implementation project(":legacy-attached-data-v0")
 	implementation project(":legacy-config-v0")
+	implementation project(":legacy-interaction-events-v0")
 	implementation project(":legacy-lifecycle-events-v0")
+	implementation project(":legacy-networking-v0")
 	implementation project(":legacy-networking-v0")
 	implementation project(":legacy-recipes-v0")
 	implementation project(":legacy-terrain-v0")

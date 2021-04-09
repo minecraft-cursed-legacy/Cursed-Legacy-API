@@ -16,6 +16,7 @@ include 'legacy-api-base'
 
 include 'legacy-attached-data-v0'
 include 'legacy-config-v0'
+include 'legacy-interaction-events-v0'
 include 'legacy-lifecycle-events-v0'
 include 'legacy-networking-v0'
 include 'legacy-recipes-v0'
