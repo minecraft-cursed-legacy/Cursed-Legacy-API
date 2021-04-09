@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "io.github.minecraftcursedlegacy.recipes.accessor",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "AccessorRecipeRegistry"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

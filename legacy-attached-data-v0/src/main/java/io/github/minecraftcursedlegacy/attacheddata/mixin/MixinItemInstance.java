@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.attacheddata.mixin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import io.github.minecraftcursedlegacy.api.data.AttachedData;
 import io.github.minecraftcursedlegacy.api.data.DataManager;
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.impl.data.DataStorage;
+import io.github.minecraftcursedlegacy.attacheddata.impl.DataStorage;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.util.io.CompoundTag;
 

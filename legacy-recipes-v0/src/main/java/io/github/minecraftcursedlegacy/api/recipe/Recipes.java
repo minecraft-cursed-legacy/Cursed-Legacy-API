@@ -1,6 +1,6 @@
 package io.github.minecraftcursedlegacy.api.recipe;
 
-import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
+import io.github.minecraftcursedlegacy.recipes.accessor.AccessorRecipeRegistry;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.level.source.OverworldLevelSource;
 import net.minecraft.recipe.DyeRecipes;

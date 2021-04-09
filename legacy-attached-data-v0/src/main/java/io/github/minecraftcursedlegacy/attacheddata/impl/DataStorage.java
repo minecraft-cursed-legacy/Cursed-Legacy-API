@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.impl.data;
+package io.github.minecraftcursedlegacy.attacheddata.impl;
 
 import java.util.Map.Entry;
 import java.util.Set;

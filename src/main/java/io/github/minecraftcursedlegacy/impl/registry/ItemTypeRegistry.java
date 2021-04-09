@@ -7,13 +7,13 @@ import java.util.Map.Entry;
 import java.util.function.IntFunction;
 
 import io.github.minecraftcursedlegacy.accessor.AccessorPlaceableTileItem;
-import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
 import io.github.minecraftcursedlegacy.accessor.AccessorShapedRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorShapelessRecipe;
 import io.github.minecraftcursedlegacy.accessor.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
+import io.github.minecraftcursedlegacy.accessor.AccessorRecipeRegistry;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;
