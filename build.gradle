@@ -26,19 +26,27 @@ def getSubprojectVersion(project, ver) {
 }
 
 dependencies {
+	ext.useDep = {dep ->
+		implementation dep
+		//include dep
+	}
+
 	// Root project setup nonsense
 	// Remind me to add include shit too
-	compile project(":legacy-api-base")
-	compile project(":legacy-attached-data-v0")
-	compile project(":legacy-config-v0")
-	compile project(":legacy-interaction-events-v0")
-	compile project(":legacy-lifecycle-events-v0")
-	compile project(":legacy-networking-v0")
-	compile project(":legacy-networking-v0")
-	compile project(":legacy-recipes-v0")
-	compile project(":legacy-registries-v0")
-	compile project(":legacy-terrain-v0")
-	compile project(":legacy-translations-v0")
+	useDep project(":legacy-api-base")
+	useDep project(":legacy-attached-data-v0")
+	useDep project(":legacy-config-v0")
+	useDep project(":legacy-interaction-events-v0")
+	useDep project(":legacy-lifecycle-events-v0")
+	useDep project(":legacy-networking-v0")
+	useDep project(":legacy-networking-v0")
+	useDep project(":legacy-recipes-v0")
+	useDep project(":legacy-registries-v0")
+	useDep project(":legacy-terrain-v0")
+	useDep project(":legacy-translations-v0")
+	
+	//include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
+	//include "tk.valoeghese:ZoesteriaConfig:1.3.4"
 }
 
 allprojects {	
@@ -83,11 +91,12 @@ allprojects {
 		}
 
 		// for config api
-		compile "tk.valoeghese:ZoesteriaConfig:1.3.4"
-		//implementation "tk.valoeghese:ZoesteriaConfig:1.3.4"
-		//include "tk.valoeghese:ZoesteriaConfig:1.3.4"
+		implementation "tk.valoeghese:ZoesteriaConfig:1.3.4"
 
 		modImplementation "com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}"
+		
+		// CoreLib for Models
+		modImplementation 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	}
 	
 	processResources {
