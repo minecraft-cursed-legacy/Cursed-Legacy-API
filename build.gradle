@@ -28,16 +28,16 @@ def getSubprojectVersion(project, ver) {
 dependencies {
 	// Root project setup nonsense
 	// Remind me to add include shit too
-	implementation project(":legacy-api-base")
-	implementation project(":legacy-attached-data-v0")
-	implementation project(":legacy-config-v0")
-	implementation project(":legacy-interaction-events-v0")
-	implementation project(":legacy-lifecycle-events-v0")
-	implementation project(":legacy-networking-v0")
-	implementation project(":legacy-networking-v0")
-	implementation project(":legacy-recipes-v0")
-	implementation project(":legacy-terrain-v0")
-	implementation project(":legacy-translations-v0")
+	compile project(":legacy-api-base")
+	compile project(":legacy-attached-data-v0")
+	compile project(":legacy-config-v0")
+	compile project(":legacy-interaction-events-v0")
+	compile project(":legacy-lifecycle-events-v0")
+	compile project(":legacy-networking-v0")
+	compile project(":legacy-networking-v0")
+	compile project(":legacy-recipes-v0")
+	compile project(":legacy-terrain-v0")
+	compile project(":legacy-translations-v0")
 }
 
 allprojects {	

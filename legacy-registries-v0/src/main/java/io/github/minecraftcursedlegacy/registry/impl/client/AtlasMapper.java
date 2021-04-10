@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.impl.client;
+package io.github.minecraftcursedlegacy.registry.impl.client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,13 +11,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.primitives.Ints;
 
+import io.github.minecraftcursedlegacy.registry.impl.client.Atlas.FileAtlas;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemType;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import io.github.minecraftcursedlegacy.impl.client.Atlas.FileAtlas;
 
 public class AtlasMapper {
 	private static class ItemAtlasUsage {

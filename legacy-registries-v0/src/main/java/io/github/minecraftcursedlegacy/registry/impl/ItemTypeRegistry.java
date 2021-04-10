@@ -8,12 +8,12 @@ import java.util.function.IntFunction;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
-import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
 import io.github.minecraftcursedlegacy.registry.accessor.AccessorPlaceableTileItem;
 import io.github.minecraftcursedlegacy.registry.accessor.AccessorRecipeRegistry;
 import io.github.minecraftcursedlegacy.registry.accessor.AccessorShapedRecipe;
 import io.github.minecraftcursedlegacy.registry.accessor.AccessorShapelessRecipe;
 import io.github.minecraftcursedlegacy.registry.accessor.AccessorTileItem;
+import io.github.minecraftcursedlegacy.registry.impl.client.AtlasMapper;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;

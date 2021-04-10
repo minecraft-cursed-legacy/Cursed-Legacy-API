@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.accessor;
+package io.github.minecraftcursedlegacy.translations.accessor;
 
 import java.util.Properties;
 

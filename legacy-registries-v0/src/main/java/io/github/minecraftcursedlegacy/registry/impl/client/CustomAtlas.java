@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.impl.client;
+package io.github.minecraftcursedlegacy.registry.impl.client;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

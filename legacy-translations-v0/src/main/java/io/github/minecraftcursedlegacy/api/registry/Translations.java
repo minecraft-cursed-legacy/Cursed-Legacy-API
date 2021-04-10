@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
-import io.github.minecraftcursedlegacy.registry.accessor.AccessorTranslationStorage;
+import io.github.minecraftcursedlegacy.translations.accessor.AccessorTranslationStorage;
 import net.minecraft.achievement.Achievement;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.resource.language.TranslationStorage;

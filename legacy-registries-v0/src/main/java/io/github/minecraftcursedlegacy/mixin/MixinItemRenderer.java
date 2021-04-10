@@ -13,9 +13,10 @@ import net.minecraft.client.render.entity.ItemRenderer;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.entity.ItemEntity;
 
-import io.github.minecraftcursedlegacy.impl.client.AtlasMapper;
+import io.github.minecraftcursedlegacy.registry.impl.client.AtlasMapper;
 
 @Mixin(ItemRenderer.class)
+@Deprecated
 abstract class MixinItemRenderer extends EntityRenderer {
 	@Inject(method = "render",
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)
