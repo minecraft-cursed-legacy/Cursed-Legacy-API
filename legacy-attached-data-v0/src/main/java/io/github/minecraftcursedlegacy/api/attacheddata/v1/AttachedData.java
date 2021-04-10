@@ -1,14 +1,14 @@
-package io.github.minecraftcursedlegacy.api.data;
+package io.github.minecraftcursedlegacy.api.attacheddata.v1;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.util.io.CompoundTag;
 
 /**
- * Data which can be attached to various vanilla objects, such as items and blocks.
+ * Data which can be attached to various vanilla objects, such as items and levels.
  * @see {@link DataManager}.
- * @deprecated since 1.0.0. Use {@linkplain io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData this equivalent} from api v1 instead.
+ * @since 1.0.0
  */
-public interface AttachedData extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData {
+public interface AttachedData {
 	/**
 	 * @return the id of this modded data.
 	 */

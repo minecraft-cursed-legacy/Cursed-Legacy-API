@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.api.data;
+package io.github.minecraftcursedlegacy.api.attacheddata.v1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,19 +10,15 @@ import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.util.io.CompoundTag;
 
-/**
- * Manager for data which can be attached to various vanilla objects, such as items and blocks.
- * @deprecated since 1.0.0. Use {@linkplain io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager this equivalent} from api v1 instead.
- */
-@Deprecated
-public class DataManager<T> {
-	private final Map<Id, Function<T, ? extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData>> attachedDataFactories = new HashMap<>();
+public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.data.DataManager<T> {
+	private final Map<Id, Function<T, ? extends AttachedData>> attachedDataFactories = new HashMap<>();
 
 	/**
 	 * Adds the specified attached data to the {@link DataManager} instance. This data can later be accessed on an instance of the object via {@link #getAttachedData}.
 	 * @return a key to use to retrieve the attached data from an object.
 	 */
-	public <E extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData> DataKey<E> addAttachedData(Id id, Function<T, E> dataProvider) {
+	@Override
+	public <E extends AttachedData> DataKey<E> addAttachedData(Id id, Function<T, E> dataProvider) {
 		this.attachedDataFactories.put(id, dataProvider);
 		return new DataKey<>(id);
 	}
@@ -30,7 +26,7 @@ public class DataManager<T> {
 	/**
 	 * Retrieves the specified attached data from the object.
 	 */
-	public <E extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData> E getAttachedData(T object, DataKey<E> key) throws ClassCastException {
+	public <E extends AttachedData> E getAttachedData(T object, DataKey<E> key) throws ClassCastException {
 		return key.apply(((DataStorage) object).getAttachedData(key.id, () -> this.attachedDataFactories.get(key.id).apply(object)));
 	}
 
@@ -46,8 +42,8 @@ public class DataManager<T> {
 	 * Used by the implementation.
 	 * @return an attached data instance of the given type constructed by the given tag.
 	 */
-	public io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData deserialize(T object, Id id, CompoundTag data) {
-		io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData result = this.attachedDataFactories.get(id).apply(object);
+	public AttachedData deserialize(T object, Id id, CompoundTag data) {
+		AttachedData result = this.attachedDataFactories.get(id).apply(object);
 		result.fromTag(data);
 		return result;
 	}
@@ -62,19 +58,20 @@ public class DataManager<T> {
 
 		((DataStorage) (Object) from).getAllAttachedData().forEach(entry -> {
 			Id dataId = entry.getKey();
-			io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData data = entry.getValue();
+			AttachedData data = (AttachedData) entry.getValue();
 			to_.putAttachedData(dataId, data.copy());
 		});
 	}
 
-	public static final DataManager<ItemInstance> ITEM_INSTANCE = io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.ITEM_INSTANCE;
+	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
 
 	/**
-	 * @deprecated since 1.0.0. Use {@linkplain io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey this equivalent} from api v1 instead.
+	 * Id class that is generically bound to a subclass of attached data, for ease of access.
 	 */
-	@Deprecated
-	public static class DataKey<T extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData> {
-		protected DataKey(Id id) throws NullPointerException {
+	public static final class DataKey<T extends AttachedData> extends io.github.minecraftcursedlegacy.api.data.DataManager.DataKey<T> {
+		private DataKey(Id id) throws NullPointerException {
+			super(id);
+
 			if (id == null) {
 				throw new NullPointerException("DataKey cannot store a null ID!");
 			}
@@ -85,7 +82,7 @@ public class DataManager<T> {
 		private final Id id;
 
 		@SuppressWarnings("unchecked")
-		private T apply(io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData data) throws ClassCastException {
+		private T apply(AttachedData data) throws ClassCastException {
 			return (T) data;
 		}
 	}

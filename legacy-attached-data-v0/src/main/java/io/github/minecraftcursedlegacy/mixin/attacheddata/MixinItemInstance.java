@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import io.github.minecraftcursedlegacy.api.data.AttachedData;
-import io.github.minecraftcursedlegacy.api.data.DataManager;
+import io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData;
+import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
