@@ -32,3 +32,7 @@ A General Summary of the code style:
 
 ## License
 This API is available under the MIT license. Feel free to learn from it and incorporate it in your own projects.
+
+## Running Tests
+If your ide runs using gradle change settings to make your ide compile it itself so you can run the test modules.
+If your ide doesn't have this feature get a better ide not a glorified text editor please kthx
