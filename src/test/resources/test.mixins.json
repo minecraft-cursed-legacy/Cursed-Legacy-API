@@ -3,7 +3,6 @@
   "package": "io.github.minecraftcursedlegacy.testmixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinPlayer"
   ],
   "injectors": {
     "defaultRequire": 1

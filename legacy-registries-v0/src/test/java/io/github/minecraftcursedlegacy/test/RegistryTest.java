@@ -1,10 +1,8 @@
 package io.github.minecraftcursedlegacy.test;
 
-import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.api.registry.TileItems;
-import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
@@ -21,13 +19,7 @@ public class RegistryTest implements ModInitializer {
 				i -> new BasicTile(i, false).setName("exampleBlock"));
 		tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
 
-		Recipes.addShapelessRecipe(new ItemInstance(item, 2), Tile.DIRT, Tile.SAND);
-		Recipes.addShapedRecipe(new ItemInstance(tile), "##", '#', Tile.DIRT);
-
 		SmeltingRecipeRegistry.getInstance().addSmeltingRecipe(item.id, new ItemInstance(tile));
-
-		Translations.addTileTranslation(tile, "Example Block");
-		Translations.addItemTranslation(item, "Example Item");
 	}
 
 	public static ItemType item;

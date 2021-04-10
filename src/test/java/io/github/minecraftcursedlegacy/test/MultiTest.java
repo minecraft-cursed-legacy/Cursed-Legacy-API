@@ -1,20 +1,20 @@
 package io.github.minecraftcursedlegacy.test;
 
-import net.minecraft.item.ItemInstance;
-import net.minecraft.item.ItemType;
-import net.minecraft.tile.Tile;
-
-import net.fabricmc.api.ModInitializer;
-
+import io.github.minecraftcursedlegacy.api.ModPostInitializer;
 import io.github.minecraftcursedlegacy.api.client.AtlasMap;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.api.registry.Translations;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.item.ItemInstance;
+import net.minecraft.item.ItemType;
+import net.minecraft.tile.Tile;
 
-public class AtlasTest implements ModInitializer {
+public class MultiTest implements ModInitializer, ModPostInitializer {
 	private static ItemType item, alsoItem;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitialize() {
 		item = Registries.ITEM_TYPE.register(new Id("modid:item_texture"),
@@ -31,5 +31,18 @@ public class AtlasTest implements ModInitializer {
 
 		Translations.addItemTranslation(item, "Example Item");
 		Translations.addItemTranslation(alsoItem, "Example Item Too");
+	}
+
+	@Override
+	public void onPostInitialize() {
+		assistRegistryTest(); // Because this ensures initialisation and registration is complete.
+	}
+
+	private static void assistRegistryTest() {
+		Recipes.addShapelessRecipe(new ItemInstance(RegistryTest.item, 2), Tile.DIRT, Tile.SAND);
+		Recipes.addShapedRecipe(new ItemInstance(RegistryTest.tile), "##", '#', Tile.DIRT);
+		
+		Translations.addTileTranslation(RegistryTest.tile, "Example Block");
+		Translations.addItemTranslation(RegistryTest.item, "Example Item");
 	}
 }
