@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "legacy-api-base",
+  "id": "legacy-lifecycle-events",
   "version": "${version}",
 
-  "name": "Minecraft Cursed Legacy API Base",
+  "name": "Minecraft Cursed Legacy Lifecycle Events",
   "description": "A set of useful hooks and features to be used by modders.",
   "authors": [
     "The Cursed Legacy Team"
@@ -17,12 +17,12 @@
   "icon": "assets/api/icon.png",
   
   "mixins": [
-    "legacy-api-base.accessors.json",
-    "legacy-api-base.mixins.json"
+    "legacy-lifecycle-events.mixins.json"
   ],
 
   "depends": {
     "fabricloader": "*",
+    "legacy-api-base": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "api",
+  "id": "legacy-registries",
   "version": "${version}",
 
-  "name": "Minecraft Cursed Legacy API",
+  "name": "Minecraft Cursed Legacy Registries",
   "description": "A set of useful hooks and features to be used by modders.",
   "authors": [
     "The Cursed Legacy Team"
@@ -15,29 +15,21 @@
 
   "license": "MIT",
   "icon": "assets/api/icon.png",
-
-  "environment": "*",
+  
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.impl.networking.NetworkingImpl"
+      "io.github.minecraftcursedlegacy.registry.impl.RegistryImpl"
     ]
   },
+  
   "mixins": [
-    "api.mixins.json"
+    "legacy-registries.accessors.json",
+    "legacy-registries.mixins.json"
   ],
 
   "depends": {
     "fabricloader": "*",
-    "minecraft": "1.0.0-beta.7.3",
     "legacy-api-base": "*",
-    "legacy-attached-data": "*",
-    "legacy-config": "*",
-    "legacy-interaction-events": "*",
-    "legacy-lifecycle-events": "*",
-    "legacy-networking": "*",
-    "legacy-recipes": "*",
-    "legacy-registries": "*",
-    "legacy-terrain": "*",
-    "legacy-translations": "*"
+    "minecraft": "1.0.0-beta.7.3"
   }
 }

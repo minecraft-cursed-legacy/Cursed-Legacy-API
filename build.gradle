@@ -36,6 +36,7 @@ dependencies {
 	compile project(":legacy-networking-v0")
 	compile project(":legacy-networking-v0")
 	compile project(":legacy-recipes-v0")
+	compile project(":legacy-registries-v0")
 	compile project(":legacy-terrain-v0")
 	compile project(":legacy-translations-v0")
 }

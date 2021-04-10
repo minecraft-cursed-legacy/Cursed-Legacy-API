@@ -1,7 +1,10 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.mixin",
+  "package": "io.github.minecraftcursedlegacy.accessor",
   "compatibilityLevel": "JAVA_8",
+  "client": [
+    "AccessorMinecraft"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

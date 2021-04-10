@@ -5,7 +5,8 @@
   "client": [
     "MixinHandshakeC2SClient",
     "MixinOverlay",
-    "MixinTitleScreen"
+    "MixinTitleScreen",
+    "MixinResourceDownloadThread"
   ],
   "server": [
     "MixinPendingConnection",

@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.mixin",
+  "package": "io.github.minecraftcursedlegacy.registry.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinItemType",
@@ -11,6 +11,10 @@
     "MixinSmeltingRecipeRegistry",
     "MixinTile",
     "MixinTileItem"
+  ],
+  "client": [
+    "MixinHandItemRenderer",
+    "MixinItemRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
