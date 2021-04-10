@@ -26,9 +26,10 @@ def getSubprojectVersion(project, ver) {
 }
 
 dependencies {
+	apply plugin: "fabric-loom"
 	ext.useDep = {dep ->
 		implementation dep
-		//include dep
+		include dep
 	}
 
 	// Root project setup nonsense
@@ -45,8 +46,8 @@ dependencies {
 	useDep project(":legacy-terrain-v0")
 	useDep project(":legacy-translations-v0")
 	
-	//include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
-	//include "tk.valoeghese:ZoesteriaConfig:1.3.4"
+	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
+	include "tk.valoeghese:ZoesteriaConfig:1.3.4"
 }
 
 allprojects {	
