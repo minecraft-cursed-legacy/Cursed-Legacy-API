@@ -86,15 +86,18 @@ public class RegistryImpl implements ModInitializer {
 		protected void beforeRemap() {
 			int size = Tile.BY_ID.length;
 
-			for (int i = 0; i < size; i++) {
+			for (int i = 1; i < size; i++) { // Starting at 1 as microoptimisation because 0 is taken by a forced null value: Air
 				Tile tile = Tile.BY_ID[i];
-				ticksRandomly.put(tile, Tile.TICKS_RANDOMLY[i]);
-				isFullOpaque.put(tile, Tile.FULL_OPAQUE[i]);
-				hasTileEntity.put(tile, Tile.HAS_TILE_ENTITY[i]);
-				field_1941.put(tile, Tile.field_1941[i]);
-				field_1942.put(tile, Tile.field_1942[i]);
-				field_1943.put(tile, Tile.field_1943[i]);
-				field_1944.put(tile, Tile.field_1944[i]);
+				
+				if (tile != null) {
+					ticksRandomly.put(tile, Tile.TICKS_RANDOMLY[i]);
+					isFullOpaque.put(tile, Tile.FULL_OPAQUE[i]);
+					hasTileEntity.put(tile, Tile.HAS_TILE_ENTITY[i]);
+					field_1941.put(tile, Tile.field_1941[i]);
+					field_1942.put(tile, Tile.field_1942[i]);
+					field_1943.put(tile, Tile.field_1943[i]);
+					field_1944.put(tile, Tile.field_1944[i]);
+				}
 			}
 
 			System.arraycopy(new Tile[size], 0, Tile.BY_ID, 0, size);
