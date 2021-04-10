@@ -70,17 +70,20 @@ public class RegistryImpl implements ModInitializer {
 
 		@Override
 		protected int getStartSerialisedId() {
-			return 1;
+			return 1; // Because 0 is taken by air and is a null entry because notch spaghetti.
 		}
 
 		@Override
 		protected void beforeRemap() {
 			int size = Tile.BY_ID.length;
+
+			// Clear the tile array
 			System.arraycopy(new Tile[size], 0, Tile.BY_ID, 0, size);
 		}
 
 		@Override
 		protected void onRemap(Tile remappedValue, int newSerialisedId) {
+			// Set the new values in the arrays
 			Tile.BY_ID[newSerialisedId] = remappedValue;
 			((IdSetter) remappedValue).setId(newSerialisedId);
 
