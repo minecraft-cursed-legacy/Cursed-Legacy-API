@@ -16,6 +16,12 @@
   "license": "MIT",
   "icon": "assets/api/icon.png",
   
+  "entrypoints": {
+    "init": [
+      "io.github.minecraftcursedlegacy.networking.impl.NetworkingImpl"
+    ]
+  },
+  
   "mixins": [
     "legacy-networking.accessors.json"
   ],

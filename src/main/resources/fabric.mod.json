@@ -17,11 +17,7 @@
   "icon": "assets/api/icon.png",
 
   "environment": "*",
-  "entrypoints": {
-    "init": [
-      "io.github.minecraftcursedlegacy.impl.networking.NetworkingImpl"
-    ]
-  },
+
   "mixins": [
     "api.mixins.json"
   ],

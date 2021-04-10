@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "legacy-attached-data",
+  "id": "legacy-interaction-events",
   "version": "${version}",
 
   "name": "Minecraft Cursed Legacy API Interaction Events",

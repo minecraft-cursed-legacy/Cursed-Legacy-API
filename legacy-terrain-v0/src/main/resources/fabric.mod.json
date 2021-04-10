@@ -21,7 +21,7 @@
       "io.github.minecraftcursedlegacy.terrain.impl.LevelGenImpl"
     ],
     "postInit": [
-      "io.github.minecraftcursedlegacy.impl.event.BiomeRecomputer"
+      "io.github.minecraftcursedlegacy.terrain.impl.BiomeRecomputer"
     ]
   },
 

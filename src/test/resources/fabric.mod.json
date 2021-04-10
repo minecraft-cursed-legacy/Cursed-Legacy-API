@@ -19,10 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.test.LevelGenTest",
-      "io.github.minecraftcursedlegacy.test.AtlasTest",
-      "io.github.minecraftcursedlegacy.test.MultiTest",
-      "io.github.minecraftcursedlegacy.test.ItemDataTest"
+      "io.github.minecraftcursedlegacy.test.MultiTest"
     ],
     "postInit": [
       "io.github.minecraftcursedlegacy.test.MultiTest"
