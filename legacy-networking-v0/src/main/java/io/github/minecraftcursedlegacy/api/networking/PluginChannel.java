@@ -1,7 +1,7 @@
 package io.github.minecraftcursedlegacy.api.networking;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.networking.impl.PluginMessagePacket;
+import io.github.minecraftcursedlegacy.impl.networking.PluginMessagePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayer;
 import net.minecraft.network.PacketHandler;

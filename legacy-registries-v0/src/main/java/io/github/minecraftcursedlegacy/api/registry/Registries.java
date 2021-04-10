@@ -1,7 +1,7 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
-import io.github.minecraftcursedlegacy.registry.impl.EntityType;
-import io.github.minecraftcursedlegacy.registry.impl.RegistryImpl;
+import io.github.minecraftcursedlegacy.impl.registry.EntityType;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
 

@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.translations.accessor",
+  "package": "io.github.minecraftcursedlegacy.accessor.translations",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AccessorTranslationStorage"

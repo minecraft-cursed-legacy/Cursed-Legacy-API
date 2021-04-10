@@ -2,7 +2,7 @@ package io.github.minecraftcursedlegacy.api.client;
 
 import java.util.OptionalInt;
 
-import io.github.minecraftcursedlegacy.registry.impl.client.AtlasMapper;
+import io.github.minecraftcursedlegacy.impl.registry.client.AtlasMapper;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;

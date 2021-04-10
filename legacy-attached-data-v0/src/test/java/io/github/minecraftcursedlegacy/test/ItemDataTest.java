@@ -9,6 +9,7 @@ import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import io.github.minecraftcursedlegacy.api.event.TileInteractionCallback;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.test.ItemDataTest.TestAxeData;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemType;
 import net.minecraft.util.io.CompoundTag;

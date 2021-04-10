@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.networking.accessor",
+  "package": "io.github.minecraftcursedlegacy.accessor.networking",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AccessorAbstractPacket"

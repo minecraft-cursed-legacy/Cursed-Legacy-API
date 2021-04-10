@@ -18,10 +18,10 @@
   
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.terrain.impl.LevelGenImpl"
+      "io.github.minecraftcursedlegacy.impl.terrain.LevelGenImpl"
     ],
     "postInit": [
-      "io.github.minecraftcursedlegacy.terrain.impl.BiomeRecomputer"
+      "io.github.minecraftcursedlegacy.impl.terrain.BiomeRecomputer"
     ]
   },
 

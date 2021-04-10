@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.events.interaction.mixin",
+  "package": "io.github.minecraftcursedlegacy.mixin.events.interaction",
   "compatibilityLevel": "JAVA_8",
   "client": [
     "MixinClientInteractionManager"

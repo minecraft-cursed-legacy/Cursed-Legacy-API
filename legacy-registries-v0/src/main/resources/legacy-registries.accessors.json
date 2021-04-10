@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.registry.accessor",
+  "package": "io.github.minecraftcursedlegacy.accessor.registry",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AccessorDimensionFile",

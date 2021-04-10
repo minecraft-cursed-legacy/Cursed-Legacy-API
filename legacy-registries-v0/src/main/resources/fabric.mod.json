@@ -18,7 +18,7 @@
   
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.registry.impl.RegistryImpl"
+      "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl"
     ]
   },
   

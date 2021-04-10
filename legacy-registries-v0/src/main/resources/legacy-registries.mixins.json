@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.registry.mixin",
+  "package": "io.github.minecraftcursedlegacy.mixin.registry",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinItemType",

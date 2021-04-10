@@ -1,6 +1,6 @@
 package io.github.minecraftcursedlegacy.api.server;
 
-import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
+import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
 import net.minecraft.entity.player.Player;
 
 public final class VanillaChecker {

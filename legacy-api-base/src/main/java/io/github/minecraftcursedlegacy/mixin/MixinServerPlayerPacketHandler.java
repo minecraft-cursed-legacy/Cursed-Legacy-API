@@ -6,10 +6,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
 import net.minecraft.entity.player.ServerPlayer;
 import net.minecraft.server.network.ServerPlayerPacketHandler;
-
-import io.github.minecraftcursedlegacy.impl.server.VanillaCheckerImpl;
 
 @Mixin(ServerPlayerPacketHandler.class)
 public class MixinServerPlayerPacketHandler {

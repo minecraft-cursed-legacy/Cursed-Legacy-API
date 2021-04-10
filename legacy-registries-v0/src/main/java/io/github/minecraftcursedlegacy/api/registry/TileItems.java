@@ -2,7 +2,7 @@ package io.github.minecraftcursedlegacy.api.registry;
 
 import java.util.function.IntFunction;
 
-import io.github.minecraftcursedlegacy.registry.impl.RegistryImpl;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;
 import net.minecraft.item.TileItem;

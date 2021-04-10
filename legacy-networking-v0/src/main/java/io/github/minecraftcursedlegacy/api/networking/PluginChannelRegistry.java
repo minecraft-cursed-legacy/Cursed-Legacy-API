@@ -1,6 +1,6 @@
 package io.github.minecraftcursedlegacy.api.networking;
 
-import io.github.minecraftcursedlegacy.networking.impl.PluginChannelRegistryImpl;
+import io.github.minecraftcursedlegacy.impl.networking.PluginChannelRegistryImpl;
 
 public class PluginChannelRegistry {
 	private PluginChannelRegistry() {

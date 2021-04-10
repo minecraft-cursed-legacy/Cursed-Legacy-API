@@ -1,6 +1,6 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
-import io.github.minecraftcursedlegacy.registry.impl.EntityType;
+import io.github.minecraftcursedlegacy.impl.registry.EntityType;
 import net.minecraft.entity.Entity;
 
 public class EntityTypes {

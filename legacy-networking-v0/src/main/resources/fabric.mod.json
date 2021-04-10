@@ -18,7 +18,7 @@
   
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.networking.impl.NetworkingImpl"
+      "io.github.minecraftcursedlegacy.impl.networking.NetworkingImpl"
     ]
   },
   

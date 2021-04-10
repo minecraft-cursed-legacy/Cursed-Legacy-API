@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.minecraftcursedlegacy.terrain.mixin",
+  "package": "io.github.minecraftcursedlegacy.mixin.terrain",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "MixinBiome",

@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.attacheddata.impl.DataStorage;
+import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.util.io.CompoundTag;
 

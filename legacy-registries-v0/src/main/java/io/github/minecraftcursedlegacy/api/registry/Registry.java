@@ -3,7 +3,7 @@ package io.github.minecraftcursedlegacy.api.registry;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import io.github.minecraftcursedlegacy.registry.impl.RegistryRemapper;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
 import net.minecraft.util.io.CompoundTag;
 
 import javax.annotation.Nonnull;
