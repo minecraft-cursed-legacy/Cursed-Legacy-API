@@ -1,5 +1,5 @@
-archivesBaseName = "legacy-attached-data-v0"
-version = getSubprojectVersion(project, "0.6.3")
+archivesBaseName = "legacy-attached-data-v1"
+version = getSubprojectVersion(project, "1.0.0")
 
 dependencies {
 	compile project(path: ':legacy-api-base')

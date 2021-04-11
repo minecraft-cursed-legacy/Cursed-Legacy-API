@@ -35,7 +35,7 @@ dependencies {
 	// Root project setup nonsense
 	// Remind me to add include shit too
 	useDep project(":legacy-api-base")
-	useDep project(":legacy-attached-data-v0")
+	useDep project(":legacy-attached-data-v1")
 	useDep project(":legacy-config-v0")
 	useDep project(":legacy-interaction-events-v0")
 	useDep project(":legacy-lifecycle-events-v0")
