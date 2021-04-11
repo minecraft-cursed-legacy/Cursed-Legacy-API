@@ -12,7 +12,7 @@ Run the following command (if you are not using eclipse, replace “eclipse” w
 NOTE: if you want sources (recommended), instead run
 
 ```
-./gradlew rebuildLVT genSources eclipse
+./gradlew :genSources eclipse
 ```
 
 If you wish to build a copy of API, you can run:
