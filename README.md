@@ -15,6 +15,8 @@ NOTE: if you want sources (recommended), instead run
 ./gradlew :genSources eclipse
 ```
 
+To be able to run the API as a whole in an API dev environment, ensure the root project has been set up in your ide. This should be automatic, but it pays to make sure.
+
 If you wish to build a copy of API, you can run:
 
 ```
