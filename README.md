@@ -9,7 +9,7 @@ Run the following command (if you are not using eclipse, replace “eclipse” w
 ./gradlew eclipse
 ```
 
-NOTE: if you want sources (recommended), instead run
+NOTE: if you want sources (recommended), instead run this. You only need to run this the first time you need to generate sources.
 
 ```
 ./gradlew :rebuildLVT :genSources eclipse
