@@ -74,9 +74,9 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	 * @throws ClassCastException when you didn't make sure the object is implementing DataStorage through a mixin.
 	 */
 	public void loadData(T object, CompoundTag moddedTag) throws ClassCastException {
-		this.getDataKeys().forEach(id -> {
-			if (moddedTag.containsKey(id.toString())) {
-				((DataStorage) object).putAttachedData(id, this.deserialize(object, id, moddedTag.getCompoundTag(id.toString())));
+		this.getDataKeys().forEach(id -> { // Iterate over each key
+			if (moddedTag.containsKey(id.toString())) { // If it exists in the stored data
+				((DataStorage) object).putAttachedData(id, this.deserialize(object, id, moddedTag.getCompoundTag(id.toString()))); // Attach the data from the stored data
 			}
 		});
 	}
@@ -89,6 +89,7 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	public static final DataManager<LevelProperties> LEVEL_PROPERTIES = new DataManager<>();
 
 	static {
+		// Legacy compat
 		io.github.minecraftcursedlegacy.api.data.DataManager.ITEM_INSTANCE = ITEM_INSTANCE;
 	}
 
