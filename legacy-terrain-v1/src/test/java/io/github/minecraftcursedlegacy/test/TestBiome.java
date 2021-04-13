@@ -5,7 +5,7 @@ import java.util.Random;
 import io.github.minecraftcursedlegacy.api.levelgen.ExtendedBiome;
 import net.minecraft.level.biome.Biome;
 import net.minecraft.level.structure.Feature;
-import net.minecraft.level.structure.Spruce;
+import net.minecraft.level.structure.SpruceTree;
 
 public class TestBiome extends Biome implements ExtendedBiome {
 	public TestBiome(String name) {
@@ -15,7 +15,7 @@ public class TestBiome extends Biome implements ExtendedBiome {
 
 	@Override
 	public Feature getTree(Random random) {
-		return new Spruce();
+		return new SpruceTree();
 	}
 
 	@Override

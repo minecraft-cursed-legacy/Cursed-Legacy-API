@@ -10,6 +10,9 @@ import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.util.io.CompoundTag;
 
+/**
+ * Manager for data which can be attached to various vanilla objects, such as items and levels.
+ */
 public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.data.DataManager<T> {
 	private final Map<Id, Function<T, ? extends AttachedData>> attachedDataFactories = new HashMap<>();
 
@@ -64,6 +67,7 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	}
 
 	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
+	public static final DataManager<ItemInstance> SAVE = new DataManager<>();
 
 	/**
 	 * Id class that is generically bound to a subclass of attached data, for ease of access.

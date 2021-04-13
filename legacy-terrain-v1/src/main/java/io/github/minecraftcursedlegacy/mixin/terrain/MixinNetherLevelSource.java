@@ -12,7 +12,7 @@ import io.github.minecraftcursedlegacy.api.levelgen.ChunkDecorateCallback;
 import net.minecraft.level.Level;
 import net.minecraft.level.source.LevelSource;
 import net.minecraft.level.source.NetherLevelSource;
-import net.minecraft.tile.Sand;
+import net.minecraft.tile.SandTile;
 
 @Mixin(NetherLevelSource.class)
 public class MixinNetherLevelSource {
@@ -23,7 +23,7 @@ public class MixinNetherLevelSource {
 
 	@Inject(at = @At("RETURN"), method = "decorate")
 	private void onDecorate(LevelSource levelSource, int x, int z, CallbackInfo info) {
-		Sand.fallInstantly = true;
+		SandTile.fallInstantly = true;
 		x *= 16;
 		z *= 16;
 
@@ -34,6 +34,6 @@ public class MixinNetherLevelSource {
 				x,
 				z);
 
-		Sand.fallInstantly = false;
+		SandTile.fallInstantly = false;
 	}
 }
