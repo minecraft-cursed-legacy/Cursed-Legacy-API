@@ -8,6 +8,7 @@ import java.util.function.Function;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.level.LevelProperties;
+import net.minecraft.level.storage.MapStorageBase;
 import net.minecraft.util.io.CompoundTag;
 
 /**
@@ -84,6 +85,7 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
 	
 	/**
+	 * For when you don't want to use mojang's level data stuff that uses {@linkplain MapStorageBase} or very specifically need to access Level Properties.
 	 * @since 1.0.0
 	 */
 	public static final DataManager<LevelProperties> LEVEL_PROPERTIES = new DataManager<>();
