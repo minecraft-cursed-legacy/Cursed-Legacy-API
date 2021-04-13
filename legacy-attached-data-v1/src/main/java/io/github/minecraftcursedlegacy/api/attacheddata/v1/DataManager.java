@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
+import net.minecraft.level.LevelProperties;
 import net.minecraft.util.io.CompoundTag;
 
 /**
@@ -57,17 +57,40 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	 * @param to the object to receive the data.
 	 */
 	public void copyData(T from, T to) {
-		DataStorage to_ = (DataStorage) (Object) to;
+		DataStorage to_ = (DataStorage) to;
 
-		((DataStorage) (Object) from).getAllAttachedData().forEach(entry -> {
+		((DataStorage) from).getAllAttachedData().forEach(entry -> {
 			Id dataId = entry.getKey();
 			AttachedData data = (AttachedData) entry.getValue();
 			to_.putAttachedData(dataId, data.copy());
 		});
 	}
 
+	/**
+	 * Used by the implementation. 
+	 * @param object the object which is storing the data. The class thereof must implement {@linkplain DataStorage} or have a mixin implementing it on the class. This is assumed to be the latter as this api exists specifically for game classes that do not have useful data attachment interfaces.
+	 * @param moddedTag the modded nbt tag which stores existing data.
+	 * @since 1.0.0
+	 * @throws ClassCastException when you didn't make sure the object is implementing DataStorage through a mixin.
+	 */
+	public void loadData(T object, CompoundTag moddedTag) throws ClassCastException {
+		this.getDataKeys().forEach(id -> {
+			if (moddedTag.containsKey(id.toString())) {
+				((DataStorage) object).putAttachedData(id, this.deserialize(object, id, moddedTag.getCompoundTag(id.toString())));
+			}
+		});
+	}
+
 	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
-	public static final DataManager<ItemInstance> SAVE = new DataManager<>();
+	
+	/**
+	 * @since 1.0.0
+	 */
+	public static final DataManager<LevelProperties> LEVEL_PROPERTIES = new DataManager<>();
+
+	static {
+		io.github.minecraftcursedlegacy.api.data.DataManager.ITEM_INSTANCE = ITEM_INSTANCE;
+	}
 
 	/**
 	 * Id class that is generically bound to a subclass of attached data, for ease of access.

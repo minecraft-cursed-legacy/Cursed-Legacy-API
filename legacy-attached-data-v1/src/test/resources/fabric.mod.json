@@ -19,7 +19,8 @@
   "environment": "*",
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.test.ItemDataTest"
+      "io.github.minecraftcursedlegacy.test.ItemDataTest",
+      "io.github.minecraftcursedlegacy.test.LevelPropertiesDataTest"
     ]
   },
 

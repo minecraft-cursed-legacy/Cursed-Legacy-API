@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataStorage;
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.impl.attacheddata.DataStorage;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.util.io.CompoundTag;
 
@@ -67,7 +67,7 @@ public class DataManager<T> {
 		});
 	}
 
-	public static final DataManager<ItemInstance> ITEM_INSTANCE = io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.ITEM_INSTANCE;
+	public static DataManager<ItemInstance> ITEM_INSTANCE;
 
 	/**
 	 * @deprecated since 1.0.0. Use {@linkplain io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey this equivalent} from api v1 instead.

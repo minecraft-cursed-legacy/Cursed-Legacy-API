@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import io.github.minecraftcursedlegacy.api.data.DataManager;
+import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemInstance;
 
