@@ -25,6 +25,13 @@ def getSubprojectVersion(project, ver) {
 	return "${project.mod_version}" + "-" + ver
 }
 
+sourceSets {
+	testmod
+}
+
+import net.fabricmc.loom.task.RunClientTask
+import net.fabricmc.loom.task.RunServerTask
+
 dependencies {
 	apply plugin: "fabric-loom"
 	ext.useDep = {dep ->
@@ -68,6 +75,21 @@ allprojects {
 	}
 
 	minecraft {
+	}
+
+	sourceSets {
+		testmod {
+			compileClasspath += main.compileClasspath
+			runtimeClasspath += main.runtimeClasspath
+		}
+	}
+
+	task runTestmodClient(type: RunClientTask) {
+		classpath sourceSets.testmod.runtimeClasspath
+	}
+
+	task runTestmodServer(type: RunServerTask) {
+		classpath sourceSets.testmod.runtimeClasspath
 	}
 
 	dependencies {
@@ -129,3 +151,8 @@ allprojects {
 	}
 }
 
+subprojects {
+	dependencies {
+		testmodCompile sourceSets.main.output
+	}
+}
