@@ -8,6 +8,7 @@ import net.minecraft.util.io.CompoundTag;
  * @see {@link DataManager}.
  * @deprecated since 1.0.0. Use {@linkplain io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData this equivalent} from api v1 instead.
  */
+@Deprecated
 public interface AttachedData extends io.github.minecraftcursedlegacy.api.attacheddata.v1.AttachedData {
 	/**
 	 * @return the id of this modded data.
