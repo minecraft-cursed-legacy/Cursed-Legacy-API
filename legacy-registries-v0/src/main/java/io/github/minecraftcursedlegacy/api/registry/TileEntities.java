@@ -1,17 +1,12 @@
 package io.github.minecraftcursedlegacy.api.registry;
 
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorTileEntity;
-import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
-import net.minecraft.item.ItemType;
-import net.minecraft.item.PlaceableTileItem;
-import net.minecraft.item.TileItem;
-import net.minecraft.tile.Tile;
 import net.minecraft.tile.entity.TileEntity;
 
-import java.util.function.IntFunction;
+import java.util.Locale;
 
 /**
- * Utilities for adding and registering tile entities.
+ * Utilities for registering and retrieving tile entity classes.
  */
 public final class TileEntities {
 	/**
@@ -21,5 +16,32 @@ public final class TileEntities {
 	 */
 	public static void registerTileEntity(Class<? extends TileEntity> clazz, Id id) {
 		AccessorTileEntity.register(clazz, id.toString());
+	}
+
+	/**
+	 * Retrieves the tile entity class registered with the given ID.
+	 * @param id the ID of the tile entity class.
+	 * @return the tile entity class with that ID.
+	 */
+	public static Class<? extends TileEntity> get(Id id) {
+		return AccessorTileEntity.getIdToClassMap().get(id.toString());
+	}
+
+	/**
+	 * Retrieves the id for a given tile entity class.
+	 * @param clazz the tile entity class.
+	 * @return the ID of that tile entity class.
+	 */
+	public static Id getId(Class<? extends TileEntity> clazz) {
+		return new Id(getStringId(clazz).toLowerCase(Locale.ROOT));
+	}
+
+	/**
+	 * Retrieves the string id for a given tile entity class.
+	 * @param clazz the tile entity class.
+	 * @return the string ID of that tile entity class.
+	 */
+	public static String getStringId(Class<? extends TileEntity> clazz) {
+		return AccessorTileEntity.getClassToIdMap().get(clazz);
 	}
 }
