@@ -1,14 +1,14 @@
 package io.github.minecraftcursedlegacy.impl.terrain;
 
-import io.github.minecraftcursedlegacy.api.levelgen.ChunkDecorateCallback;
-import io.github.minecraftcursedlegacy.api.levelgen.ExtendedBiome;
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenEvents;
+import io.github.minecraftcursedlegacy.api.terrain.ExtendedBiome;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.level.structure.Feature;
 
 public class LevelGenImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		ChunkDecorateCallback decoration = (level, biome, rand, x, z) -> {
+		ChunkGenEvents.Decorate decoration = (level, biome, rand, x, z) -> {
 			if (biome instanceof ExtendedBiome) {
 				ExtendedBiome eBiome = (ExtendedBiome) biome;
 
@@ -22,7 +22,7 @@ public class LevelGenImpl implements ModInitializer {
 			}
 		};
 
-		ChunkDecorateCallback.OVERWORLD.register(decoration);
-		ChunkDecorateCallback.NETHER.register(decoration);
+		ChunkGenEvents.Decorate.OVERWORLD.register(decoration);
+		ChunkGenEvents.Decorate.NETHER.register(decoration);
 	}
 }

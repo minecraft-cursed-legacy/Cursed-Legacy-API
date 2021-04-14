@@ -82,10 +82,13 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 		});
 	}
 
+	/**
+	 * Stores data to an item instance.
+	 */
 	public static final DataManager<ItemInstance> ITEM_INSTANCE = new DataManager<>();
 	
 	/**
-	 * For when you don't want to use mojang's level data stuff that uses {@linkplain MapStorageBase} or very specifically need to access Level Properties.
+	 * Stores data to the Level.dat file.
 	 * @since 1.0.0
 	 */
 	public static final DataManager<LevelProperties> LEVEL_PROPERTIES = new DataManager<>();

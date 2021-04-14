@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.api.levelgen.ChunkDecorateCallback;
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenEvents;
 import net.minecraft.level.Level;
 import net.minecraft.level.source.LevelSource;
 import net.minecraft.level.source.NetherLevelSource;
@@ -27,7 +27,7 @@ public class MixinNetherLevelSource {
 		x *= 16;
 		z *= 16;
 
-		ChunkDecorateCallback.NETHER.invoker().onDecorate(
+		ChunkGenEvents.Decorate.NETHER.invoker().onDecorate(
 				this.level,
 				this.level.getBiomeSource().getBiome(x + 16, z + 16),
 				this.rand,
