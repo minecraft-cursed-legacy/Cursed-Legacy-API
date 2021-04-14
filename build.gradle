@@ -52,6 +52,7 @@ dependencies {
 	useDep project(":legacy-registries-v0")
 	useDep project(":legacy-terrain-v1")
 	useDep project(":legacy-translations-v0")
+	useDep project(":legacy-worldtypes-v1")
 	
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	include "tk.valoeghese:ZoesteriaConfig:1.3.6"

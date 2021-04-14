@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.impl.terrain;
+package io.github.minecraftcursedlegacy.impl.worldtype;
 
 import javax.annotation.Nullable;
 
@@ -11,7 +11,7 @@ import net.minecraft.util.io.CompoundTag;
  * @since 1.0.0
  */
 public class WorldTypeData implements AttachedData {
-	public WorldTypeData(Id typeId) {
+	WorldTypeData(Id typeId) {
 		this.typeId = typeId;
 	}
 
@@ -49,7 +49,7 @@ public class WorldTypeData implements AttachedData {
 		tag.put("id", this.typeId.toString());
 
 		if (this.additionalData != null) {
-			tag.put("id", this.typeId.toString());
+			tag.put("data", this.typeId.toString());
 		}
 
 		return tag;

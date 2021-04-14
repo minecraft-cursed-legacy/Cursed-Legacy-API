@@ -1,10 +1,7 @@
 package io.github.minecraftcursedlegacy.impl.terrain;
 
-import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager;
-import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey;
 import io.github.minecraftcursedlegacy.api.terrain.ChunkGenEvents;
 import io.github.minecraftcursedlegacy.api.terrain.ExtendedBiome;
-import io.github.minecraftcursedlegacy.api.terrain.WorldType;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.level.structure.Feature;
 
@@ -28,10 +25,5 @@ public class LevelGenImpl implements ModInitializer {
 
 		ChunkGenEvents.Decorate.OVERWORLD.register(decoration);
 		ChunkGenEvents.Decorate.NETHER.register(decoration);
-		
-		// World Type
-		worldTypeData = DataManager.LEVEL_PROPERTIES.addAttachedData(WorldTypeData.ID, properties -> new WorldTypeData(WorldType.DEFAULT.getId()));
 	}
-	
-	public static DataKey<WorldTypeData> worldTypeData;
 }

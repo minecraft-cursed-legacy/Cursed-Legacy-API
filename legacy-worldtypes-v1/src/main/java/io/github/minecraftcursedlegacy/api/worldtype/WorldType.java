@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.api.terrain;
+package io.github.minecraftcursedlegacy.api.worldtype;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenerator;
+import io.github.minecraftcursedlegacy.impl.worldtype.WorldTypeImpl;
 import net.minecraft.level.Level;
 import net.minecraft.level.gen.BiomeSource;
 import net.minecraft.level.source.LevelSource;
@@ -33,6 +35,7 @@ public class WorldType {
 	public WorldType(Id id, boolean storeAdditionalData) {
 		this.id = id;
 		REVERSE_LOOKUP.put(id, this);
+		WorldTypeImpl.add(this);
 
 		this.storeAdditionalData = storeAdditionalData;
 		this.translationKey = "generator." + this.id.getNamespace() + "." + this.id.getName();

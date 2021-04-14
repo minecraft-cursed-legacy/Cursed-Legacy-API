@@ -2,7 +2,7 @@ package io.github.minecraftcursedlegacy.test;
 
 import java.util.Random;
 
-import io.github.minecraftcursedlegacy.api.levelgen.ExtendedBiome;
+import io.github.minecraftcursedlegacy.api.terrain.ExtendedBiome;
 import net.minecraft.level.biome.Biome;
 import net.minecraft.level.structure.Feature;
 import net.minecraft.level.structure.SpruceTree;
