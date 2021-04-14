@@ -49,6 +49,7 @@ public class WorldTypeImpl implements ModInitializer {
 	public static void add(WorldType type) {
 		TYPES.add(type);
 	}
+
 	public static WorldType cycle() {
 		if (++selected >= TYPES.size()) {
 			selected = 0;
@@ -59,5 +60,9 @@ public class WorldTypeImpl implements ModInitializer {
 	
 	public static WorldType getSelected() {
 		return TYPES.get(selected);
+	}
+
+	public static boolean hasModdedTypes() {
+		return TYPES.size() > 1;
 	}
 }
