@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.level.Level;
-import net.minecraft.level.dimension.Dimension;
 import net.minecraft.level.gen.BiomeSource;
 import net.minecraft.level.source.LevelSource;
 import net.minecraft.level.source.OverworldLevelSource;
@@ -46,7 +45,7 @@ public class WorldType {
 	/**
 	 * Creates the world type's overworld biome source for the given level.
 	 * @param level the level.
-	 * @param additionalData if this world type stores additional data, a tag to read and write such data from.
+	 * @param additionalData if this world type stores additional data, a tag to read and write such data from. Otherwise null.
 	 * @return an instance of {@linkplain BiomeSource} or one of its subclassses, for placing biomes in the world.
 	 */
 	public BiomeSource createBiomeSource(Level level, @Nullable CompoundTag additionalData) {
@@ -56,6 +55,7 @@ public class WorldType {
 	/**
 	 * Creates the world type's overworld chunk gemerator for the given level.
 	 * @param level the level.
+	 * @param additionalData if this world type stores additional data, a tag to read and write such data from. Otherwise null.
 	 * @return an instance of {@linkplain LevelSource} or one of its subclassses (modded ones will typically be an instance of {@linkplain ChunkGenerator}), for generating the shape and decorations of the world.
 	 */
 	public LevelSource createChunkGenerator(Level level, @Nullable CompoundTag additionalData) {
@@ -71,12 +71,11 @@ public class WorldType {
 	}
 
 	/**
-	 * Create a compound tag of additional stored data to be used in functions of this world type.
-	 * @return a compound tag of additional data, if additional data should be written. Otherwise, returns null.
+	 * Whether this world type stores additional data.
+	 * @return a boolean specifying whether the world type stores additional data.
 	 */
-	@Nullable
-	public CompoundTag writeAdditionalData(Dimension dimension, @Nullable CompoundTag previousData) {
-		return null;
+	public boolean storesAdditionalData() {
+		return this.storeAdditionalData;
 	}
 
 	/**

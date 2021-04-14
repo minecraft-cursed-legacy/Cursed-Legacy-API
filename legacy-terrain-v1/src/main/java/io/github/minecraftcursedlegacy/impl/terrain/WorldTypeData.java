@@ -27,8 +27,9 @@ public class WorldTypeData implements AttachedData {
 	}
 
 	@Nullable
-	public CompoundTag getLoadedData() {
-		return this.additionalData;
+	public CompoundTag getOrCreateLoadedData(boolean storesAdditionalData) {
+		// If null and should not be null, set it to a new blank compound tag. Otherwise, just return the value (which will be null if it doesn't store data, or the existing tag)
+		return this.additionalData == null && storesAdditionalData ? (this.additionalData = new CompoundTag()) : this.additionalData;
 	}
 
 	/**
