@@ -22,17 +22,20 @@ public class RegistryTest implements ModInitializer {
 		tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
 
 
-		tileWithEntity = Registries.TILE.register(new Id("modid_tile_with_entity"),
+		tileWithEntity = Registries.TILE.register(new Id("modid:tile_with_entity"),
 				i -> new BasicTileWithEntity(i).setName("exampleBlockWithEntity"));
+		tileWithEntityItem = TileItems.registerTileItem(new Id("modid:tile_with_entity"), tileWithEntity);
 		tileEntityClass = BasicTileWithEntity.BasicTileEntity.class;
 		TileEntities.registerTileEntity(tileEntityClass, new Id("modid:tile_entity"));
 
 		SmeltingRecipeRegistry.getInstance().addSmeltingRecipe(item.id, new ItemInstance(tile));
+		SmeltingRecipeRegistry.getInstance().addSmeltingRecipe(Tile.DIRT.id, new ItemInstance(tileWithEntity));
 	}
 
 	public static ItemType item;
 	public static Tile tile;
-	public static Tile tileWithEntity;
 	public static ItemType tileItem;
+	public static Tile tileWithEntity;
+	public static ItemType tileWithEntityItem;
 	public static Class<? extends TileEntity> tileEntityClass;
 }
