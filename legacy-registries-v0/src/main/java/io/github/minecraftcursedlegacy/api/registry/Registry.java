@@ -23,18 +23,25 @@
 
 package io.github.minecraftcursedlegacy.api.registry;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
-import net.minecraft.util.io.CompoundTag;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.Consumer;
-import java.util.function.IntFunction;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
+import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
+import net.fabricmc.fabric.api.event.Event;
+import net.minecraft.util.io.CompoundTag;
 
 /**
  * Registry for game content.
@@ -50,6 +57,8 @@ public class Registry<T> implements Iterable<T> {
 		this.registryName = registryName;
 		this.defaultValue = defaultValue;
 		RegistryRemapper.addRegistry(this);
+
+		this.event = RegistryImpl.createEvent(clazz);
 	}
 
 	protected final BiMap<Id, T> byRegistryId = HashBiMap.create();
@@ -57,6 +66,7 @@ public class Registry<T> implements Iterable<T> {
 	private final Id registryName;
 	@Nullable
 	private final T defaultValue;
+	private final Event<RegistryEntryAddedCallback<T>> event;
 	private int nextId = this.getStartSerialisedId();
 	/**
 	 * Whether the registry is locked, and values can no longer be registered to it.
@@ -107,6 +117,7 @@ public class Registry<T> implements Iterable<T> {
 	 * @param value the registered value.
 	 */
 	protected void onRegister(int serialisedId, Id id, T value) {
+		this.event.invoker().onEntryAdded(value, id, serialisedId);
 	}
 
 	/**
@@ -293,6 +304,13 @@ public class Registry<T> implements Iterable<T> {
 	 */
 	public Set<Integer> serialisedIds() {
 		return this.bySerialisedId.keySet();
+	}
+
+	/**
+	 * @return the {@linkplain RegistryEntryAddedCallback} event associated with this registry.
+	 */
+	public final Event<RegistryEntryAddedCallback<T>> getEvent() {
+		return this.event;
 	}
 
 	@Override

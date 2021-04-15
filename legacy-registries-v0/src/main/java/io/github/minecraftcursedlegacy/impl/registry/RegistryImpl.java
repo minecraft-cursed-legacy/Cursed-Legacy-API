@@ -31,16 +31,32 @@ import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorEntityRegistry;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
+import io.github.minecraftcursedlegacy.api.registry.RegistryEntryAddedCallback;
 import io.github.minecraftcursedlegacy.impl.Hacks;
 
 public class RegistryImpl implements ModInitializer {
-	private static int currentItemtypeId = Tile.BY_ID.length;
-	private static int currentTileId = 1;
+	@Override
+	public void onInitialize() {
+		Hacks.hack = Registry::lockAll;
+	}
+	
 
-	static final Map<Tile, ItemType> T_2_TI = new HashMap<>();
+	public static <I extends ItemType> I addTileItem(Id id, Tile value, IntFunction<I> constructor) {
+		return ((ItemTypeRegistry) ITEM_TYPE).addTileItem(id, value, constructor);
+	}
+
+	public static <T> Event<RegistryEntryAddedCallback<T>> createEvent(Class<T> clazz) {
+		return EventFactory.createArrayBacked(RegistryEntryAddedCallback.class, listeners -> (object, id, rawId) -> {
+			for (RegistryEntryAddedCallback<T> listener : listeners) {
+				listener.onEntryAdded(object, id, rawId);
+			}
+		});
+	}
 
 	static int nextItemTypeId() {
 		while (ItemType.byId[currentItemtypeId] != null) {
@@ -56,6 +72,24 @@ public class RegistryImpl implements ModInitializer {
 		}
 
 		return currentTileId;
+	}
+
+	public static final Registry<ItemType> ITEM_TYPE;
+	public static final Registry<Tile> TILE;
+	public static final Registry<EntityType> ENTITY_TYPE;
+
+	private static int currentItemtypeId = Tile.BY_ID.length;
+	private static int currentTileId = 1;
+
+	static final Map<Tile, ItemType> T_2_TI = new HashMap<>();
+
+	static {
+		//noinspection ResultOfMethodCallIgnored
+		Tile.BED.hashCode(); // make sure tiles are initialised
+		AccessorEntityRegistry.getIdToClassMap(); // make sure entities are initialised
+		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
+		TILE = new TileRegistry(new Id("api:tile"));
+		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
 	}
 
 	private static class TileRegistry extends Registry<Tile> {
@@ -155,27 +189,5 @@ public class RegistryImpl implements ModInitializer {
 			Tile.field_1943[newSerialisedId] = field_1943.getOrDefault(remappedValue, 0);
 			Tile.field_1944[newSerialisedId] = field_1944.getOrDefault(remappedValue, false);
 		}
-	}
-
-	public static <I extends ItemType> I addTileItem(Id id, Tile value, IntFunction<I> constructor) {
-		return ((ItemTypeRegistry) ITEM_TYPE).addTileItem(id, value, constructor);
-	}
-
-	@Override
-	public void onInitialize() {
-		Hacks.hack = Registry::lockAll;
-	}
-
-	public static final Registry<ItemType> ITEM_TYPE;
-	public static final Registry<Tile> TILE;
-	public static final Registry<EntityType> ENTITY_TYPE;
-
-	static {
-		//noinspection ResultOfMethodCallIgnored
-		Tile.BED.hashCode(); // make sure tiles are initialised
-		AccessorEntityRegistry.getIdToClassMap(); // make sure entities are initialised
-		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
-		TILE = new TileRegistry(new Id("api:tile"));
-		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
 	}
 }
