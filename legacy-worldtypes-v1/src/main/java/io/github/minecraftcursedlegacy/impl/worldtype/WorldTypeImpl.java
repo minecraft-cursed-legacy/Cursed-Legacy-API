@@ -62,6 +62,10 @@ public class WorldTypeImpl implements ModInitializer {
 		return TYPES.get(selected);
 	}
 
+	public static void setSelected(WorldType type) {
+		selected = TYPES.indexOf(type);
+	}
+
 	public static boolean hasModdedTypes() {
 		return TYPES.size() > 1;
 	}
