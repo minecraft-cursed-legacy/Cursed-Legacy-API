@@ -21,25 +21,25 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.test;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
+import io.github.minecraftcursedlegacy.api.event.ActionResult;
+import io.github.minecraftcursedlegacy.api.event.TileInteractionCallback;
+import net.fabricmc.api.DedicatedServerModInitializer;
 import net.minecraft.entity.player.ServerPlayer;
-import net.minecraft.server.network.ServerPlayerPacketHandler;
+import net.minecraft.server.level.ServerLevel;
 
-@Mixin(ServerPlayerPacketHandler.class)
-public class MixinServerPlayerPacketHandler {
-	@Shadow
-	private ServerPlayer field_920;
+public class NetworkingTestServer implements DedicatedServerModInitializer {
+	@Override
+	public void onInitializeServer() {
+		TileInteractionCallback.EVENT.register((player, level, item, tile, x, y, z, face) -> {
+			// This may not trigger every time due to load order.
+			// That is ok.
+			if (face == 0 && level instanceof ServerLevel && player instanceof ServerPlayer) {
+				NetworkingTest.testPluginChannel.send(new byte[] {(byte) tile.id}, (ServerPlayer) player);
+			}
 
-	@Inject(at= @At("HEAD"), method = "loseConnection")
-	public void method_1473(String string, Object[] objects, CallbackInfo bruh) {
-		VanillaCheckerImpl.playermap.remove(field_920.name);
+			return ActionResult.PASS;
+		});
 	}
 }

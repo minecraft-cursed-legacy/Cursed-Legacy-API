@@ -21,25 +21,26 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.test;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import io.github.minecraftcursedlegacy.api.networking.PluginChannel;
+import io.github.minecraftcursedlegacy.api.registry.Id;
+import net.minecraft.network.PacketHandler;
+import net.minecraft.packet.play.SendChatMessageS2C;
 
-import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
-import net.minecraft.entity.player.ServerPlayer;
-import net.minecraft.server.network.ServerPlayerPacketHandler;
-
-@Mixin(ServerPlayerPacketHandler.class)
-public class MixinServerPlayerPacketHandler {
-	@Shadow
-	private ServerPlayer field_920;
-
-	@Inject(at= @At("HEAD"), method = "loseConnection")
-	public void method_1473(String string, Object[] objects, CallbackInfo bruh) {
-		VanillaCheckerImpl.playermap.remove(field_920.name);
+/**
+ * The test plugin channel.
+ */
+public class TestPluginChannel extends PluginChannel {
+	@Override
+	public Id getChannelIdentifier() {
+		return ID;
 	}
+
+	@Override
+	public void onReceive(PacketHandler arg, byte[] data) {
+		arg.handleChatMessage(new SendChatMessageS2C("Wassup bro! Tile: " + data[0]));
+	}
+
+	public static final Id ID = new Id("legacy-networking-test", "test");
 }

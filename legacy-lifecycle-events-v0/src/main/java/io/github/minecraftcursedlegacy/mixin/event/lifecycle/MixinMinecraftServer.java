@@ -34,7 +34,7 @@ import net.minecraft.server.MinecraftServer;
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
 	// MinecraftServer#tick()
-	@Inject(at = @At("RETURN"), method = "method_2171")
+	@Inject(at = @At("RETURN"), method = "tick")
 	private void onTick(CallbackInfo info) {
 		DedicatedServerTickCallback.EVENT.invoker().onServerTick((MinecraftServer) (Object) this);
 	}

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "legacy-worldtype-test",
+  "id": "legacy-networking-test",
   "version": "${version}",
 
-  "name": "World Type Test Mod",
-  "description": "Tests for the world type module of Cursed Legacy API.",
+  "name": "Networking Test Mod",
+  "description": "Tests for the networking module of Cursed Legacy API.",
   "authors": [
     "The Cursed Legacy Team"
   ],
@@ -19,17 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.test.WorldTypeTest"
+      "io.github.minecraftcursedlegacy.test.NetworkingTest"
     ]
   },
 
   "depends": {
     "fabricloader": "*",
     "legacy-api-base": "*",
-    "legacy-attached-data": "*",
-    "legacy-terrain": "*",
-    "legacy-translations": "*",
-    "legacy-worldtypes": "*",
+    "legacy-networking": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }

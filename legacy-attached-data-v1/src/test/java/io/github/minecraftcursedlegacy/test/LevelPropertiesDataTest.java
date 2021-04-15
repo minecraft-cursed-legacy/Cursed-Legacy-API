@@ -30,7 +30,6 @@ import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import io.github.minecraftcursedlegacy.api.event.TileInteractionCallback;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.client.level.ClientLevel;
 import net.minecraft.item.ItemType;
 import net.minecraft.util.io.CompoundTag;
 
@@ -40,7 +39,7 @@ public class LevelPropertiesDataTest implements ModInitializer {
 		test_level = DataManager.LEVEL_PROPERTIES.addAttachedData(TestLevelData.ID, properties -> new TestLevelData(false));
 
 		TileInteractionCallback.EVENT.register((player, level, item, tile, x, y, z, face) -> {
-			if (!(level instanceof ClientLevel)) {
+			if (!level.isClient) {
 				if (item != null && item.getType() == ItemType.stick) {
 					TestLevelData data = DataManager.LEVEL_PROPERTIES.getAttachedData(level.getProperties(), test_level);
 					data.active = !data.active;
