@@ -9,6 +9,7 @@
     "AccessorRecipeRegistry",
     "AccessorShapedRecipe",
     "AccessorShapelessRecipe",
+    "AccessorTileEntity",
     "AccessorTileItem"
   ],
   "injectors": {

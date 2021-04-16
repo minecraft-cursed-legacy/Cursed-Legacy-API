@@ -1,4 +1,4 @@
-package io.github.minecraftcursedlegacy.accessor.registry;
+package io.github.minecraftcursedlegacy.accessor.tileentities;
 
 import net.minecraft.tile.entity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;

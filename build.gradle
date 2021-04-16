@@ -51,6 +51,7 @@ dependencies {
 	useDep project(":legacy-recipes-v0")
 	useDep project(":legacy-registries-v0")
 	useDep project(":legacy-terrain-v1")
+	useDep project(":legacy-tile-entities-v1")
 	useDep project(":legacy-translations-v0")
 	useDep project(":legacy-worldtypes-v1")
 	

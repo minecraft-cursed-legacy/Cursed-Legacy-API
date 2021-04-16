@@ -1,6 +1,7 @@
-package io.github.minecraftcursedlegacy.api.registry;
+package io.github.minecraftcursedlegacy.api.tileentities;
 
-import io.github.minecraftcursedlegacy.accessor.registry.AccessorTileEntity;
+import io.github.minecraftcursedlegacy.accessor.tileentities.AccessorTileEntity;
+import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.tile.entity.TileEntity;
 
 import java.util.Locale;
