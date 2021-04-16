@@ -27,22 +27,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.IntFunction;
 
-import net.minecraft.item.ItemType;
-import net.minecraft.tile.Tile;
-
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorEntityRegistry;
+import io.github.minecraftcursedlegacy.api.networking.PluginChannel;
+import io.github.minecraftcursedlegacy.api.networking.PluginChannelRegistry;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.api.registry.RegistryEntryAddedCallback;
 import io.github.minecraftcursedlegacy.impl.Hacks;
+import io.github.minecraftcursedlegacy.impl.registry.sync.RegistrySyncChannelS2C;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.item.ItemType;
+import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 public class RegistryImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Hacks.hack = Registry::lockAll;
+
+		PluginChannelRegistry.registerPluginChannel(syncChannel = new RegistrySyncChannelS2C());
 	}
 	
 
@@ -82,6 +87,10 @@ public class RegistryImpl implements ModInitializer {
 	private static int currentTileId = 1;
 
 	static final Map<Tile, ItemType> T_2_TI = new HashMap<>();
+
+	// Sync Stuff
+	public static PluginChannel syncChannel;
+	public static CompoundTag registryData; // this is used server side only
 
 	static {
 		//noinspection ResultOfMethodCallIgnored

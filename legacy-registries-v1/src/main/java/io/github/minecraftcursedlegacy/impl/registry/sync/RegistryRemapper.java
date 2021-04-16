@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.registry;
+package io.github.minecraftcursedlegacy.impl.registry.sync;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -37,6 +37,8 @@ import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import javax.annotation.Nullable;
+
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.util.io.AbstractTag;
 import net.minecraft.util.io.CompoundTag;
@@ -48,7 +50,7 @@ public class RegistryRemapper {
 		REGISTRIES.add(registry);
 	}
 
-	public static void remap(File file) {
+	public static void readAndWrite(File file, @Nullable CompoundTag cache) {
 		// just in case
 		file.getParentFile().mkdirs();
 
@@ -62,42 +64,33 @@ public class RegistryRemapper {
 					data = (CompoundTag) AbstractTag.readTag(dis);
 				}
 
-				CompoundTag newData = new CompoundTag();
-
-				Iterator<Registry<?>> iter = REGISTRIES.iterator();
-
-				// remap and add new data
-				LOGGER.info("Remapping Registries.");
-				while (iter.hasNext()) {
-					Registry<?> registry = iter.next();
-					String key = registry.getRegistryName().toString();
-
-					if (data.containsKey(key)) {
-						newData.put(key, registry.remap(data.getCompoundTag(key)));
-					} else {
-						newData.put(key, registry.toTag());
-					}
+				if (cache == null) { // "cache" acts as newData to write
+					cache = new CompoundTag();
 				}
+
+				remap(data, cache);
 
 				LOGGER.info("Writing Registry Data.");
 				// write
 				try (DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
-					AbstractTag.writeTag(newData, dos);
+					AbstractTag.writeTag(cache, dos);
 				}
 			} else {
-				CompoundTag data = new CompoundTag();
+				if (cache == null) { // "cache" acts as the collected data to write
+					cache = new CompoundTag();
+				}
 
 				// add data
 				LOGGER.info("Collecting Registry Data.");
 
 				for (Registry<?> registry : REGISTRIES) {
-					data.put(registry.getRegistryName().toString(), registry.toTag());
+					cache.put(registry.getRegistryName().toString(), registry.toTag());
 				}
 
 				// write
 				LOGGER.info("Writing Registry Data.");
 				try (DataOutputStream dos = new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)))) {
-					AbstractTag.writeTag(data, dos);
+					AbstractTag.writeTag(cache, dos);
 				}
 			}
 		} catch (IOException e) {
@@ -105,9 +98,33 @@ public class RegistryRemapper {
 		}
 	}
 
+	public static void remap(CompoundTag readFrom, @Nullable CompoundTag writeTo) {
+		Iterator<Registry<?>> iter = REGISTRIES.iterator();
+		boolean nc = writeTo != null; // null check
+
+		// remap and add new data
+		LOGGER.info("Remapping Registries.");
+		while (iter.hasNext()) {
+			Registry<?> registry = iter.next(); // get next registry
+			String key = registry.getRegistryName().toString(); // get name
+
+			if (nc) { // If we are writing to a tag, we special-case it
+				// We still will need to write, in the case of new entries in a registry, or a new registry!
+
+				if (readFrom.containsKey(key)) {
+					writeTo.put(key, registry.remap(readFrom.getCompoundTag(key)));
+				} else {
+					writeTo.put(key, registry.toTag());
+				}
+			} else if (readFrom.containsKey(key)) { // Otherwise, just remap
+				registry.remap(readFrom.getCompoundTag(key)); // Duplicate earlier line
+			}
+		}
+	}
+
 	public static Stream<Registry<?>> registries() {
 		return REGISTRIES.stream();
 	}
 
-	static final Logger LOGGER = Logger.getLogger("Cursed Legacy API");
+	public static final Logger LOGGER = Logger.getLogger("Cursed Legacy API");
 }

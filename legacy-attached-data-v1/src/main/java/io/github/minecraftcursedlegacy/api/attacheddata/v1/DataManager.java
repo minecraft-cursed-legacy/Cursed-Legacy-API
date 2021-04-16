@@ -31,7 +31,6 @@ import java.util.function.Function;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.level.LevelProperties;
-import net.minecraft.level.storage.MapStorageBase;
 import net.minecraft.util.io.CompoundTag;
 
 /**

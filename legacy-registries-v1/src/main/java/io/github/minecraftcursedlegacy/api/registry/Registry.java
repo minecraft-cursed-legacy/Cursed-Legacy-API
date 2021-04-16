@@ -39,7 +39,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
-import io.github.minecraftcursedlegacy.impl.registry.RegistryRemapper;
+import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.util.io.CompoundTag;
 

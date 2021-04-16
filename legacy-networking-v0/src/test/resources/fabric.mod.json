@@ -20,6 +20,9 @@
   "entrypoints": {
     "init": [
       "io.github.minecraftcursedlegacy.test.NetworkingTest"
+    ],
+    "server": [
+      "io.github.minecraftcursedlegacy.test.NetworkingTestServer"
     ]
   },
 

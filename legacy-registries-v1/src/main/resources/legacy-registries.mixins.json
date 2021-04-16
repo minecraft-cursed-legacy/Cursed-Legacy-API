@@ -16,6 +16,10 @@
     "MixinHandItemRenderer",
     "MixinItemRenderer"
   ],
+  "server": [
+    "MixinMinecraftServer",
+    "MixinPendingConnection"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
