@@ -8,6 +8,9 @@
   "client": [
     "MixinCreateLevelScreen"
   ],
+  "server": [
+    "MixinMinecraftServer"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

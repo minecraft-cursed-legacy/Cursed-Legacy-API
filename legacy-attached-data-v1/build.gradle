@@ -4,5 +4,5 @@ version = getSubprojectVersion(project, "1.0.0")
 dependencies {
 	compile project(path: ':legacy-api-base')
 	testImplementation project(path: ':legacy-interaction-events-v0')
-	testImplementation project(path: ':legacy-registries-v0')
+	testImplementation project(path: ':legacy-registries-v1')
 }

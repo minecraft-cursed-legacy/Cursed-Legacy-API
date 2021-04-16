@@ -1,6 +1,0 @@
-archivesBaseName = "legacy-registries-v0"
-version = getSubprojectVersion(project, "0.6.3")
-
-dependencies {
-	compile project(path: ':legacy-api-base')
-}

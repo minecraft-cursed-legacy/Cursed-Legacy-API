@@ -49,7 +49,7 @@ dependencies {
 	useDep project(":legacy-networking-v0")
 	useDep project(":legacy-networking-v0")
 	useDep project(":legacy-recipes-v0")
-	useDep project(":legacy-registries-v0")
+	useDep project(":legacy-registries-v1")
 	useDep project(":legacy-terrain-v1")
 	useDep project(":legacy-tile-entities-v1")
 	useDep project(":legacy-translations-v0")

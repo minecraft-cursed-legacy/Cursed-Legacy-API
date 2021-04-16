@@ -29,6 +29,7 @@
     "legacy-attached-data": "*",
     "legacy-terrain": "*",
     "legacy-translations": "*",
+    "legacy-worldtypes": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
