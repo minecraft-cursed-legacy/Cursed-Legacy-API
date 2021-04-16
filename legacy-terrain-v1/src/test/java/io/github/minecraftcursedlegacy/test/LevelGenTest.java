@@ -41,11 +41,11 @@ public class LevelGenTest implements ModInitializer {
 		BiomePlacementCallback.EVENT.register((temperature, humidity, biomesetter) -> {
 			float t = temperature;
 
-			while (t > 0.05f) {
-				t -= 0.05f;
+			while (t > 0.1f) {
+				t -= 0.1f;
 			}
 
-			if (t > 0.025f) {
+			if (t > 0.06f) {
 				biomesetter.accept(testBiome);
 				return ActionResult.SUCCESS;
 			}

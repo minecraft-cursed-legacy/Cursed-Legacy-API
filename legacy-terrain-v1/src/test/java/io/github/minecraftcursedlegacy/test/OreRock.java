@@ -33,19 +33,33 @@ public class OreRock extends Feature {
 
 	@Override
 	public boolean generate(Level level, Random rand, int x, int y, int z) {
-		for (int xo = -1; xo <= 1; ++xo) {
-			for (int zo = -1; zo <= 1; ++zo) {
-				for (int yo = 0; yo < 3; ++yo) {
-					if (yo == 3 && Math.abs(xo) == 1 && 1 == Math.abs(zo)) {
-						continue;
-					}
+		if (level.getTileId(x, y - 1, z) == Tile.GRASS.id) {
+			if (rand.nextInt(4) == 0) { // big boi
+				for (int xo = -1; xo <= 1; ++xo) {
+					for (int zo = -1; zo <= 1; ++zo) {
+						for (int yo = 0; yo < 3; ++yo) {
+							if (yo == 2 && Math.abs(xo) == 1 && 1 == Math.abs(zo)) {
+								continue;
+							}
 
-					level.setTile(x, y, z, rand.nextInt(3) == 0 ? Tile.IRON_ORE.id : Tile.STONE.id);
+							level.setTile(x + xo, y + yo, z + zo, rand.nextInt(3) == 0 ? Tile.IRON_ORE.id : Tile.STONE.id);
+						}
+					}
+				}
+			} else { // smol boi
+				for (int xo = 0; xo < 2; ++xo) {
+					for (int zo = 0; zo < 2; ++zo) {
+						for (int yo = 0; yo < 2; ++yo) {
+							level.setTile(x + xo, y + yo, z + zo, rand.nextInt(3) == 0 ? Tile.IRON_ORE.id : Tile.STONE.id);
+						}
+					}
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 }
