@@ -26,6 +26,7 @@ package io.github.minecraftcursedlegacy.api.terrain.feature;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenEvents;
 import net.minecraft.level.Level;
 import net.minecraft.level.structure.Feature;
 
@@ -40,6 +41,18 @@ public final class PositionedFeature extends Feature {
 
 	private Placement placement;
 	private Feature feature;
+
+	/**
+	 * Generate this positioned feature in the world, assuming the root positions of x, z are given (i.e. those provided by {@linkplain ChunkGenEvents.Decorate}, chunkX * 16 and chunkZ * 16).
+	 * @param level the level in which to generate the feature.
+	 * @param rand the worldgen pseudorandom number generator.
+	 * @param startX the start x position for generation.
+	 * @param startZ the start z position for generation.
+	 * @return whether the feature successfully generated at least once.
+	 */
+	public boolean generate(Level level, Random rand, int startX, int startZ) {
+		return this.generate(level, rand, startX, 0, startZ);
+	}
 
 	/**
 	 * Generate this positioned feature in various positions relative to the given start coordinates.

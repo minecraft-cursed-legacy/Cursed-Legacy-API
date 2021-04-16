@@ -23,37 +23,34 @@
 
 package io.github.minecraftcursedlegacy.api.terrain.feature;
 
+import java.util.Arrays;
 import java.util.Random;
-import java.util.function.Function;
 
 import net.minecraft.level.Level;
-import net.minecraft.level.structure.Feature;
 import net.minecraft.util.maths.TilePos;
 
 /**
- * Provides the locations for a {@linkplain Feature feature} to generate in the world, when used in a {@linkplain PositionedFeature}.
+ * {@linkplain Placement} that scatters along the x and z of the given region, and offsets the height (typically from 0) based on a given range.
+ * Similar to how vanilla places most ores.
  */
-public abstract class Placement implements Function<Feature, PositionedFeature> {
+public class ScatteredYRangePlacement extends Placement {
 	/**
-	 * Retrieve the set of positions at which the feature should be generated.
-	 * @param level the level in whch to generate.
-	 * @param rand the pseudo random number generator for worldgen.
-	 * @param startX the start X position for offseting positions.
-	 * @param startY the start Y position for offseting positions.
-	 * @param startZ the start Z position for offseting positions.
-	 * @return an Iterable of positions to generate the feature at.
+	 * @param minY the minimum y for generation.
+	 * @param maxY the maximum y for generation, exclusive. Must be greater than minY.
 	 */
-	public abstract Iterable<TilePos> getPositions(Level level, Random rand, int startX, int startY, int startZ);
-
-	/**
-	 * Create a decorated feature from this placement and the provided feature.
-	 * @param feature the feature to place via this placement.
-	 * @return the {@linkplain PositionedFeature} created via the combination of this placement and the feature.
-	 */
-	@Override
-	public final PositionedFeature apply(Feature feature) {
-		return new PositionedFeature(this, feature);
+	public ScatteredYRangePlacement(int minY, int maxY) {
+		this.minY = minY;
+		this.rangeY = maxY - minY;
 	}
 
-	public static final Placement SCATTERED_HEIGHTMAP = new ScatteredHeightmapPlacement();
+	private final int minY;
+	private final int rangeY;
+
+	@Override
+	public Iterable<TilePos> getPositions(Level level, Random rand, int startX, int startY, int startZ) {
+		int xToGen = startX + rand.nextInt(16) + 8;
+		int yToGen = startY + rand.nextInt(this.rangeY) + this.minY;
+		int zToGen = startZ + rand.nextInt(16) + 8;
+		return Arrays.asList(new TilePos(xToGen, yToGen, zToGen));
+	}
 }

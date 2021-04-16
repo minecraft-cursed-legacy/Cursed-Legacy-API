@@ -23,13 +23,13 @@ public class MixinOverworldLevelSource {
 
 	@Inject(at = @At(value = "INVOKE", target = "net/minecraft/level/Level.getBiomeSource()Lnet/minecraft/level/gen/BiomeSource;", ordinal = 1), method = "decorate")
 	private void onDecorate(LevelSource levelSource, int x, int z, CallbackInfo info) {
-		// the parameter variables x and z are multiplied by 16 in the code early on
-		// but for some reason it doesn't seem to affect this
+		// the parameter variables x and z are multiplied by 16 in the code early on and stored in a local variable
+		// So we replicate it here for ease of mods using this, as block x/z is more applicable for decoration
 		x *= 16;
 		z *= 16;
 		ChunkGenEvents.Decorate.OVERWORLD.invoker().onDecorate(
 				this.level,
-				this.level.getBiomeSource().getBiome(x + 16, z + 16),
+				this.level.getBiomeSource().getBiome(x + 16, z + 16), // yes, vanilla does +16 in getBiome calls for features.
 				this.rand,
 				x,
 				z);

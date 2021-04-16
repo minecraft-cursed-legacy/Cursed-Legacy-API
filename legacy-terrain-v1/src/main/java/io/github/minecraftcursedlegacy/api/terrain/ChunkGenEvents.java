@@ -34,11 +34,11 @@ public class ChunkGenEvents {
 
 		/**
 		 * Called on chunk decoration, after vanilla decorators are run.
-		 * @param level
-		 * @param biome
-		 * @param rand
-		 * @param x
-		 * @param z
+		 * @param level the level to generate in.
+		 * @param biome the biome of the chunk region to be considered for decoration.
+		 * @param rand the worldgen pseudorandom number generator.
+		 * @param x the start X position for worldgen, equal to chunkX * 16.
+		 * @param z the start Z position for worldgen, equal to chunkZ * 16.
 		 */
 		void onDecorate(Level level, Biome biome, Random rand, int x, int z);
 	}

@@ -21,39 +21,31 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.terrain.feature;
+package io.github.minecraftcursedlegacy.test;
 
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import net.minecraft.level.Level;
-import net.minecraft.util.maths.TilePos;
+import net.minecraft.level.structure.Feature;
+import net.minecraft.tile.Tile;
 
-/**
- * {@linkplain Placement} that iterates the given feature a given number of times. Use in combination with other placements for the best results.
- */
-public class CountPlacement extends Placement {
-	public CountPlacement(int count) {
-		this.count = count;
-	}
-
-	private final int count;
-
-	/**
-	 * Get the count for the given position and rng.
-	 * @param rand the worldgen pseudorandom number generator.
-	 * @param x the x position for worldgen.
-	 * @param y the y position for worldgen.
-	 * @param z the z position for worldgen.
-	 * @return the number of times to generate the feature (i.e. how many times to duplicate the position).
-	 */
-	protected int getCount(Random rand, int x, int y, int z) {
-		return this.count;
-	}
+public class OreRock extends Feature {
 
 	@Override
-	public Iterable<TilePos> getPositions(Level level, Random rand, int startX, int startY, int startZ) {
-		TilePos position = new TilePos(startX, startY, startZ);
-		return IntStream.range(0, this.getCount(rand, startX, startY, startZ)).mapToObj(i -> position)::iterator;
+	public boolean generate(Level level, Random rand, int x, int y, int z) {
+		for (int xo = -1; xo <= 1; ++xo) {
+			for (int zo = -1; zo <= 1; ++zo) {
+				for (int yo = 0; yo < 3; ++yo) {
+					if (yo == 3 && Math.abs(xo) == 1 && 1 == Math.abs(zo)) {
+						continue;
+					}
+
+					level.setTile(x, y, z, rand.nextInt(3) == 0 ? Tile.IRON_ORE.id : Tile.STONE.id);
+				}
+			}
+		}
+
+		return true;
 	}
+
 }

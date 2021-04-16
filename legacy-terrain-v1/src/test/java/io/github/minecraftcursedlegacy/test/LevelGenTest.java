@@ -25,13 +25,18 @@ package io.github.minecraftcursedlegacy.test;
 
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import io.github.minecraftcursedlegacy.api.terrain.BiomeEvents.BiomePlacementCallback;
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenEvents;
+import io.github.minecraftcursedlegacy.api.terrain.feature.PositionedFeature;
+import io.github.minecraftcursedlegacy.api.terrain.feature.PositionedFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.level.biome.Biome;
 
 public class LevelGenTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		biome = new TestBiome("Test");
+		System.out.println("Hello, Fabric LevelGen World!");
+
+		testBiome = new TestBiome("Test");
 
 		BiomePlacementCallback.EVENT.register((temperature, humidity, biomesetter) -> {
 			float t = temperature;
@@ -41,13 +46,22 @@ public class LevelGenTest implements ModInitializer {
 			}
 
 			if (t > 0.025f) {
-				biomesetter.accept(biome);
+				biomesetter.accept(testBiome);
 				return ActionResult.SUCCESS;
 			}
 
 			return ActionResult.PASS;
 		});
+
+		oreRock = PositionedFeatures.withCountScatteredHeightmap(new OreRock(), 3);
+
+		ChunkGenEvents.Decorate.OVERWORLD.register((level, biome, rand, x, z) -> {
+			if (biome == testBiome) {
+				oreRock.generate(level, rand, x, z);
+			}
+		});
 	}
 
-	public static Biome biome;
+	public static Biome testBiome;
+	private static PositionedFeature oreRock;
 }
