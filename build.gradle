@@ -69,16 +69,23 @@ allprojects {
 		classpath sourceSets.testmod.runtimeClasspath
 	}
 
-	compileJava {
+	// CHOCO DEBUG
+	/*task splat {
 		doFirst {
-			//println options.compilerArgs
-			//configurations.annotationProcessor.files.each {
-			//	println it.name
-			//}
-			classpath.forEach {
+			compileJava.classpath.each {
 				println it.name
 			}
 		}
+	}*/
+	compileJava {
+		/*doFirst {
+			println options.compilerArgs
+			configurations.annotationProcessor.files.each {
+				println it.name
+			}
+			
+		}*/
+		//finalizedBy splat
 	}
 	dependencies {
 		// fabric loader requires log4j, guava, and gson
@@ -109,17 +116,24 @@ allprojects {
 		// CoreLib for Models
 		modImplementation 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	}
-	
-	processResources {
-		inputs.property "version", project.version
 
-		from(sourceSets.main.resources.srcDirs) {
-			include "fabric.mod.json"
-			expand "version": project.version
+	afterEvaluate {
+		remapJar {
+			input = file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar")
+			archiveName = "${archivesBaseName}-${version}.jar"
 		}
+		
+		processResources {
+			inputs.property "version", project.version
 
-		from(sourceSets.main.resources.srcDirs) {
-			exclude "fabric.mod.json"
+			from(sourceSets.main.resources.srcDirs) {
+				include "fabric.mod.json"
+				expand "version": project.version
+			}
+
+			from(sourceSets.main.resources.srcDirs) {
+				exclude "fabric.mod.json"
+			}
 		}
 	}
 
@@ -148,6 +162,19 @@ subprojects {
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+processResources {
+	inputs.property "version", project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+		expand "version": project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
+}
 
 dependencies {
 	ext.useDep = {dep ->
