@@ -26,12 +26,15 @@ package io.github.minecraftcursedlegacy.test;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.api.registry.TileItems;
+import io.github.minecraftcursedlegacy.api.tileentities.TileEntities;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.recipe.SmeltingRecipeRegistry;
 import net.minecraft.tile.Tile;
+import net.minecraft.tile.TileWithEntity;
 import net.minecraft.tile.entity.TileEntity;
+import net.minecraft.tile.material.Material;
 
 public class TileEntityTest implements ModInitializer {
 	@Override

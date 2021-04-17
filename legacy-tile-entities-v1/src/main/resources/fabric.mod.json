@@ -15,20 +15,14 @@
 
   "license": "MIT",
   "icon": "assets/api/icon.png",
-  
-  "entrypoints": {
-    "init": []
-  },
-  
+
   "mixins": [
-    "legacy-tile-entities.accessors.json",
-    "legacy-tile-entities.mixins.json"
+    "legacy-tile-entities.accessors.json"
   ],
 
   "depends": {
     "fabricloader": "*",
     "legacy-api-base": "*",
-    "legacy-api-registries-v0": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
