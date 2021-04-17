@@ -204,22 +204,19 @@ class ItemTypeRegistry extends Registry<ItemType> {
 
 	@Override
 	protected void addNewValues(List<Entry<Id, ItemType>> unmapped, CompoundTag tag) {
-		int serialisedTileId = 1;
 		int serialisedItemId = Tile.BY_ID.length;
 
 		for (Entry<Id, ItemType> entry : unmapped) {
 			ItemType value = entry.getValue();
 
 			if (value instanceof TileItem || value instanceof PlaceableTileItem) {
-				while (this.bySerialisedId.get(serialisedTileId) != null) {
-					++serialisedTileId;
-				}
+				int tileId = ((HasParentId) value).getParentId();
 
 				// readd to registry
-				this.bySerialisedId.put(serialisedTileId, value);
+				this.bySerialisedId.put(tileId, value);
 				// add to tag
-				tag.put(entry.getKey().toString(), serialisedTileId);
-				this.onRemap(value, serialisedTileId);
+				tag.put(entry.getKey().toString(), tileId);
+				this.onRemap(value, tileId);
 			} else {
 				while (this.bySerialisedId.get(serialisedItemId) != null) {
 					++serialisedItemId;

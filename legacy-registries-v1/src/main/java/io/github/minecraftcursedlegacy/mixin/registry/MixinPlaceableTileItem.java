@@ -26,16 +26,21 @@ package io.github.minecraftcursedlegacy.mixin.registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import io.github.minecraftcursedlegacy.impl.registry.ParentIdSetter;
+import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
 import net.minecraft.item.PlaceableTileItem;
 
 @Mixin(PlaceableTileItem.class)
-public class MixinPlaceableTileItem implements ParentIdSetter {
+public class MixinPlaceableTileItem implements HasParentId {
 	@Shadow
 	private int field_2216;
 
 	@Override
 	public void setParentId(int id) {
 		this.field_2216 = id;
+	}
+
+	@Override
+	public int getParentId() {
+		return this.field_2216;
 	}
 }

@@ -23,6 +23,7 @@
 
 package io.github.minecraftcursedlegacy.impl.registry;
 
-public interface ParentIdSetter {
+public interface HasParentId {
 	void setParentId(int id);
+	int getParentId();
 }
