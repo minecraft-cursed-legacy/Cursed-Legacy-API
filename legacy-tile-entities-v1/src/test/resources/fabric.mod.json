@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "legacy-registries-test",
+  "id": "legacy-tile-entities-test",
   "version": "${version}",
 
   "name": "Registries Test Mod",
@@ -27,6 +27,7 @@
     "fabricloader": "*",
     "legacy-api-base": "*",
     "legacy-registries": "*",
+    "legacy-tile-entities": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
