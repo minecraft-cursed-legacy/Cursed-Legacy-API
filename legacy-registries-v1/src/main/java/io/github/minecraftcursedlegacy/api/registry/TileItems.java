@@ -28,27 +28,12 @@ import java.util.function.IntFunction;
 import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
 import net.minecraft.item.ItemType;
 import net.minecraft.item.PlaceableTileItem;
-import net.minecraft.item.TileItem;
 import net.minecraft.tile.Tile;
 
 /**
  * Utilities for adding and registering tile items.
  */
 public class TileItems {
-	/**
-	 * Adds a registered tile item for the tile.
-	 * @param id the id of the tile item.
-	 * @param value the tile this tile item is for.
-	 * @return the tile item created.
-	 * @deprecated Prefer using {@link #registerTileItem(Id, Tile)} (which creates a 
-	 * 				{@link PlaceableTileItem} for the given tile rather than a {@link TileItem}) so 
-	 * 				that it will respect the item meta when deciding on the tile to place in the world.
-	 */
-	@Deprecated
-	public static TileItem addRegisteredTileItem(Id id, Tile value) {
-		return RegistryImpl.addTileItem(id, value, itemID -> new TileItem(itemID, value));
-	}
-
 	/**
 	 * Register an {@link ItemType} for the given {@link Tile}.
 	 *
