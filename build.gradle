@@ -21,6 +21,8 @@ plugins {
     id 'checkstyle'
 }
 
+apply plugin: "fabric-loom"
+
 def getSubprojectVersion(project, ver) {
 	return "${project.mod_version}" + "-" + ver
 }
@@ -136,8 +138,6 @@ allprojects {
 	}
 }
 
-subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
-
 subprojects {
 	dependencies {
 		testmodCompile sourceSets.main.output
@@ -145,7 +145,6 @@ subprojects {
 }
 
 dependencies {
-	apply plugin: "fabric-loom"
 	ext.useDep = {dep ->
 		implementation dep
 		include dep
