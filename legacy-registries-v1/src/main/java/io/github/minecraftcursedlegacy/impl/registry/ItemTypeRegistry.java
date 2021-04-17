@@ -210,7 +210,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		for (Entry<Id, ItemType> entry : unmapped) {
 			ItemType value = entry.getValue();
 
-			if (value instanceof TileItem) {
+			if (value instanceof TileItem || value instanceof PlaceableTileItem) {
 				while (this.bySerialisedId.get(serialisedTileId) != null) {
 					++serialisedTileId;
 				}
