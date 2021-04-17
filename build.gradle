@@ -176,6 +176,8 @@ processResources {
 	}
 }
 
+subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
+
 dependencies {
 	ext.useDep = {dep ->
 		implementation dep
