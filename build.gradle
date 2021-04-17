@@ -32,34 +32,6 @@ sourceSets {
 import net.fabricmc.loom.task.RunClientTask
 import net.fabricmc.loom.task.RunServerTask
 
-dependencies {
-	apply plugin: "fabric-loom"
-	ext.useDep = {dep ->
-		implementation dep
-		include dep
-	}
-
-	afterEvaluate {
-		// Root project setup nonsense
-		useDep project(":legacy-api-base")
-		useDep project(":legacy-attached-data-v1")
-		useDep project(":legacy-config-v0")
-		useDep project(":legacy-interaction-events-v0")
-		useDep project(":legacy-lifecycle-events-v0")
-		useDep project(":legacy-networking-v0")
-		useDep project(":legacy-networking-v0")
-		useDep project(":legacy-recipes-v0")
-		useDep project(":legacy-registries-v1")
-		useDep project(":legacy-terrain-v1")
-		useDep project(":legacy-tile-entities-v1")
-		useDep project(":legacy-translations-v0")
-		useDep project(":legacy-worldtypes-v1")
-	}
-	
-	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
-	include "tk.valoeghese:ZoesteriaConfig:1.3.6"
-}
-
 allprojects {	
 	apply plugin: "fabric-loom"
 
@@ -69,13 +41,6 @@ allprojects {
 	archivesBaseName = project.archives_base_name
 	version = project.mod_version
 	group = project.maven_group
-
-	repositories {
-		maven { 
-			name = "Jitpack"
-			url "https://jitpack.io/"
-		}
-	}
 
 	minecraft {
 	}
@@ -93,6 +58,12 @@ allprojects {
 
 	task runTestmodServer(type: RunServerTask) {
 		classpath sourceSets.testmod.runtimeClasspath
+	}
+
+	compileJava {
+		options.compilerArgs << '-XDignore.symbol.file'
+		options.fork = true
+		options.forkOptions.executable = 'javac'
 	}
 
 	dependencies {
@@ -124,6 +95,17 @@ allprojects {
 		// CoreLib for Models
 		modImplementation 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	}
+
+	repositories {
+		maven { 
+			name = "Jitpack"
+			url "https://jitpack.io/"
+		}
+	}
+
+	//loom {
+	//	shareCaches = true
+	//}
 	
 	processResources {
 		inputs.property "version", project.version
@@ -154,8 +136,38 @@ allprojects {
 	}
 }
 
+subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
+
 subprojects {
 	dependencies {
 		testmodCompile sourceSets.main.output
 	}
+}
+
+dependencies {
+	apply plugin: "fabric-loom"
+	ext.useDep = {dep ->
+		implementation dep
+		include dep
+	}
+
+	afterEvaluate {
+		// Root project setup nonsense
+		useDep project(":legacy-api-base")
+		useDep project(":legacy-attached-data-v1")
+		useDep project(":legacy-config-v0")
+		useDep project(":legacy-interaction-events-v0")
+		useDep project(":legacy-lifecycle-events-v0")
+		useDep project(":legacy-networking-v0")
+		useDep project(":legacy-networking-v0")
+		useDep project(":legacy-recipes-v0")
+		useDep project(":legacy-registries-v1")
+		useDep project(":legacy-terrain-v1")
+		useDep project(":legacy-tile-entities-v1")
+		useDep project(":legacy-translations-v0")
+		useDep project(":legacy-worldtypes-v1")
+	}
+	
+	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
+	include "tk.valoeghese:ZoesteriaConfig:1.3.6"
 }
