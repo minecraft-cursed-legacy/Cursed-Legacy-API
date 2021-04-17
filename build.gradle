@@ -41,7 +41,6 @@ dependencies {
 
 	afterEvaluate {
 		// Root project setup nonsense
-		// Remind me to add include shit too
 		useDep project(":legacy-api-base")
 		useDep project(":legacy-attached-data-v1")
 		useDep project(":legacy-config-v0")
