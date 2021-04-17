@@ -197,7 +197,7 @@ dependencies {
 	afterEvaluate {
 		// Root project setup nonsense
 		useDep project(":legacy-api-base")
-		useDep project(":legacy-attached-data-v1")
+		/*useDep project(":legacy-attached-data-v1")
 		useDep project(":legacy-config-v0")
 		useDep project(":legacy-interaction-events-v0")
 		useDep project(":legacy-lifecycle-events-v0")
@@ -208,7 +208,7 @@ dependencies {
 		useDep project(":legacy-terrain-v1")
 		useDep project(":legacy-tile-entities-v1")
 		useDep project(":legacy-translations-v0")
-		useDep project(":legacy-worldtypes-v1")
+		useDep project(":legacy-worldtypes-v1")*/
 	}
 	
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'

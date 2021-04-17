@@ -13,7 +13,7 @@ pluginManagement {
 rootProject.name = "cursed-legacy-api"
 
 include 'legacy-api-base'
-
+/*
 include 'legacy-attached-data-v1'
 include 'legacy-config-v0'
 include 'legacy-interaction-events-v0'
@@ -24,4 +24,4 @@ include 'legacy-registries-v1'
 include 'legacy-terrain-v1'
 include 'legacy-tile-entities-v1'
 include 'legacy-translations-v0'
-include 'legacy-worldtypes-v1'
+include 'legacy-worldtypes-v1'*/
