@@ -100,15 +100,20 @@ public class RegistryRemapper {
 
 	public static void remap(CompoundTag readFrom, @Nullable CompoundTag writeTo) {
 		Iterator<Registry<?>> iter = REGISTRIES.iterator();
-		boolean nc = writeTo != null; // null check
+		boolean isNull = writeTo == null; // null check
 
 		// remap and add new data
-		LOGGER.info("Remapping Registries.");
+		LOGGER.info(isNull ? "Remapping Registries." : "Remapping Registries and storing registry updates.");
 		while (iter.hasNext()) {
 			Registry<?> registry = iter.next(); // get next registry
 			String key = registry.getRegistryName().toString(); // get name
 
-			if (nc) { // If we are writing to a tag, we special-case it
+			if (isNull) {
+				if (readFrom.containsKey(key)) { // Otherwise, just remap
+					registry.remap(readFrom.getCompoundTag(key)); // Duplicate earlier line
+				}
+			} else {
+				// If we are writing to a tag, we special-case it
 				// We still will need to write, in the case of new entries in a registry, or a new registry!
 
 				if (readFrom.containsKey(key)) {
@@ -116,8 +121,6 @@ public class RegistryRemapper {
 				} else {
 					writeTo.put(key, registry.toTag());
 				}
-			} else if (readFrom.containsKey(key)) { // Otherwise, just remap
-				registry.remap(readFrom.getCompoundTag(key)); // Duplicate earlier line
 			}
 		}
 	}
