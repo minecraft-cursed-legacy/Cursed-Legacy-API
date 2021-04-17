@@ -36,7 +36,7 @@ import net.minecraft.tile.entity.TileEntity;
 public class TileEntityTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		System.out.println("Hello, Fabric World!");
+		System.out.println("Hello, Fabric Tile Entities! World!");
 		tileWithEntity = Registries.TILE.register(new Id("modid:tile_with_entity"),
 				i -> new BasicTileWithEntity(i).setName("exampleBlockWithEntity"));
 		tileWithEntityItem = TileItems.registerTileItem(new Id("modid:tile_with_entity"), tileWithEntity);
