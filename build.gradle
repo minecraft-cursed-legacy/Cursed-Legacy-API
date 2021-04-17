@@ -12,7 +12,7 @@ buildscript {
 		}
 	}
 	dependencies {
-        classpath 'com.github.Chocohead:Fabric-Loom:bbaa5d7'
+        classpath 'com.github.Chocohead:Fabric-Loom:7425f5a'
 	}
 }
 
@@ -71,7 +71,13 @@ allprojects {
 
 	compileJava {
 		doFirst {
-			println options.compilerArgs
+			//println options.compilerArgs
+			//configurations.annotationProcessor.files.each {
+			//	println it.name
+			//}
+			classpath.forEach {
+				println it.name
+			}
 		}
 	}
 	dependencies {
