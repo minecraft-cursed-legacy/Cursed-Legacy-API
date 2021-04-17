@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 The Cursed Legacy Team.
+e * Copyright (c) 2020 The Cursed Legacy Team.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -31,6 +31,7 @@ import java.util.Locale;
 
 /**
  * Utilities for registering and retrieving tile entity classes.
+ * @since 1.0.0
  */
 public final class TileEntities {
 	/**
