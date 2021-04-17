@@ -32,6 +32,7 @@ import net.minecraft.tile.Tile;
 
 /**
  * Utilities for adding and registering tile items.
+ * @since 1.0.0
  */
 public class TileItems {
 	/**
@@ -42,7 +43,7 @@ public class TileItems {
 	 *
 	 * @return An item for the given tile
 	 *
-	 * @since 0.4.1
+	 * @since 1.0.0
 	 */
 	public static ItemType registerTileItem(Id id, Tile tile) {
 		return registerTileItem(id, tile, PlaceableTileItem::new);
@@ -57,7 +58,7 @@ public class TileItems {
 	 *
 	 * @return An item for the given tile
 	 *
-	 * @since 0.4.1
+	 * @since 1.0.0
 	 */
 	public static <I extends PlaceableTileItem> I registerTileItem(Id id, Tile tile, IntFunction<I> itemFactory) {
 		return RegistryImpl.addTileItem(id, tile, itemFactory);
