@@ -3,8 +3,8 @@
   "id": "legacy-tile-entities-test",
   "version": "${version}",
 
-  "name": "Registries Test Mod",
-  "description": "Tests for the registry module of Cursed Legacy API.",
+  "name": "Tile Entities Test Mod",
+  "description": "Tests for the tile entities module of Cursed Legacy API.",
   "authors": [
     "The Cursed Legacy Team"
   ],
