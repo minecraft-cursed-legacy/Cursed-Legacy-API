@@ -131,11 +131,23 @@ subprojects {
 	}
 
 	configurations {
-		dev
+		dev {
+			canBeConsumed = true
+			canBeResolved = false
+		}
+		test {
+			canBeConsumed = true
+			canBeResolved = false
+		}
+	}
+
+	task testJar(type: Jar) {
+		from sourceSets.test.output
 	}
 
 	artifacts {
 		dev jar
+		test testJar
 	}
 }
 
@@ -149,7 +161,7 @@ sourceSets {
 dependencies {
 	ext.useDep = {dep ->
 		implementation project(path: ":$dep", configuration: 'dev')
-		testImplementation project(":$dep").sourceSets.test.output
+		testImplementation project(path: ":$dep", configuration: 'test')
 		include project(":$dep")
 	}
 
