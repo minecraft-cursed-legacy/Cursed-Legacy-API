@@ -22,17 +22,11 @@ plugins {
 }
 
 def getSubprojectVersion(project, ver) {
-	return "${project.mod_version}" + "-" + ver
-}
-
-sourceSets {
-	testmod
+	return "${project.mod_version}-$ver"
 }
 
 import net.fabricmc.loom.task.RunClientTask
 import net.fabricmc.loom.task.RunServerTask
-
-apply plugin: "fabric-loom"
 
 allprojects {	
 	apply plugin: "fabric-loom"
@@ -157,48 +151,40 @@ subprojects {
 	dependencies {
 		testmodCompile sourceSets.main.output
 	}
-}
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+	assert this.remapJar != remapJar //No accidents moving this around
+	this.remapJar.dependsOn(remapJar)
 
-processResources {
-	inputs.property "version", project.version
-
-	from(sourceSets.main.resources.srcDirs) {
-		include "fabric.mod.json"
-		expand "version": project.version
+	configurations {
+		dev
 	}
 
-	from(sourceSets.main.resources.srcDirs) {
-		exclude "fabric.mod.json"
+	artifacts {
+		dev jar
 	}
 }
-
-subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
 
 dependencies {
 	ext.useDep = {dep ->
-		implementation dep
-		include dep
+		implementation project(path: ":$dep", configuration: 'dev')
+		include project(":$dep")
 	}
 
 	afterEvaluate {
 		// Root project setup nonsense
-		useDep project(":legacy-api-base")
-		useDep project(":legacy-attached-data-v1")
-		useDep project(":legacy-config-v0")
-		useDep project(":legacy-interaction-events-v0")
-		useDep project(":legacy-lifecycle-events-v0")
-		useDep project(":legacy-networking-v0")
-		useDep project(":legacy-networking-v0")
-		useDep project(":legacy-recipes-v0")
-		useDep project(":legacy-registries-v1")
-		useDep project(":legacy-terrain-v1")
-		useDep project(":legacy-tile-entities-v1")
-		useDep project(":legacy-translations-v0")
-		useDep project(":legacy-worldtypes-v1")
+		useDep 'legacy-api-base'
+		useDep 'legacy-attached-data-v1'
+		useDep 'legacy-config-v0'
+		useDep 'legacy-interaction-events-v0'
+		useDep 'legacy-lifecycle-events-v0'
+		useDep 'legacy-networking-v0'
+		useDep 'legacy-networking-v0'
+		useDep 'legacy-recipes-v0'
+		useDep 'legacy-registries-v1'
+		useDep 'legacy-terrain-v1'
+		useDep 'legacy-tile-entities-v1'
+		useDep 'legacy-translations-v0'
+		useDep 'legacy-worldtypes-v1'
 	}
 	
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
