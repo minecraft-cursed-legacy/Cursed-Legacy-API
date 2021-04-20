@@ -48,39 +48,6 @@ allprojects {
 	minecraft {
 	}
 
-	sourceSets {
-		testmod {
-			compileClasspath += main.compileClasspath
-			runtimeClasspath += main.runtimeClasspath
-		}
-	}
-
-	task runTestmodClient(type: RunClientTask) {
-		classpath sourceSets.testmod.runtimeClasspath
-	}
-
-	task runTestmodServer(type: RunServerTask) {
-		classpath sourceSets.testmod.runtimeClasspath
-	}
-
-	// CHOCO DEBUG
-	/*task splat {
-		doFirst {
-			compileJava.classpath.each {
-				println it.name
-			}
-		}
-	}*/
-	compileJava {
-		/*doFirst {
-			println options.compilerArgs
-			configurations.annotationProcessor.files.each {
-				println it.name
-			}
-			
-		}*/
-		//finalizedBy splat
-	}
 	dependencies {
 		// fabric loader requires log4j, guava, and gson
 		implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.1'
@@ -148,12 +115,20 @@ allprojects {
 }
 
 subprojects {
-	dependencies {
-		testmodCompile sourceSets.main.output
+	sourceSets {
+		test {
+			compileClasspath += main.compileClasspath + main.output
+			runtimeClasspath += main.runtimeClasspath + main.output
+		}
 	}
 
-	assert this.remapJar != remapJar //No accidents moving this around
-	this.remapJar.dependsOn(remapJar)
+	task runTestmodClient(type: RunClientTask) {
+		classpath sourceSets.test.runtimeClasspath
+	}
+
+	task runTestmodServer(type: RunServerTask) {
+		classpath sourceSets.test.runtimeClasspath
+	}
 
 	configurations {
 		dev
@@ -164,9 +139,17 @@ subprojects {
 	}
 }
 
+sourceSets {
+	test {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+}
+
 dependencies {
 	ext.useDep = {dep ->
 		implementation project(path: ":$dep", configuration: 'dev')
+		testImplementation project(":$dep").sourceSets.test.output
 		include project(":$dep")
 	}
 
