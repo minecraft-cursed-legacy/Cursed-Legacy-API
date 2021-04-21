@@ -36,10 +36,10 @@ import net.minecraft.server.network.ServerPlayerPacketHandler;
 @Mixin(ServerPlayerPacketHandler.class)
 public class MixinServerPlayerPacketHandler {
 	@Shadow
-	private ServerPlayer field_920;
+	private ServerPlayer player;
 
 	@Inject(at= @At("HEAD"), method = "loseConnection")
 	public void method_1473(String string, Object[] objects, CallbackInfo bruh) {
-		VanillaCheckerImpl.playermap.remove(field_920.name);
+		VanillaCheckerImpl.playermap.remove(player.name);
 	}
 }

@@ -40,12 +40,12 @@ import net.minecraft.item.ItemInstance;
 @Mixin(HandItemRenderer.class)
 abstract class MixinHandItemRenderer {
 	@Shadow
-	private Minecraft field_2401;
+	private Minecraft minecraft;
 
 	@Inject(method = "method_1862",
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)
 			)
 	private void fixAtlas(LivingEntity entity, ItemInstance item, CallbackInfo info) {
-		AtlasMapper.getAtlas(field_2401.textureManager, item.itemId, item.getDamage()).ifPresent(field_2401.textureManager::bindTexture);
+		AtlasMapper.getAtlas(minecraft.textureManager, item.itemId, item.getDamage()).ifPresent(minecraft.textureManager::bindTexture);
 	}
 }

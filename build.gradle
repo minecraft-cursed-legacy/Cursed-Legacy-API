@@ -78,6 +78,13 @@ allprojects {
 		modImplementation 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	}
 
+	sourceSets {
+		test {
+			compileClasspath += main.compileClasspath + main.output
+			runtimeClasspath += main.runtimeClasspath + main.output
+		}
+	}
+
 	afterEvaluate {
 		remapJar {
 			input = file("${project.buildDir}/libs/$archivesBaseName-${version}-dev.jar")
@@ -115,13 +122,6 @@ allprojects {
 }
 
 subprojects {
-	sourceSets {
-		test {
-			compileClasspath += main.compileClasspath + main.output
-			runtimeClasspath += main.runtimeClasspath + main.output
-		}
-	}
-
 	task runTestmodClient(type: RunClientTask) {
 		classpath sourceSets.test.runtimeClasspath
 	}
@@ -129,6 +129,9 @@ subprojects {
 	task runTestmodServer(type: RunServerTask) {
 		classpath sourceSets.test.runtimeClasspath
 	}
+
+	assert this.remapJar != remapJar //No accidents moving this around
+	this.remapJar.dependsOn(remapJar)
 
 	configurations {
 		dev {
@@ -143,6 +146,7 @@ subprojects {
 
 	task testJar(type: Jar) {
 		from sourceSets.test.output
+		classifier 'test'
 	}
 
 	artifacts {
@@ -150,15 +154,6 @@ subprojects {
 		test testJar
 	}
 }
-
-sourceSets {
-	test {
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
-	}
-}
-
-subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
 
 dependencies {
 	ext.useDep = {dep ->
