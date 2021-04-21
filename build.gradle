@@ -158,6 +158,8 @@ sourceSets {
 	}
 }
 
+subprojects.each { remapJar.dependsOn("${it.path}:remapJar") }
+
 dependencies {
 	ext.useDep = {dep ->
 		implementation project(path: ":$dep", configuration: 'dev')
