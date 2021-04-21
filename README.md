@@ -20,7 +20,7 @@ To be able to run the API as a whole in an API dev environment, ensure the root 
 If you wish to build a copy of API, you can run:
 
 ```
-./gradlew build -x compileTestJava -x checkstyleTest
+./gradlew build -x checkstyleTest
 ```
 
 ## Contributing
