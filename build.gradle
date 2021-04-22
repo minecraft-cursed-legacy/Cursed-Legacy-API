@@ -12,7 +12,7 @@ buildscript {
 		}
 	}
 	dependencies {
-        classpath 'com.github.Chocohead:Fabric-Loom:7425f5a'
+        classpath 'com.github.Chocohead:Fabric-Loom:5a0ea93'
 	}
 }
 
@@ -46,22 +46,14 @@ allprojects {
 	}
 
 	minecraft {
+		addLibraryFilter {library ->
+			return !(library.startsWith('net.minecraft:launchwrapper:') ||
+						library.startsWith('net.sf.jopt-simple:jopt-simple:') ||
+						library.startsWith('org.ow2.asm:asm-all:'))
+		}
 	}
 
 	dependencies {
-		// fabric loader requires log4j, guava, and gson
-		implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.1'
-		implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.1'
-		implementation 'com.google.guava:guava:28.0-jre'
-		implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
-
-		// mixin and fabric loader need asm 8
-		implementation 'org.ow2.asm:asm:8.0'
-		implementation 'org.ow2.asm:asm-analysis:8.0'
-		implementation 'org.ow2.asm:asm-commons:8.0'
-		implementation 'org.ow2.asm:asm-tree:8.0'
-		implementation 'org.ow2.asm:asm-util:8.0'
-
 		//to change the versions see the gradle.properties file
 		minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
@@ -72,7 +64,9 @@ allprojects {
 		// for config api
 		implementation "tk.valoeghese:ZoesteriaConfig:1.3.6"
 
-		modImplementation "com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}"
+		modImplementation("com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
+			transitive false
+		}
 		
 		// CoreLib for Models
 		modImplementation 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
@@ -155,9 +149,15 @@ subprojects {
 	}
 }
 
+configurations {
+	implementationOnly //A non-transitive implementation
+	runtimeClasspath.extendsFrom implementationOnly
+	compileClasspath.extendsFrom implementationOnly
+}
+
 dependencies {
 	ext.useDep = {dep ->
-		implementation project(path: ":$dep", configuration: 'dev')
+		implementationOnly project(path: ":$dep", configuration: 'dev')
 		testImplementation project(path: ":$dep", configuration: 'test')
 		include project(":$dep")
 	}
@@ -181,4 +181,22 @@ dependencies {
 	
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 	include "tk.valoeghese:ZoesteriaConfig:1.3.6"
+}
+
+minecraft {
+	addIncludeTweaker {dependency, json ->
+		if ('tk.valoeghese' == dependency.group && 'ZoesteriaConfig' == dependency.name) {
+			json.addProperty('description', 'Config format and library designed for Zoesteria 2, but also useable by other projects')
+			json.addProperty('license', 'MIT')
+
+			def authors = new com.google.gson.JsonArray()
+			authors.add('Valoeghese')
+			json.add('authors', authors)
+
+			def contact = new com.google.gson.JsonObject()
+			contact.addProperty('sources', 'https://github.com/valoeghese/ZoesteriaConfig')
+			contact.addProperty('issues', 'https://github.com/valoeghese/ZoesteriaConfig/issues')
+			json.add('contact', contact)
+		}
+	}
 }
