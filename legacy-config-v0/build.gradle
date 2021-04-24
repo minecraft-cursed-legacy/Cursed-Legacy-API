@@ -1,6 +1,6 @@
-archivesBaseName = "legacy-config-v0"
-version = getSubprojectVersion(project, "0.6.3")
+archivesBaseName = 'legacy-config-v0'
+version = getSubprojectVersion(project, '0.6.3')
 
+moduleDependencies(project, 'legacy-api-base')
 dependencies {
-	compile project(path: ':legacy-api-base')
 }

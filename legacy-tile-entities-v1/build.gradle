@@ -1,7 +1,7 @@
-archivesBaseName = "legacy-tile-entities-v1"
-version = getSubprojectVersion(project, "1.0.0")
+archivesBaseName = 'legacy-tile-entities-v1'
+version = getSubprojectVersion(project, '1.0.0')
 
+moduleDependencies(project, 'legacy-api-base')
 dependencies {
-	compile project(path: ':legacy-api-base')
 	testImplementation project(path: ':legacy-registries-v1')
 }

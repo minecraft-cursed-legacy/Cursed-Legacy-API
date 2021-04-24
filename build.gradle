@@ -1,13 +1,12 @@
 buildscript {
     repositories {
     	mavenCentral()
-		jcenter()
         maven {
-            name = "Fabric"
-            url = "https://maven.fabricmc.net/"
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
         }
 		maven { 
-			name = "Jitpack"
+			name = 'Jitpack'
 			url 'https://jitpack.io/'
 		}
 	}
@@ -21,28 +20,66 @@ plugins {
     id 'checkstyle'
 }
 
+//Subprojects will set these themselves
+archivesBaseName = archives_base_name
+version = mod_version
+
 def getSubprojectVersion(project, ver) {
 	return "${project.mod_version}-$ver"
 }
 
-import net.fabricmc.loom.task.RunClientTask
-import net.fabricmc.loom.task.RunServerTask
+def moduleDependencies(Project project, String... projectNames) {
+	project.with {
+		def modules = projectNames.collect { dependencies.project(path: ":$it", configuration: 'dev') }
+
+		dependencies {
+			modules.each {
+				implementationOnly it
+			}
+		}
+		publishing {
+			publications {
+				mavenJava(MavenPublication) {
+					pom.withXml {
+						def dependenciesNode = asNode().appendNode('dependencies')
+
+						modules.each {module ->
+							dependenciesNode.appendNode('dependency').with {
+								appendNode('groupId', module.group)
+								appendNode('artifactId', module.name)
+								appendNode('version', module.version)
+								appendNode('scope', 'compile')
+								println "Project is ${module.group}:${module.name}:${module.version}"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 
 allprojects {	
-	apply plugin: "fabric-loom"
+	apply plugin: 'fabric-loom'
 
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
 
-	archivesBaseName = project.archives_base_name
-	version = project.mod_version
 	group = project.maven_group
 
 	repositories {
 		maven { 
-			name = "Jitpack"
-			url "https://jitpack.io/"
+			name = 'Jitpack'
+			url 'https://jitpack.io/'
 		}
+	}
+
+	configurations {
+		implementationOnly //A non-transitive implementation
+		runtimeClasspath.extendsFrom implementationOnly
+		compileClasspath.extendsFrom implementationOnly
+		
 	}
 
 	minecraft {
@@ -57,12 +94,12 @@ allprojects {
 		//to change the versions see the gradle.properties file
 		minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-		mappings loom.fromCommit("minecraft-cursed-legacy/Plasma", "59b928b") {spec ->
-			spec.version = "b1.7.3-15"
+		mappings loom.fromCommit('minecraft-cursed-legacy/Plasma', '59b928b') {spec ->
+			spec.version = 'b1.7.3-15'
 		}
 
 		// for config api
-		implementation "tk.valoeghese:ZoesteriaConfig:1.3.6"
+		implementation 'tk.valoeghese:ZoesteriaConfig:1.3.6'
 
 		modImplementation("com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
 			transitive false
@@ -86,15 +123,15 @@ allprojects {
 		}
 		
 		processResources {
-			inputs.property "version", project.version
+			inputs.property 'version', project.version
 
 			from(sourceSets.main.resources.srcDirs) {
-				include "fabric.mod.json"
-				expand "version": project.version
+				include 'fabric.mod.json'
+				expand 'version': project.version
 			}
 
 			from(sourceSets.main.resources.srcDirs) {
-				exclude "fabric.mod.json"
+				exclude 'fabric.mod.json'
 			}
 		}
 	}
@@ -103,19 +140,24 @@ allprojects {
 	// this fixes some edge cases with special characters not displaying correctly
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	tasks.withType(JavaCompile) {
-		options.encoding = "UTF-8"
+		options.encoding = 'UTF-8'
 	}
 
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this task, sources will not be generated.
 	task sourcesJar(type: Jar, dependsOn: classes) {
-		classifier = "sources"
+		classifier = 'sources'
 		from sourceSets.main.allSource
 	}
 }
 
+import net.fabricmc.loom.task.RunClientTask
+import net.fabricmc.loom.task.RunServerTask
+
 subprojects {
+	apply plugin: 'maven-publish'
+
 	task runTestmodClient(type: RunClientTask) {
 		classpath sourceSets.test.runtimeClasspath
 	}
@@ -149,12 +191,6 @@ subprojects {
 	}
 }
 
-configurations {
-	implementationOnly //A non-transitive implementation
-	runtimeClasspath.extendsFrom implementationOnly
-	compileClasspath.extendsFrom implementationOnly
-}
-
 dependencies {
 	ext.useDep = {dep ->
 		implementationOnly project(path: ":$dep", configuration: 'dev')
@@ -180,7 +216,7 @@ dependencies {
 	}
 	
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
-	include "tk.valoeghese:ZoesteriaConfig:1.3.6"
+	include 'tk.valoeghese:ZoesteriaConfig:1.3.6'
 }
 
 minecraft {
