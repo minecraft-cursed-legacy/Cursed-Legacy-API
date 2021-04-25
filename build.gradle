@@ -36,7 +36,7 @@ def moduleDependencies(Project project, String... projectNames) {
 			publications {
 				mavenJava(MavenPublication) {
 					pom.withXml {
-						addDependency(it, 'compile', modules)
+						addDependency(it, 'compile', *modules)
 					}
 				}
 			}
