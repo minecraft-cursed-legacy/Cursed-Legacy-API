@@ -25,3 +25,14 @@ minecraft {
 		}
 	}
 }
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			pom.withXml {
+				//Workaround from java.components including everything (including the game)
+				addDependency(it, 'compile', project.configurations.api.dependencies)
+			}
+		}
+	}
+}

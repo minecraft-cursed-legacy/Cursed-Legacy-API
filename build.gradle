@@ -11,18 +11,13 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'com.github.Chocohead:Fabric-Loom:5a0ea93'
+		classpath 'com.github.Chocohead:Fabric-Loom:d823377'
 	}
 }
 
 plugins {
-	id 'java'
 	id 'checkstyle'
 }
-
-//Subprojects will set these themselves
-archivesBaseName = archives_base_name
-version = mod_version
 
 def getSubprojectVersion(project, ver) {
 	return "${project.mod_version}-$ver"
@@ -41,17 +36,7 @@ def moduleDependencies(Project project, String... projectNames) {
 			publications {
 				mavenJava(MavenPublication) {
 					pom.withXml {
-						def dependenciesNode = asNode().appendNode('dependencies')
-
-						modules.each {module ->
-							dependenciesNode.appendNode('dependency').with {
-								appendNode('groupId', module.group)
-								appendNode('artifactId', module.name)
-								appendNode('version', module.version)
-								appendNode('scope', 'compile')
-								println "Project is ${module.group}:${module.name}:${module.version}"
-							}
-						}
+						addDependency(it, 'compile', modules)
 					}
 				}
 			}
@@ -59,13 +44,28 @@ def moduleDependencies(Project project, String... projectNames) {
 	}
 }
 
+void addDependency(XmlProvider xml, String scope, Object... dependencies) {
+	def dependenciesNode = net.fabricmc.loom.util.GroovyXmlUtil.getOrCreateNode(xml.asNode(), 'dependencies')
 
-allprojects {	
+	dependencies.each {dependency ->
+		dependenciesNode.appendNode('dependency').with {
+			appendNode('groupId', dependency.group)
+			appendNode('artifactId', dependency.name)
+			appendNode('version', dependency.version)
+			appendNode('scope', scope)
+		}
+	}
+}
+
+
+allprojects {
+	apply plugin: 'maven-publish'
 	apply plugin: 'fabric-loom'
 
 	sourceCompatibility = JavaVersion.VERSION_1_8
 	targetCompatibility = JavaVersion.VERSION_1_8
 
+	//Group is common for all API modules
 	group = project.maven_group
 
 	repositories {
@@ -149,14 +149,28 @@ allprojects {
 		classifier = 'sources'
 		from sourceSets.main.allSource
 	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				afterEvaluate {
+					artifact(remapJar) {
+						builtBy remapJar
+					}
+
+					artifact(sourcesJar) {
+						builtBy remapSourcesJar
+					}
+				}
+			}
+		}
+	}
 }
 
 import net.fabricmc.loom.task.RunClientTask
 import net.fabricmc.loom.task.RunServerTask
 
-subprojects {
-	apply plugin: 'maven-publish'
-
+subprojects {subproject ->
 	task runTestmodClient(type: RunClientTask) {
 		classpath sourceSets.test.runtimeClasspath
 	}
@@ -193,31 +207,30 @@ subprojects {
 		dev jar
 		test testJar
 	}
+
+	//Attach the subproject to the root project
+	this.dependencies {
+		implementationOnly project(path: ":$name", configuration: 'dev')
+		testImplementation project(path: ":$name", configuration: 'test')
+		include project(path: ":$name", configuration: 'out')
+	}
+
+	//Mark the subproject as a compile time dependency of the root project
+	this.publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				pom.withXml {xml ->
+					addDependency(xml, 'compile', subproject)
+				}
+			}
+		}
+	}
 }
 
+//Subprojects will set these themselves
+archivesBaseName = archives_base_name
+version = mod_version
+
 dependencies {
-	ext.useDep = {dep ->
-		implementationOnly project(path: ":$dep", configuration: 'dev')
-		testImplementation project(path: ":$dep", configuration: 'test')
-		include project(path: ":$dep", configuration: 'out')
-	}
-
-	afterEvaluate {
-		// Root project setup nonsense
-		useDep 'legacy-api-base'
-		useDep 'legacy-attached-data-v1'
-		useDep 'legacy-config-v0'
-		useDep 'legacy-interaction-events-v0'
-		useDep 'legacy-lifecycle-events-v0'
-		useDep 'legacy-networking-v0'
-		useDep 'legacy-networking-v0'
-		useDep 'legacy-recipes-v0'
-		useDep 'legacy-registries-v1'
-		useDep 'legacy-terrain-v1'
-		useDep 'legacy-tile-entities-v1'
-		useDep 'legacy-translations-v0'
-		useDep 'legacy-worldtypes-v1'
-	}
-
 	include 'com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0'
 }
