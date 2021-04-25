@@ -225,5 +225,7 @@ version = mod_version
 
 dependencies {
 	// CoreLib for Models, only included as part of the combined distribution
-	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0')
+	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0') {
+		exclude(group: 'tk.valoeghese') //ZoesteriaConfig has disppeared from here
+	}
 }
