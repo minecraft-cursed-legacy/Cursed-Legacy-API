@@ -180,7 +180,7 @@ subprojects {subproject ->
 	}
 
 	assert this.remapJar != remapJar //No accidents moving this around
-	//this.remapJar.dependsOn(remapJar)
+	this.remapJar.dependsOn(remapJar)
 
 	configurations {
 		out {
@@ -212,7 +212,9 @@ subprojects {subproject ->
 	this.dependencies {
 		implementationOnly project(path: ":$name", configuration: 'dev')
 		testImplementation project(path: ":$name", configuration: 'test')
-		include project(path: ":$name", configuration: 'out')
+		afterEvaluate {//Do this after Loom tries to work out how included projects relate to remapJar tasks
+			include project(path: ":$name", configuration: 'out')
+		}
 	}
 
 	//Mark the subproject as a compile time dependency of the root project
