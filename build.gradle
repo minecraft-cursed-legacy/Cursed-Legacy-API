@@ -180,7 +180,7 @@ subprojects {subproject ->
 	}
 
 	assert this.remapJar != remapJar //No accidents moving this around
-	this.remapJar.dependsOn(remapJar)
+	//this.remapJar.dependsOn(remapJar)
 
 	configurations {
 		out {
