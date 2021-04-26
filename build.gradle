@@ -101,6 +101,9 @@ allprojects {
 		modImplementation("com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
 			transitive false //Avoid leaking Loader's dependencies forwards
 		}
+
+		//For @Nullable and @Nonnull
+		compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 	}
 
 	sourceSets {
