@@ -21,20 +21,28 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.terrain;
+package io.github.minecraftcursedlegacy.mixin.terrain;
 
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+
+import io.github.minecraftcursedlegacy.api.terrain.ChunkGenerator;
+import io.github.minecraftcursedlegacy.impl.terrain.InternalLevelSourceAccess;
+import net.minecraft.level.Level;
 import net.minecraft.level.source.LevelSource;
 
-/**
- * Duck interface.
- * Because a certain way they implemented cancellable head injects is very annoying.
- * And messing with priorities didn't fix it.
- */
-public interface InternalLevelSourceSetter {
-	/**
-	 * Sets the internal api level source field on the class implementing this (i.e. Dimension).
-	 * @param source the level source.
-	 * @return the given source.
-	 */
-	LevelSource setInternalLevelSource(LevelSource source);
+@Mixin(Level.class)
+public class MixinLevel {
+	@ModifyConstant(constant = @Constant(intValue = 63), method = "method_152")
+	public int alterMinY(int original) {
+		Level self = (Level) (Object) this;
+		LevelSource cg = ((InternalLevelSourceAccess) self.dimension).getInternalLevelSource();
+
+		if (cg instanceof ChunkGenerator) {
+			return ((ChunkGenerator) cg).getMinSpawnY();
+		}
+
+		return original;
+	}
 }

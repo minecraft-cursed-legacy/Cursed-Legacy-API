@@ -5,6 +5,7 @@
   "mixins": [
     "MixinBiome",
     "MixinDimension",
+    "MixinLevel",
     "MixinNetherLevelSource",
     "MixinOverworldLevelSource"
   ],

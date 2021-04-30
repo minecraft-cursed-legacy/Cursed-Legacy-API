@@ -29,12 +29,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.minecraftcursedlegacy.api.terrain.ChunkGenerator;
-import io.github.minecraftcursedlegacy.impl.terrain.InternalLevelSourceSetter;
+import io.github.minecraftcursedlegacy.impl.terrain.InternalLevelSourceAccess;
 import net.minecraft.level.dimension.Dimension;
 import net.minecraft.level.source.LevelSource;
 
 @Mixin(Dimension.class)
-public class MixinDimension implements InternalLevelSourceSetter {
+public class MixinDimension implements InternalLevelSourceAccess {
 	private LevelSource api_level_source;
 
 	@Inject(at = @At("HEAD"), method = "method_1770", cancellable = true)
@@ -53,5 +53,10 @@ public class MixinDimension implements InternalLevelSourceSetter {
 	@Override
 	public LevelSource setInternalLevelSource(LevelSource source) {
 		return this.api_level_source = source;
+	}
+
+	@Override
+	public LevelSource getInternalLevelSource() {
+		return this.api_level_source;
 	}
 }

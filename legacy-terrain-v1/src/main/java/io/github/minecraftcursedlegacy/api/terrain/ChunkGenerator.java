@@ -61,10 +61,19 @@ public abstract class ChunkGenerator implements LevelSource {
 	 * @param x the block x position to spawn the player at.
 	 * @param z the block z position to spawn the player at.
 	 * @return whether the player is allowed to spawn here.
+	 * @since 1.0.4
 	 */
 	public boolean isValidSpawnPos(int x, int z) {
 		int surfaceTile = this.level.method_152(x, z);
 		return surfaceTile == Tile.SAND.id;
+	}
+
+	/**
+	 * @return the minimum y value at which the player can spawn naturally.
+	 * @since 1.0.5
+	 */
+	public int getMinSpawnY() {
+		return 63;
 	}
 
 	@Override
@@ -116,5 +125,4 @@ public abstract class ChunkGenerator implements LevelSource {
 	public final boolean method_1805() {
 		return true;
 	}
-
 }
