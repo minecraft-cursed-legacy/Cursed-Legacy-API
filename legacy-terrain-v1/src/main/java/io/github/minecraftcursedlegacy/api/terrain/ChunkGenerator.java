@@ -69,7 +69,7 @@ public abstract class ChunkGenerator implements LevelSource {
 	}
 
 	/**
-	 * @return the minimum y value at which the player can spawn naturally.
+	 * @return the minimum y value of the block on which the player can spawn naturally.
 	 * @since 1.0.5
 	 */
 	public int getMinSpawnY() {

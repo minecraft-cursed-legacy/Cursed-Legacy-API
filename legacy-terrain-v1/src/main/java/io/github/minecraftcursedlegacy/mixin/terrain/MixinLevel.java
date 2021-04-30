@@ -24,8 +24,11 @@
 package io.github.minecraftcursedlegacy.mixin.terrain;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.minecraftcursedlegacy.api.terrain.ChunkGenerator;
 import io.github.minecraftcursedlegacy.impl.terrain.InternalLevelSourceAccess;
@@ -44,5 +47,15 @@ public class MixinLevel {
 		}
 
 		return original;
+	}
+
+	@Inject(at = @At("RETURN"), method = "computeSpawnPosition")
+	private void recomputeSpawnY(CallbackInfo info) {
+		Level self = (Level) (Object) this;
+		LevelSource cg = ((InternalLevelSourceAccess) self.dimension).getInternalLevelSource();
+
+		if (cg instanceof ChunkGenerator) {
+			self.getProperties().setSpawnY(((ChunkGenerator) cg).getMinSpawnY() + 1);
+		}
 	}
 }

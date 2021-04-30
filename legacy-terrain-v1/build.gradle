@@ -1,5 +1,5 @@
 archivesBaseName = 'legacy-terrain-v1'
-version = getSubprojectVersion(project, '1.0.5')
+version = getSubprojectVersion(project, '1.0.6')
 
 moduleDependencies(project, 'legacy-api-base')
 dependencies {
