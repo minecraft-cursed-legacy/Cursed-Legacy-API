@@ -42,4 +42,10 @@ public class RandomChunkGenerator extends ChunkGenerator {
 	protected void buildSurface(int chunkX, int chunkZ, byte[] tiles, Biome[] biomes) {
 		this.surface.buildSurface(chunkX, chunkZ, tiles, biomes);
 	}
+
+	@Override
+	public boolean isValidSpawnPos(int x, int z) {
+		int surfaceTile = this.level.method_152(x, z);
+		return surfaceTile == Tile.GRASS.id;
+	}
 }

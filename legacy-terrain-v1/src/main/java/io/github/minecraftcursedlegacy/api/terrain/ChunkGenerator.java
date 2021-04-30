@@ -7,6 +7,7 @@ import net.minecraft.level.biome.Biome;
 import net.minecraft.level.chunk.Chunk;
 import net.minecraft.level.gen.OverworldCave;
 import net.minecraft.level.source.LevelSource;
+import net.minecraft.tile.Tile;
 import net.minecraft.util.ProgressListener;
 
 /**
@@ -53,6 +54,17 @@ public abstract class ChunkGenerator implements LevelSource {
 	 * @param biomes the array of biomes in the chunk. Only requires an x,z index equal to {@code localX * 16 + localZ}.
 	 */
 	protected void generateCarvers(int chunkX, int chunkZ, byte[] tiles, Biome[] biomes) {
+	}
+
+	/**
+	 * Whether the given x/z spawn coordinates are a valid player spawn position.
+	 * @param x the block x position to spawn the player at.
+	 * @param z the block z position to spawn the player at.
+	 * @return whether the player is allowed to spawn here.
+	 */
+	public boolean isValidSpawnPos(int x, int z) {
+		int surfaceTile = this.level.method_152(x, z);
+		return surfaceTile == Tile.SAND.id;
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager;
 import io.github.minecraftcursedlegacy.api.worldtype.WorldType;
+import io.github.minecraftcursedlegacy.impl.terrain.InternalLevelSourceSetter;
 import io.github.minecraftcursedlegacy.impl.worldtype.WorldTypeData;
 import io.github.minecraftcursedlegacy.impl.worldtype.WorldTypeImpl;
 import net.minecraft.level.LevelProperties;
@@ -60,7 +61,9 @@ public class MixinDimension {
 		WorldType type = WorldType.getById(data.getTypeId());		// retrieve the world type 
 
 		if (type != WorldType.DEFAULT) {							// only mess with non default in case another mod wants to mixin here for some reason
-			info.setReturnValue(type.createChunkGenerator(self.level, data.getOrCreateLoadedData(type.storesAdditionalData()))); // set the custom chunk generator
+			info.setReturnValue(((InternalLevelSourceSetter) this).setInternalLevelSource( // set the custom chunk generator
+					type.createChunkGenerator(self.level, data.getOrCreateLoadedData(type.storesAdditionalData()))
+					));
 		}
 	}
 }

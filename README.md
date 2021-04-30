@@ -38,3 +38,8 @@ This API is available under the MIT license. Feel free to learn from it and inco
 ## Running Tests
 If your ide runs using gradle change settings to make your ide compile it itself so you can run the test modules.
 If your ide doesn't have this feature get a better ide not a glorified text editor please kthx
+
+## Subproject Versions
+The convention I use for subproject versions is setting it to the last api version I updated them.
+If this is stupid, please ping Valoeghese on discord to rant about it.
+
