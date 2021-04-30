@@ -40,7 +40,7 @@ public class LowFlatChunkGenerator extends ChunkGenerator {
 
 	@Override
 	public int getMinSpawnY() {
-		return 10;
+		return 9;
 	}
 
 	@Override
