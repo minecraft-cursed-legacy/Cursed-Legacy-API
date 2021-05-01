@@ -23,21 +23,28 @@
 
 package io.github.minecraftcursedlegacy.api.command;
 
+import javax.annotation.Nullable;
+
+import io.github.minecraftcursedlegacy.impl.command.DefaultCommandDispatcherImpl;
+import net.minecraft.entity.player.Player;
+
 /**
  * Interface for an object in charge of registering and dispatching commands issued to the game.
  * @since 1.1.0
  */
-public interface CommandDispatcher<T> {
+public interface CommandDispatcher {
 	/**
 	 * The default command dispatcher, as provided by Cursed Legacy API.
-	 * @since 1.1.0
 	 */
-	DefaultCommandDispatcher DEFAULT = new DefaultCommandDispatcher();
+	DefaultCommandDispatcher DEFAULT = new DefaultCommandDispatcherImpl();
 
 	/**
-	 * 
-	 * @param command
-	 * @param commandObject
+	 * Called when a command is issued to the game by a player. This method is used to handle command dispatching
+	 * logic, sending the data to the relevant registered command object.
+	 * @param player the player who has issued the command. Will be null if it is the console.
+	 * @param commandName the name of the command that has been issued.
+	 * @param command the command string, excluding the "/" (slash) at the beginning if executed from chat.
+	 * @param singleplayer whether this is executed in a singleplayer world.
 	 */
-	void register(String command, T commandObject);
+	void dispatch(@Nullable Player player, String commandName, String command, boolean singleplayer);
 }

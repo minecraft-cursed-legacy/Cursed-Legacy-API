@@ -25,10 +25,33 @@ package io.github.minecraftcursedlegacy.impl.command;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiPredicate;
 
+import javax.annotation.Nullable;
+
+import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
+import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
+import net.fabricmc.api.EnvType;
 import net.minecraft.entity.player.Player;
 
-public class DefaultCommandsImpl {
-	private static Map<String, BiPredicate<Player, String[]>> TOOLKIT_COMMANDS = new HashMap<>();
+public class DefaultCommandDispatcherImpl implements DefaultCommandDispatcher {
+	private final Map<String, Command> commands = new HashMap<>();
+
+	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
+		commands.put(commandName, commandFunction);
+
+		if (environment == null) {
+			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
+			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
+		} else if (environment == EnvType.SERVER) {
+			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
+		} else {
+			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
+		}
+	}
+
+	@Override
+	public void dispatch(Player player, String commandName, String command, boolean singleplayer) {
+		String[] args = command.split(" ");
+		commands.get(commandName).execute(player, args); // TODO if false print in red bold to the player "A problem occured while executing this command."
+	}
 }
