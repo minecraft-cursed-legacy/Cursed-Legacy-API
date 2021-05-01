@@ -17,7 +17,8 @@
   "icon": "assets/api/icon.png",
 
   "mixins": [
-    "legacy-commands.mixins.json"
+    "legacy-commands.mixins.json",
+    "legacy-commands.accessors.json"
   ],
 
   "depends": {
