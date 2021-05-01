@@ -44,7 +44,7 @@ public abstract class MixinServerPlayPacketHandler {
 		}
 	}
 
-	@Inject(method = "handleChatMessage", at = @At(value = "INVOKE", target = "startsWith"), cancellable = true)
+	@Inject(method = "handleChatMessage", at = @At(value = "INVOKE", target = "Ljava/lang/String;startsWith(Ljava/lang/String;)Z"), cancellable = true)
 	private void onChatMessageReceived(ChatMessagePacket packet, CallbackInfo info) {
 		if (ChatEvent.MULTIPLAYER.invoker().onMessageSent(ServerCommandSender.of((ServerPlayPacketHandler) (Object) this), packet.message.trim()) == ActionResult.FAIL) {
 			info.cancel();
