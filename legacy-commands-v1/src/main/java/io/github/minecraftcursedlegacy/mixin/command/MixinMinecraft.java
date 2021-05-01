@@ -56,7 +56,7 @@ public abstract class MixinMinecraft {
 
 	@Inject(at = @At("HEAD"), method = "handleClientCommand", cancellable = true)
 	private void handleClientCommand(String message, CallbackInfoReturnable<Boolean> info) {
-		if (ChatEvent.SINGLEPLAYER.invoker().onMessageSent(Sender.fromPlayer(this.player), message) == ActionResult.FAIL) {
+		if (!isConnectedToServer() && ChatEvent.SINGLEPLAYER.invoker().onMessageSent(Sender.fromPlayer(this.player), message) == ActionResult.FAIL) {
 			info.setReturnValue(true);
 		}
 	}

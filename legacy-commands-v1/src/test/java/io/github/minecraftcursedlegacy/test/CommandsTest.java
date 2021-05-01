@@ -23,15 +23,38 @@
 
 package io.github.minecraftcursedlegacy.test;
 
+import io.github.minecraftcursedlegacy.api.command.ChatEvent;
 import io.github.minecraftcursedlegacy.api.command.CommandDispatcher;
+import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.fabricmc.api.ModInitializer;
 
 public class CommandsTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
+		// command
 		CommandDispatcher.DEFAULT.register("echo", (source, args) -> {
 			source.sendCommandFeedback(args[1]);
 			return true;
+		});
+		
+		// because I can
+		ChatEvent.SINGLEPLAYER.register((sender, msg) -> {
+			if (!msg.startsWith("/")) {
+				sender.sendCommandFeedback("<" + sender.getPlayer().name + "'s Second Cousin> " + msg);
+				return ActionResult.SUCCESS;
+			}
+			
+			return ActionResult.PASS;
+		});
+
+		// test the event that I don't use in implementation
+		ChatEvent.MULTIPLAYER.register((sender, msg) -> {
+			if (msg.toLowerCase().contains("fuck")) {
+				sender.sendCommandFeedback("That message contains a bad bad no-no word!");
+				return ActionResult.FAIL;
+			}
+			
+			return ActionResult.PASS;
 		});
 	}
 }
