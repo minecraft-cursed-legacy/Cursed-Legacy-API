@@ -36,7 +36,7 @@ import net.minecraft.server.MinecraftServer;
 
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
-	@Inject(at = @At("HEAD"), method = "method_2159")
+	@Inject(at = @At("HEAD"), method = "loadLevels")
 	private void method_2159(LevelStorage storage, String string, long seedOrToken, CallbackInfo info) {
 		String val = ((MinecraftServer) (Object) this).serverProperties.getString("world-type", "minecraft:default");
 		WorldTypeImpl.setSelected(WorldType.getById(new Id(val)));

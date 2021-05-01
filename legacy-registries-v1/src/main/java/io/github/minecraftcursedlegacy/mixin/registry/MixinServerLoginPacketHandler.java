@@ -21,27 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin;
+package io.github.minecraftcursedlegacy.mixin.registry;
+
+import java.io.ByteArrayOutputStream;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
-import net.minecraft.packet.handshake.HandshakeC2S;
-import net.minecraft.server.network.PendingConnection;
+import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
+import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
+import net.minecraft.packet.login.LoginRequestPacket;
+import net.minecraft.server.network.ServerLoginPacketHandler;
+import net.minecraft.server.player.ServerPlayer;
+import net.minecraft.util.io.NBTIO;
 
-@Mixin(PendingConnection.class)
-public class MixinPendingConnection {
-	@Inject(at = @At("HEAD"), method = "handleHandshake")
-	public void handleHandshake(HandshakeC2S arg, CallbackInfo bruh) {
-		if (arg.field_1211 == -9223372036854775808l) {
-			System.out.println("Fabric Client Connecting");
-			VanillaCheckerImpl.playermap.put(arg.field_1210, false);
-		} else {
-			System.out.println("Vanilla Client Connecting");
-			VanillaCheckerImpl.playermap.put(arg.field_1210, true);
-		}
+@Mixin(ServerLoginPacketHandler.class)
+public class MixinServerLoginPacketHandler {
+	@Inject(at = @At("RETURN"), method = "complete", locals = LocalCapture.CAPTURE_FAILHARD)
+	private void onConnectPlayer(LoginRequestPacket arg, CallbackInfo info, ServerPlayer player) {
+		RegistryRemapper.LOGGER.info("Sending registry remap packet to connecting client.");
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		NBTIO.writeGzipped(RegistryImpl.registryData, bos);
+		RegistryImpl.syncChannel.send(bos.toByteArray(), player);
 	}
 }

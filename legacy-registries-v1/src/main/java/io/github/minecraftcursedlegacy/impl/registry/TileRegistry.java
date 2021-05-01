@@ -91,9 +91,9 @@ class TileRegistry extends Registry<Tile> {
 				isFullOpaque.put(tile, Tile.FULL_OPAQUE[i]);
 				hasTileEntity.put(tile, Tile.HAS_TILE_ENTITY[i]);
 				field_1941.put(tile, Tile.field_1941[i]);
-				field_1942.put(tile, Tile.field_1942[i]);
-				field_1943.put(tile, Tile.field_1943[i]);
-				field_1944.put(tile, Tile.field_1944[i]);
+				field_1942.put(tile, Tile.IS_AIR[i]);
+				field_1943.put(tile, Tile.LUMINANCES[i]);
+				field_1944.put(tile, Tile.MULTIPLE_STATES[i]);
 			}
 		}
 
@@ -102,9 +102,9 @@ class TileRegistry extends Registry<Tile> {
 		System.arraycopy(new boolean[size], 0, Tile.FULL_OPAQUE, 0, size);
 		System.arraycopy(new boolean[size], 0, Tile.HAS_TILE_ENTITY, 0, size);
 		System.arraycopy(new int[size], 0, Tile.field_1941, 0, size);
-		System.arraycopy(new boolean[size], 0, Tile.field_1942, 0, size);
-		System.arraycopy(new int[size], 0, Tile.field_1943, 0, size);
-		System.arraycopy(new boolean[size], 0, Tile.field_1944, 0, size);
+		System.arraycopy(new boolean[size], 0, Tile.IS_AIR, 0, size);
+		System.arraycopy(new int[size], 0, Tile.LUMINANCES, 0, size);
+		System.arraycopy(new boolean[size], 0, Tile.MULTIPLE_STATES, 0, size);
 	}
 
 	@Override
@@ -124,8 +124,8 @@ class TileRegistry extends Registry<Tile> {
 		Tile.FULL_OPAQUE[newSerialisedId] = isFullOpaque.getOrDefault(remappedValue, false);
 		Tile.HAS_TILE_ENTITY[newSerialisedId] = hasTileEntity.getOrDefault(remappedValue, false);
 		Tile.field_1941[newSerialisedId] = field_1941.getOrDefault(remappedValue, 0);
-		Tile.field_1942[newSerialisedId] = field_1942.getOrDefault(remappedValue, false);
-		Tile.field_1943[newSerialisedId] = field_1943.getOrDefault(remappedValue, 0);
-		Tile.field_1944[newSerialisedId] = field_1944.getOrDefault(remappedValue, false);
+		Tile.IS_AIR[newSerialisedId] = field_1942.getOrDefault(remappedValue, false);
+		Tile.LUMINANCES[newSerialisedId] = field_1943.getOrDefault(remappedValue, 0);
+		Tile.MULTIPLE_STATES[newSerialisedId] = field_1944.getOrDefault(remappedValue, false);
 	}
 }

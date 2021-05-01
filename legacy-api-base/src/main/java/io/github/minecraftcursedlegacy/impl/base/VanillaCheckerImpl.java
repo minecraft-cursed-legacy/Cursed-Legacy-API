@@ -30,4 +30,6 @@ public final class VanillaCheckerImpl {
 	}
 	
 	public static HashMap<String, Boolean> playermap = new HashMap<String, Boolean>();
+
+	public static final long FABRIC_IDENTIFIER_CONSTANT = -9223372036854775808l;
 }

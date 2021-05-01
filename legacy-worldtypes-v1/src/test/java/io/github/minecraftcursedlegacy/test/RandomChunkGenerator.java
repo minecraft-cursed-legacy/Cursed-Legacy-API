@@ -50,7 +50,7 @@ public class RandomChunkGenerator extends ChunkGenerator {
 
 	@Override
 	public boolean isValidSpawnPos(int x, int z) {
-		int surfaceTile = this.level.method_152(x, z);
+		int surfaceTile = this.level.getTileAtSurface(x, z);
 		return surfaceTile == Tile.GRASS.id;
 	}
 }

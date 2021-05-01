@@ -42,7 +42,7 @@ import net.minecraft.util.io.CompoundTag;
 @Mixin(MinecraftServer.class)
 public class MixinMinecraftServer {
 	@Inject(
-			method = "method_2159",
+			method = "loadLevels",
 			at = @At(value = "NEW", target = "Lnet/minecraft/server/level/ServerLevel;"),
 			locals = LocalCapture.CAPTURE_FAILHARD)
 	private void method_2159(LevelStorage arg, String string, long l, CallbackInfo info, McRegionDimensionFile data) {

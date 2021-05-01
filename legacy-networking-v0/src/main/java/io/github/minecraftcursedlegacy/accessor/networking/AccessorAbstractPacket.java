@@ -29,6 +29,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import net.minecraft.packet.AbstractPacket;
 
 @Mixin(AbstractPacket.class)
+@SuppressWarnings("rawtypes")
 public interface AccessorAbstractPacket {
 	@Invoker("register")
 	static void register(int var0, boolean flag, boolean flag1, Class arg) {

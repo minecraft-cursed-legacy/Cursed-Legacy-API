@@ -18,7 +18,7 @@
   ],
   "server": [
     "MixinMinecraftServer",
-    "MixinPendingConnection"
+    "MixinServerLoginPacketHandler"
   ],
   "injectors": {
     "defaultRequire": 1

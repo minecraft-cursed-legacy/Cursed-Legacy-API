@@ -32,15 +32,15 @@ import net.minecraft.item.PlaceableTileItem;
 @Mixin(PlaceableTileItem.class)
 public class MixinPlaceableTileItem implements HasParentId {
 	@Shadow
-	private int field_2216;
+	private int tileId;
 
 	@Override
 	public void setParentId(int id) {
-		this.field_2216 = id;
+		this.tileId = id;
 	}
 
 	@Override
 	public int getParentId() {
-		return this.field_2216;
+		return this.tileId;
 	}
 }

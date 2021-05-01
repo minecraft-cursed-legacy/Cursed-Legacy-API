@@ -46,7 +46,7 @@ public class MultiTest implements ModInitializer, ModPostInitializer {
 
 		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> {
 			ItemType item = new BasicItem(id).setName("exampleTextureItemAlso");
-			return item.method_458(AtlasMap.registerSprite(item, "/assets/modid/bc/iron_gear.png"));
+			return item.setTexturePosition(AtlasMap.registerSprite(item, "/assets/modid/bc/iron_gear.png"));
 		});
 
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);

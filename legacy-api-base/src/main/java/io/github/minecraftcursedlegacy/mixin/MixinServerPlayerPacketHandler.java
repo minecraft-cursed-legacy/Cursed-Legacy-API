@@ -30,15 +30,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
-import net.minecraft.entity.player.ServerPlayer;
-import net.minecraft.server.network.ServerPlayerPacketHandler;
+import net.minecraft.server.network.ServerPlayPacketHandler;
+import net.minecraft.server.player.ServerPlayer;
 
-@Mixin(ServerPlayerPacketHandler.class)
+@Mixin(ServerPlayPacketHandler.class)
 public class MixinServerPlayerPacketHandler {
 	@Shadow
 	private ServerPlayer player;
 
-	@Inject(at= @At("HEAD"), method = "loseConnection")
+	@Inject(at= @At("HEAD"), method = "onSocketClosed")
 	public void method_1473(String string, Object[] objects, CallbackInfo bruh) {
 		VanillaCheckerImpl.playermap.remove(player.name);
 	}

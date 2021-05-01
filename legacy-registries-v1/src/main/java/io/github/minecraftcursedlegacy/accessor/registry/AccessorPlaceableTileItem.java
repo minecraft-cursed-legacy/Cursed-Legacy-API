@@ -30,6 +30,6 @@ import net.minecraft.item.PlaceableTileItem;
 
 @Mixin(PlaceableTileItem.class)
 public interface AccessorPlaceableTileItem {
-	@Accessor("field_2216")
+	@Accessor("tileId")
 	int getTileId();
 }

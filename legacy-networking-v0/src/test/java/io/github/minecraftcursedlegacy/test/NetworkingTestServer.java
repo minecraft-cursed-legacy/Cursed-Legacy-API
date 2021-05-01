@@ -26,8 +26,8 @@ package io.github.minecraftcursedlegacy.test;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import io.github.minecraftcursedlegacy.api.event.TileInteractionCallback;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.minecraft.entity.player.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.player.ServerPlayer;
 
 public class NetworkingTestServer implements DedicatedServerModInitializer {
 	@Override

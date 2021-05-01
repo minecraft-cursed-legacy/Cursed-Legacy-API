@@ -32,7 +32,7 @@ import io.github.minecraftcursedlegacy.impl.events.interaction.TileInteractionIm
 import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.level.Level;
-import net.minecraft.server.ServerInteractionManager;
+import net.minecraft.server.player.ServerInteractionManager;
 
 @Mixin(ServerInteractionManager.class)
 public class MixinServerInteractionManager {

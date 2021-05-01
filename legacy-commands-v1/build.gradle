@@ -1,0 +1,7 @@
+archivesBaseName = 'legacy-commands-v1'
+version = getSubprojectVersion(project, '1.1.0')
+
+moduleDependencies(project, 'legacy-api-base')
+
+dependencies {
+}

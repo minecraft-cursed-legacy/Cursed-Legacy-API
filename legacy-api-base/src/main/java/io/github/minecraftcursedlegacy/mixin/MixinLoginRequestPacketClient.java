@@ -32,26 +32,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import io.github.minecraftcursedlegacy.impl.base.VanillaCheckerImpl;
 import net.minecraft.packet.AbstractPacket;
-import net.minecraft.packet.handshake.HandshakeC2S;
+import net.minecraft.packet.login.LoginRequestPacket;
 
-@Mixin(HandshakeC2S.class)
-public class MixinHandshakeC2SClient {
+@Mixin(LoginRequestPacket.class)
+public class MixinLoginRequestPacketClient {
 	@Shadow
 	public int protocolVersion;
 	@Shadow
-	public String field_1210;
+	public String username;
+	// Unused in C2S so we can override it with a magic constant
+	// TODO: a proper modded client handshake if vanilla-checker returns FABRIC
 	@Shadow
-	public long field_1211;
+	public long worldSeed;
 	@Shadow
-	public byte field_1212;
+	public byte dimensionId;
 
 	@Inject(at = @At("HEAD"), method = "write", cancellable = true)
 	public void write(DataOutputStream dataOutputStream, CallbackInfo bruh) throws IOException {
 		dataOutputStream.writeInt(this.protocolVersion);
-		AbstractPacket.writeString(this.field_1210, dataOutputStream);
-		dataOutputStream.writeLong(-9223372036854775808l);
-		dataOutputStream.writeByte(this.field_1212);
+		AbstractPacket.writeString(this.username, dataOutputStream);
+		dataOutputStream.writeLong(VanillaCheckerImpl.FABRIC_IDENTIFIER_CONSTANT);
+		dataOutputStream.writeByte(this.dimensionId);
 		bruh.cancel();
 	}
 }

@@ -37,7 +37,7 @@ import net.minecraft.level.source.LevelSource;
 public class MixinDimension implements InternalLevelSourceAccess {
 	private LevelSource api_level_source;
 
-	@Inject(at = @At("HEAD"), method = "method_1770", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "isValidSpawnPos", cancellable = true)
 	private void onIsValidSpawnPos(int x, int z, CallbackInfoReturnable<Boolean> info) {
 		if (this.api_level_source instanceof ChunkGenerator) {
 			info.setReturnValue(((ChunkGenerator) this.api_level_source).isValidSpawnPos(x, z));

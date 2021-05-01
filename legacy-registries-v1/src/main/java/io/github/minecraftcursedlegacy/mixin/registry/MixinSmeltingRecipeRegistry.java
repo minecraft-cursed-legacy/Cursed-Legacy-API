@@ -32,6 +32,7 @@ import io.github.minecraftcursedlegacy.impl.registry.SmeltingRecipeSetter;
 import net.minecraft.recipe.SmeltingRecipeRegistry;
 
 @Mixin(SmeltingRecipeRegistry.class)
+@SuppressWarnings("rawtypes")
 public abstract class MixinSmeltingRecipeRegistry implements SmeltingRecipeSetter {
 	@Shadow
 	private Map recipes;

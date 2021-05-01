@@ -94,8 +94,8 @@ allprojects {
 		//to change the versions see the gradle.properties file
 		minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-		mappings loom.fromCommit('minecraft-cursed-legacy/Plasma', '59b928b') {spec ->
-			spec.version = 'b1.7.3-15'
+		mappings loom.fromCommit('minecraft-cursed-legacy/Plasma', "build.${project.plasma_build}") {spec ->
+			spec.version = "b1.7.3-${project.plasma_build}"
 		}
 
 		modImplementation("com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
@@ -227,8 +227,4 @@ archivesBaseName = archives_base_name
 version = mod_version
 
 dependencies {
-	// CoreLib for Models, only included as part of the combined distribution
-	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0') {
-		exclude(group: 'tk.valoeghese') //ZoesteriaConfig has disppeared from here
-	}
 }

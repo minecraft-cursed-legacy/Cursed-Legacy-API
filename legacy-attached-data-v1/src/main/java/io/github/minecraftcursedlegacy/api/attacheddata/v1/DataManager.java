@@ -44,15 +44,15 @@ public final class DataManager<T> extends io.github.minecraftcursedlegacy.api.da
 	 * @return a key to use to retrieve the attached data from an object.
 	 */
 	@Override
-	public <E extends AttachedData> DataKey<E> addAttachedData(Id id, Function<T, E> dataProvider) {
+	public <E extends AttachedData> io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey<E> addAttachedData(Id id, Function<T, E> dataProvider) {
 		this.attachedDataFactories.put(id, dataProvider);
-		return new DataKey<>(id);
+		return new io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey<>(id);
 	}
 
 	/**
 	 * Retrieves the specified attached data from the object.
 	 */
-	public <E extends AttachedData> E getAttachedData(T object, DataKey<E> key) throws ClassCastException {
+	public <E extends AttachedData> E getAttachedData(T object, io.github.minecraftcursedlegacy.api.attacheddata.v1.DataManager.DataKey<E> key) throws ClassCastException {
 		return key.apply(((DataStorage) object).getAttachedData(key.id, () -> this.attachedDataFactories.get(key.id).apply(object)));
 	}
 

@@ -52,7 +52,7 @@ public final class Translations {
 	 * @param tile The tile to add the translation for
 	 * @param translation The translated name for the tile
 	 *
-	 * @throws IllegalArgumentException If the given tile has not had {@link Tile#setName(String)} called
+	 * @throws IllegalArgumentException If the given tile has not had {@link Tile#name(String)} called
 	 */
 	public static void addTileTranslation(Tile tile, String translation) {
 		if (tile.method_1597() == null) throw new IllegalArgumentException("Given tile doesn't have a name: " + tile);

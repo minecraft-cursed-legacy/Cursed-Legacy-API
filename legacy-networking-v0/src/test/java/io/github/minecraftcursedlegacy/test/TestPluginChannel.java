@@ -26,7 +26,7 @@ package io.github.minecraftcursedlegacy.test;
 import io.github.minecraftcursedlegacy.api.networking.PluginChannel;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import net.minecraft.network.PacketHandler;
-import net.minecraft.packet.play.SendChatMessageS2C;
+import net.minecraft.packet.play.ChatMessagePacket;
 
 /**
  * The test plugin channel.
@@ -39,7 +39,7 @@ public class TestPluginChannel extends PluginChannel {
 
 	@Override
 	public void onReceive(PacketHandler arg, byte[] data) {
-		arg.handleChatMessage(new SendChatMessageS2C("Wassup bro! Tile: " + data[0]));
+		arg.handleChatMessage(new ChatMessagePacket("Wassup bro! Tile: " + data[0]));
 	}
 
 	public static final Id ID = new Id("legacy-networking-test", "test");

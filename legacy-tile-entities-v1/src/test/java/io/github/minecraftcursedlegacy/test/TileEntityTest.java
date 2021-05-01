@@ -41,7 +41,7 @@ public class TileEntityTest implements ModInitializer {
 	public void onInitialize() {
 		System.out.println("Hello, Fabric Tile Entities World!");
 		tileWithEntity = Registries.TILE.register(new Id("modid:tile_with_entity"),
-				i -> new BasicTileWithEntity(i).setName("exampleBlockWithEntity"));
+				i -> new BasicTileWithEntity(i).name("exampleBlockWithEntity"));
 		tileWithEntityItem = TileItems.registerTileItem(new Id("modid:tile_with_entity"), tileWithEntity);
 		tileEntityClass = BasicTileWithEntity.BasicTileEntity.class;
 		TileEntities.registerTileEntity(tileEntityClass, new Id("modid:tile_entity"));

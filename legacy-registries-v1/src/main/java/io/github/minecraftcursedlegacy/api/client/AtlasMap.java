@@ -106,7 +106,7 @@ public final class AtlasMap {
 	 * @param stack The item type and damage which uses the given sprite.
 	 * @param sprite The location of the custom sprite.
 	 *
-	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}.
+	 * @return The atlas positioning for use with {@link ItemType#setTexturePosition(int)}.
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID and meta.
@@ -122,7 +122,7 @@ public final class AtlasMap {
 	 * @param item The item which uses the given sprite.
 	 * @param sprite The location of the custom sprite.
 	 *
-	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}.
+	 * @return The atlas positioning for use with {@link ItemType#setTexturePosition(int)}.
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID.
@@ -139,7 +139,7 @@ public final class AtlasMap {
 	 * @param meta The damage value an instance must have to use this sprite.
 	 * @param sprite The location of the custom sprite.
 	 *
-	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}.
+	 * @return The atlas positioning for use with {@link ItemType#setTexturePosition(int)}.
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID and meta.
@@ -155,7 +155,7 @@ public final class AtlasMap {
 	 * @param itemID The ID of the item which uses the given sprite.
 	 * @param sprite The location of the custom sprite.
 	 *
-	 * @return The atlas positioning for use with {@link ItemType#method_458(int)}.
+	 * @return The atlas positioning for use with {@link ItemType#setTexturePosition(int)}.
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID.

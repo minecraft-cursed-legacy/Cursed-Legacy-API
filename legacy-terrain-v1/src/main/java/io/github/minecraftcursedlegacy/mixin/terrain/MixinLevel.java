@@ -38,7 +38,7 @@ import net.minecraft.level.source.LevelSource;
 
 @Mixin(Level.class)
 public class MixinLevel {
-	@ModifyConstant(constant = @Constant(intValue = 63), method = "method_152")
+	@ModifyConstant(constant = @Constant(intValue = 63), method = "getTileAtSurface")
 	public int alterMinY(int original) {
 		Level self = (Level) (Object) this;
 		LevelSource cg = ((InternalLevelSourceAccess) self.dimension).getInternalLevelSource();

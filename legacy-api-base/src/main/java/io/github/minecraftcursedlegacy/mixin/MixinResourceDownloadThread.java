@@ -55,6 +55,7 @@ public class MixinResourceDownloadThread {
 	@Shadow
 	private boolean field_139;
 
+	@SuppressWarnings("deprecation")
 	@Inject(method = "run", at = @At("HEAD"), remap = false, cancellable = true)
 	private void go(CallbackInfo info) {
 		if (field_138.isApplet && ((AccessorMinecraft) field_138).getApplet() != null) {

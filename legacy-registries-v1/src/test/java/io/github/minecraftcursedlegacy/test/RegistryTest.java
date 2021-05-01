@@ -39,7 +39,7 @@ public class RegistryTest implements ModInitializer {
 		item = Registries.ITEM_TYPE.register(new Id("modid:item"),
 				i -> new BasicItem(i).setTexturePosition(5, 0).setName("exampleItem"));
 		tile = Registries.TILE.register(new Id("modid:tile"),
-				i -> new BasicTile(i, false).setName("exampleBlock"));
+				i -> new BasicTile(i, false).name("exampleBlock"));
 		tileItem = TileItems.registerTileItem(new Id("modid:tile"), tile);
 
 		SmeltingRecipeRegistry.getInstance().addSmeltingRecipe(item.id, new ItemInstance(tile));

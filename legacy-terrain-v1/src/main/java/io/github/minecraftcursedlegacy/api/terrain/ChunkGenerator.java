@@ -64,7 +64,7 @@ public abstract class ChunkGenerator implements LevelSource {
 	 * @since 1.0.4
 	 */
 	public boolean isValidSpawnPos(int x, int z) {
-		int surfaceTile = this.level.method_152(x, z);
+		int surfaceTile = this.level.getTileAtSurface(x, z);
 		return surfaceTile == Tile.SAND.id;
 	}
 
@@ -112,7 +112,7 @@ public abstract class ChunkGenerator implements LevelSource {
 	}
 
 	@Override
-	public final boolean method_1804(boolean flag, ProgressListener arg) {
+	public final boolean saveChunks(boolean flag, ProgressListener arg) {
 		return true;
 	}
 
@@ -122,7 +122,7 @@ public abstract class ChunkGenerator implements LevelSource {
 	}
 
 	@Override
-	public final boolean method_1805() {
+	public final boolean isClean() {
 		return true;
 	}
 }
