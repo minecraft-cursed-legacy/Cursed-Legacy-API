@@ -1,14 +1,15 @@
 package io.github.minecraftcursedlegacy.mixin.command;
 
+import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
+import io.github.minecraftcursedlegacy.api.command.CursedCommandSource;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.AbstractClientPlayer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.level.Level;
 
 @Mixin(Minecraft.class)
 public class MixinMinecraft {
@@ -22,8 +23,7 @@ public class MixinMinecraft {
 	private void handleClientCommand(String command, CallbackInfoReturnable<Boolean> info) {
 		if (command.length() > 1 && command.startsWith("/") && !((Minecraft) (Object) this).isConnectedToServer()) {
 			command = command.substring(1);
-			String commandName = command.split(" ")[0];
-			DispatcherRegistry.dispatch(((Minecraft) (Object) this).player, commandName, command, true);
+			CommandDispatchEvent.SINGLEPLAYER_DISPATCH.invoker().dispatch(CursedCommandSource.singleplayer(player), command);
 			info.setReturnValue(true);
 		}
 	}

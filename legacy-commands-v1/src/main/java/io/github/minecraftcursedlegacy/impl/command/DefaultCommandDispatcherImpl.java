@@ -23,35 +23,48 @@
 
 package io.github.minecraftcursedlegacy.impl.command;
 
+import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
+import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
+import net.fabricmc.api.EnvType;
+
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nullable;
+public class DefaultCommandDispatcherImpl implements DefaultCommandDispatcher{
+	private final Map<String, Command> singleplayerCommands = new HashMap<>();
+	private final Map<String, Command> multiplayerCommands = new HashMap<>();
 
-import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
-import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
-import net.fabricmc.api.EnvType;
-import net.minecraft.entity.player.Player;
+	public DefaultCommandDispatcherImpl() {
+		CommandDispatchEvent.MULTIPLAYER_DISPATCH.register((source, commandString) -> {
+			String[] args = commandString.split(" ");
+			Command command = multiplayerCommands.get(args[0]);
+			if (command != null) {
+				command.execute(source, args);
+				return true;
+			}
+			return false;
+		});
 
-public class DefaultCommandDispatcherImpl implements DefaultCommandDispatcher {
-	private final Map<String, Command> commands = new HashMap<>();
-
-	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
-		commands.put(commandName, commandFunction);
-
-		if (environment == null) {
-			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
-			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
-		} else if (environment == EnvType.SERVER) {
-			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
-		} else {
-			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
-		}
+		CommandDispatchEvent.SINGLEPLAYER_DISPATCH.register((source, commandString) -> {
+			String[] args = commandString.split(" ");
+			Command command = singleplayerCommands.get(args[0]);
+			if (command != null) {
+				command.execute(source, args);
+				return true;
+			}
+			return false;
+		});
 	}
 
-	@Override
-	public void dispatch(Player player, String commandName, String command, boolean singleplayer) {
-		String[] args = command.split(" ");
-		commands.get(commandName).execute(player, args); // TODO if false print in red bold to the player "A problem occured while executing this command."
+	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
+		if (environment == EnvType.SERVER) {
+			multiplayerCommands.put(commandName, commandFunction);
+		} else if (environment == EnvType.CLIENT) {
+			singleplayerCommands.put(commandName, commandFunction);
+		} else {
+			singleplayerCommands.put(commandName, commandFunction);
+			multiplayerCommands.put(commandName, commandFunction);
+		}
 	}
 }
