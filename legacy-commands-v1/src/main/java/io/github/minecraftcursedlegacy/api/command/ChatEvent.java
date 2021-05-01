@@ -33,7 +33,7 @@ import net.fabricmc.fabric.api.event.EventFactory;
  */
 public interface ChatEvent {
 	/**
-	 * For when a chat message is sent in a singleplayer world.
+	 * Invoked when a chat message is sent in a singleplayer world.
 	 */
 	Event<ChatEvent> SINGLEPLAYER = EventFactory.createArrayBacked(ChatEvent.class, (listeners -> (sender, message) -> {
 		for (ChatEvent listener : listeners) {
@@ -48,7 +48,7 @@ public interface ChatEvent {
 	}));
 
 	/**
-	 * For when a chat message is sent in a multiplayer world, handled server side.
+	 * Invoked when a chat message is sent in a multiplayer world, handled server side.
 	 */
 	Event<ChatEvent> MULTIPLAYER = EventFactory.createArrayBacked(ChatEvent.class, (listeners -> (sender, message) -> {
 		for (ChatEvent listener : listeners) {
@@ -63,7 +63,7 @@ public interface ChatEvent {
 	}));
 
 	/**
-	 * For when a chat message is sent in a multiplayer world, handled client side by the sending player.
+	 * Invoked client side by the sending player when a chat message is sent in a multiplayer world.
 	 * This has more limited use cases than the other events, but may be useful if you want to have configuration commands for a client side mod while on the server.
 	 */
 	Event<ChatEvent> MULTIPLAYER_CLIENT = EventFactory.createArrayBacked(ChatEvent.class, (listeners -> (sender, message) -> {
