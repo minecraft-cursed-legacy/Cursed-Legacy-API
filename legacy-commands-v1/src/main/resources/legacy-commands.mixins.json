@@ -5,6 +5,9 @@
   "client": [
     "MixinMinecraft"
   ],
+  "server": [
+    "MixinServerPlayPacketHandler"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

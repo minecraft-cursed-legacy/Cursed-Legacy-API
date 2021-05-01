@@ -1,7 +1,9 @@
 package io.github.minecraftcursedlegacy.api.command;
 
+import io.github.minecraftcursedlegacy.impl.command.MultiplayerCursedCommandSourceImpl;
 import io.github.minecraftcursedlegacy.impl.command.SingleplayerCursedCommandSourceImpl;
 import net.minecraft.entity.player.Player;
+import net.minecraft.server.command.CommandSource;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +17,7 @@ public interface CursedCommandSource {
         return new SingleplayerCursedCommandSourceImpl(player);
     }
 
-    static CursedCommandSource multiplayer(Player player) {
-        return new SingleplayerCursedCommandSourceImpl(player);
+    static CursedCommandSource multiplayer(CommandSource source) {
+        return new MultiplayerCursedCommandSourceImpl(source);
     }
 }
