@@ -30,8 +30,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
 import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
+import io.github.minecraftcursedlegacy.api.command.ServerCommandUtils;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
-import io.github.minecraftcursedlegacy.impl.command.ServerCommandSender;
 import net.minecraft.packet.play.ChatMessagePacket;
 import net.minecraft.server.network.ServerPlayPacketHandler;
 
@@ -39,14 +39,14 @@ import net.minecraft.server.network.ServerPlayPacketHandler;
 public abstract class MixinServerPlayPacketHandler {
 	@Inject(method = "method_836", at = @At("HEAD"), cancellable = true)
 	void handleCommand(String string, CallbackInfo ci) {
-		if (CommandDispatchEvent.INSTANCE.invoker().onDispatch(ServerCommandSender.of((ServerPlayPacketHandler) (Object) this), string.substring(1))) {
+		if (CommandDispatchEvent.INSTANCE.invoker().onDispatch(ServerCommandUtils.createSender((ServerPlayPacketHandler) (Object) this), string.substring(1))) {
 			ci.cancel();
 		}
 	}
 
-	@Inject(method = "handleChatMessage", at = @At(value = "INVOKE", target = "Ljava/lang/String;startsWith(Ljava/lang/String;)Z"), cancellable = true)
+	@Inject(method = "handleChatMessage", at = @At(value = "INVOKE", target = "Ljava/lang/String;startsWith(Ljava/lang/String;)Z", remap = false), cancellable = true)
 	private void onChatMessageReceived(ChatMessagePacket packet, CallbackInfo info) {
-		if (ChatEvent.MULTIPLAYER.invoker().onMessageSent(ServerCommandSender.of((ServerPlayPacketHandler) (Object) this), packet.message.trim()) == ActionResult.FAIL) {
+		if (ChatEvent.MULTIPLAYER.invoker().onMessageSent(ServerCommandUtils.createSender((ServerPlayPacketHandler) (Object) this), packet.message.trim()) == ActionResult.FAIL) {
 			info.cancel();
 		}
 	}

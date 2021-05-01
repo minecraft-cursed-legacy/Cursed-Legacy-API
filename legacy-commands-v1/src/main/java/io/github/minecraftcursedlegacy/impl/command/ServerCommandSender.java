@@ -33,8 +33,4 @@ public class ServerCommandSender implements Sender {
 	public void sendError(String message) {
 		this.source.sendFeedback("§4"+message);
 	}
-
-	public static Sender of(CommandSource source) {
-		return new ServerCommandSender(source);
-	}
 }

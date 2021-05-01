@@ -44,12 +44,12 @@ public class DefaultCommandDispatcherImpl implements DefaultCommandDispatcher{
 	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
 		if (environment != EnvType.CLIENT) {
 			multiplayerCommands.put(commandName, commandFunction);
-			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
+			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
 		}
 
 		if (environment != EnvType.SERVER) {
 			singleplayerCommands.put(commandName, commandFunction);
-			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
+			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
 		}
 	}
 

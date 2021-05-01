@@ -26,6 +26,7 @@ package io.github.minecraftcursedlegacy.test;
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
 import io.github.minecraftcursedlegacy.api.command.CommandDispatcher;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 
 public class CommandsTest implements ModInitializer {
@@ -36,6 +37,11 @@ public class CommandsTest implements ModInitializer {
 			source.sendCommandFeedback(args[1]);
 			return true;
 		});
+		
+		CommandDispatcher.DEFAULT.register("singleplayerecho", (source, args) -> {
+			source.sendCommandFeedback(args[1]);
+			return true;
+		}, EnvType.CLIENT);
 		
 		// because I can
 		ChatEvent.SINGLEPLAYER.register((sender, msg) -> {

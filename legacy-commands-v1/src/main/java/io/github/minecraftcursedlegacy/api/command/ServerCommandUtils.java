@@ -21,24 +21,22 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin.command;
+package io.github.minecraftcursedlegacy.api.command;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import io.github.minecraftcursedlegacy.impl.command.ServerCommandSender;
+import net.minecraft.server.command.CommandSource;
 
-import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
-import io.github.minecraftcursedlegacy.api.command.ServerCommandUtils;
-import net.minecraft.server.command.Command;
-import net.minecraft.server.command.CommandManager;
-
-@Mixin(CommandManager.class)
-public abstract class MixinCommandManager {
-	@Inject(method = "processCommand", at = @At(value = "HEAD"), cancellable = true)
-	private void handleCommand(Command command, CallbackInfo ci) {
-		if (CommandDispatchEvent.INSTANCE.invoker().onDispatch(ServerCommandUtils.createSender(command.source), command.commandString)) {
-			ci.cancel();
-		}
+/**
+ * Utilities for server commands. Do not reference this class client side!
+ * @since 1.1.0
+ */
+public class ServerCommandUtils {
+	/**
+	 * Create a {@linkplain Sender sender} from a command source.
+	 * @param source the command source.
+	 * @return the sender instance that references the given command source.
+	 */
+	public static Sender createSender(CommandSource source) {
+		return new ServerCommandSender(source);
 	}
 }
