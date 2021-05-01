@@ -21,33 +21,46 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin.command;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+package io.github.minecraftcursedlegacy.impl.command;
 
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
 import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
+import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
-import io.github.minecraftcursedlegacy.impl.command.ServerCommandSender;
-import net.minecraft.packet.play.ChatMessagePacket;
-import net.minecraft.server.network.ServerPlayPacketHandler;
+import net.fabricmc.api.ModInitializer;
 
-@Mixin(ServerPlayPacketHandler.class)
-public abstract class MixinServerPlayPacketHandler {
-	@Inject(method = "method_836", at = @At("HEAD"), cancellable = true)
-	void handleCommand(String string, CallbackInfo ci) {
-		if (CommandDispatchEvent.INSTANCE.invoker().onDispatch(ServerCommandSender.of((ServerPlayPacketHandler) (Object) this), string.substring(1))) {
-			ci.cancel();
-		}
-	}
+/** 
+ * Implementation for command dispatchers that use our api.
+ * @since 1.1.0
+ */
+public class CommandsImpl implements ModInitializer {
+	@Override
+	public void onInitialize() {
+		// Client
+		ChatEvent.SINGLEPLAYER.register((sender, message) -> {
+			// isClient is only true when a client connected to the server
+			if (message.length() > 1 && message.startsWith("/") && !sender.getPlayer().level.isClient) {
+				message = message.substring(1);
+				String[] args = message.split(" ");
 
-	@Inject(method = "handleChatMessage", at = @At(value = "INVOKE", target = "startsWith"), cancellable = true)
-	private void onChatMessageReceived(ChatMessagePacket packet, CallbackInfo info) {
-		if (ChatEvent.MULTIPLAYER.invoker().onMessageSent(ServerCommandSender.of((ServerPlayPacketHandler) (Object) this), packet.message.trim()) == ActionResult.FAIL) {
-			info.cancel();
-		}
+				if (DispatcherRegistry.dispatch(sender, args[0], message, true)) {
+					return ActionResult.FAIL;
+				}
+			}
+
+			return ActionResult.PASS;
+		});
+
+		// Server
+		CommandDispatchEvent.INSTANCE.register((sender, command) -> {
+			// isClient is only true when a client connected to the server
+			String[] args = command.split(" ");
+
+			if (DispatcherRegistry.dispatch(sender, args[0], command, true)) {
+				return true;
+			}
+
+			return false;
+		});
 	}
 }

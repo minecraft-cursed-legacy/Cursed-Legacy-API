@@ -23,48 +23,49 @@
 
 package io.github.minecraftcursedlegacy.impl.command;
 
-import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
-import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
-import net.fabricmc.api.EnvType;
-
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
+import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
+import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
+import io.github.minecraftcursedlegacy.api.command.Sender;
+import net.fabricmc.api.EnvType;
+
+/**
+ * The implementation for the default command dispatcher.
+ * @since 1.1.0
+ */
 public class DefaultCommandDispatcherImpl implements DefaultCommandDispatcher{
 	private final Map<String, Command> singleplayerCommands = new HashMap<>();
 	private final Map<String, Command> multiplayerCommands = new HashMap<>();
 
-	public DefaultCommandDispatcherImpl() {
-		CommandDispatchEvent.MULTIPLAYER_DISPATCH.register((source, commandString) -> {
-			String[] args = commandString.split(" ");
-			Command command = multiplayerCommands.get(args[0]);
-			if (command != null) {
-				command.execute(source, args);
-				return true;
-			}
-			return false;
-		});
+	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
+		if (environment != EnvType.CLIENT) {
+			multiplayerCommands.put(commandName, commandFunction);
+			DispatcherRegistry.registerSingleplayerDispatcher(commandName, this);
+		}
 
-		CommandDispatchEvent.SINGLEPLAYER_DISPATCH.register((source, commandString) -> {
-			String[] args = commandString.split(" ");
-			Command command = singleplayerCommands.get(args[0]);
-			if (command != null) {
-				command.execute(source, args);
-				return true;
-			}
-			return false;
-		});
+		if (environment != EnvType.SERVER) {
+			singleplayerCommands.put(commandName, commandFunction);
+			DispatcherRegistry.registerMultiplayerDispatcher(commandName, this);
+		}
 	}
 
-	public void register(String commandName, Command commandFunction, @Nullable EnvType environment) {
-		if (environment == EnvType.SERVER) {
-			multiplayerCommands.put(commandName, commandFunction);
-		} else if (environment == EnvType.CLIENT) {
-			singleplayerCommands.put(commandName, commandFunction);
-		} else {
-			singleplayerCommands.put(commandName, commandFunction);
-			multiplayerCommands.put(commandName, commandFunction);
+	@Override
+	public boolean dispatch(Sender sender, String commandName, String command, boolean singleplayer) {
+		String[] args = command.split(" ");
+
+		try {
+			if (!(singleplayer ? this.singleplayerCommands : this.multiplayerCommands).get(commandName).execute(sender, args)) {
+				sender.sendError("An unexpected issue occured while processing this command.");
+			}
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			sender.sendError("An unexpected error occured while processing this command.");
 		}
+
+		return true;
 	}
 }

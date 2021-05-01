@@ -23,30 +23,55 @@
 
 package io.github.minecraftcursedlegacy.api.command;
 
+import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
 /**
- * Event for when a command is issued on the server. Used by the command implementation for multiplayer commands.
+ * Event for when a chat message is sent. Used by the command implementation, but also has uses in chat filtering, etc.
  * @since 1.1.0
  */
-public interface CommandDispatchEvent {
-	Event<CommandDispatchEvent> INSTANCE = EventFactory.createArrayBacked(CommandDispatchEvent.class, listeners -> (sender, command) -> {
-		for (CommandDispatchEvent listener : listeners) {
-			if (listener.onDispatch	(sender, command)) {
-				return true;
+public interface ChatEvent {
+	/**
+	 * For when a chat message is sent in a singleplayer world.
+	 */
+	Event<ChatEvent> SINGLEPLAYER = EventFactory.createArrayBacked(ChatEvent.class, (listeners -> (sender, message) -> {
+		for (ChatEvent listener : listeners) {
+			ActionResult result = listener.onMessageSent(sender, message);
+
+			if (result != ActionResult.PASS) {
+				return result;
 			}
 		}
 
-		return false;
-	});
+		return ActionResult.SUCCESS;
+	}));
+
+	/**
+	 * For when a chat message is sent in a multiplayer world.
+	 */
+	Event<ChatEvent> MULTIPLAYER = EventFactory.createArrayBacked(ChatEvent.class, (listeners -> (sender, message) -> {
+		for (ChatEvent listener : listeners) {
+			ActionResult result = listener.onMessageSent(sender, message);
+
+			if (result != ActionResult.PASS) {
+				return result;
+			}
+		}
+
+		return ActionResult.SUCCESS;
+	}));
 
 	/**
 	 * Called when a command is issued by a source.
 	 * @param sender the source who has issued the command.
-	 * @param command the command string, excluding the "/" (slash) at the beginning if executed from chat.
+	 * @param message the chat message.
 	 *
-	 * @return whether the command was handled. 
+	 * @return
+	 * <ul>
+	 *   <li>SUCCESS</li> to prevent further event handling and immediately send the chat message.
+	 *   <li>FAIL</li> to prevent further event handling and do not send the chat message.
+	 *   <li>PASS</li> to continue further event handling. If all events pass, defaults to SUCCESS.
 	 */
-	boolean onDispatch(Sender sender, String command);
+	ActionResult onMessageSent(Sender sender, String message);
 }

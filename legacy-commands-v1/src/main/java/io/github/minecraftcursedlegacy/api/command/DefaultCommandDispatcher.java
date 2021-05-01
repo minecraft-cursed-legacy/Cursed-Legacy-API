@@ -23,27 +23,23 @@
 
 package io.github.minecraftcursedlegacy.api.command;
 
-import io.github.minecraftcursedlegacy.impl.command.DefaultCommandDispatcherImpl;
-import net.fabricmc.api.EnvType;
-
 import javax.annotation.Nullable;
+
+import net.fabricmc.api.EnvType;
 
 /**
  * Interface to the default command dispatcher in cursed legacy API.
  * Yes, this is where you register your commands to.
  * Access the instance from {@code CommandDispatcher.DEFAULT}.
  */
-public interface DefaultCommandDispatcher {
-
-	DefaultCommandDispatcher INSTANCE = new DefaultCommandDispatcherImpl();
-
+public interface DefaultCommandDispatcher extends CommandDispatcher {
 	/**
 	 * Register a command to the command dispatcher.
 	 * @param command the command name.
 	 * @param handler the object in charge of executing the command.
 	 */
 	default void register(String command, Command handler) {
-		register(command, handler, null);
+		this.register(command, handler, null); // register for both singleplayer and multiplayer.
 	}
 
 	/**
@@ -66,10 +62,10 @@ public interface DefaultCommandDispatcher {
 	public interface Command {
 		/**
 		 * Called on command execution.
-		 * @param source the source executing the command. Will be null if it is the console.
+		 * @param info info about the command execution.
 		 * @param args the command arguments. {@code args[0]} will always be the command name.
 		 * @return whether the command executed successfully.
 		 */
-		boolean execute(CursedCommandSource source, String[] args);
+		boolean execute(Sender info, String[] args);
 	}
 }

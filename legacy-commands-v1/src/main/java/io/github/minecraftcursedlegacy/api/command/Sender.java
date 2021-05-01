@@ -21,16 +21,39 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.accessor.command;
+package io.github.minecraftcursedlegacy.api.command;
 
-import net.minecraft.client.Minecraft;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import javax.annotation.Nullable;
 
-@Mixin(Minecraft.class)
-public interface AccessorMinecraft {
-    @Accessor
-    public static Minecraft getInstance() {
-        throw new UnsupportedOperationException("mixin");
-    }
+import io.github.minecraftcursedlegacy.impl.command.PlayerSender;
+import net.minecraft.entity.player.Player;
+
+/**
+ * Information about and utility methods for handling incoming commands and chat messages.
+ * @since 1.1.0
+ */
+public interface Sender {
+	/**
+	 * @return the player executing the command. Will be null if it is the console.
+	 */
+	@Nullable Player getPlayer();
+	/**
+	 * Sends a chat message to the command source as feedback.
+	 * @param message the message to send. 
+	 */
+	void sendCommandFeedback(String message);
+	/**
+	 * Sends an error chat message to the command source as feedback.
+	 * @param message the message to send.
+	 */
+	void sendError(String message);
+
+	/**
+	 * Creates a new sender from the given player.
+	 * @param player the player who is responsible for sending.
+	 * @return the new sender instance.
+	 */
+	static Sender fromPlayer(Player player) {
+		return new PlayerSender(player);
+	}
 }

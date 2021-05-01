@@ -16,6 +16,12 @@
   "license": "MIT",
   "icon": "assets/api/icon.png",
 
+  "entrypoints": {
+    "init": [
+      "io.github.minecraftcursedlegacy.impl.command.CommandsImpl"
+    ]
+  },
+
   "mixins": [
     "legacy-commands.mixins.json",
     "legacy-commands.accessors.json"

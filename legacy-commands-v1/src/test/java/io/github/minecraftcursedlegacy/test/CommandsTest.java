@@ -23,13 +23,13 @@
 
 package io.github.minecraftcursedlegacy.test;
 
-import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
+import io.github.minecraftcursedlegacy.api.command.CommandDispatcher;
 import net.fabricmc.api.ModInitializer;
 
 public class CommandsTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		DefaultCommandDispatcher.INSTANCE.register("echo", (source, args) -> {
+		CommandDispatcher.DEFAULT.register("echo", (source, args) -> {
 			source.sendCommandFeedback(args[1]);
 			return true;
 		});

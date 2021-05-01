@@ -21,16 +21,28 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.accessor.command;
+package io.github.minecraftcursedlegacy.api.command;
 
-import net.minecraft.client.Minecraft;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import io.github.minecraftcursedlegacy.impl.command.DefaultCommandDispatcherImpl;
 
-@Mixin(Minecraft.class)
-public interface AccessorMinecraft {
-    @Accessor
-    public static Minecraft getInstance() {
-        throw new UnsupportedOperationException("mixin");
-    }
+/**
+ * Interface for an object in charge of registering and dispatching commands issued to the game.
+ * @since 1.1.0
+ */
+public interface CommandDispatcher {
+	/**
+	 * The default command dispatcher, as provided by Cursed Legacy API.
+	 */
+	DefaultCommandDispatcher DEFAULT = new DefaultCommandDispatcherImpl();
+
+	/**
+	 * Called when a command is issued to the game. This method is used to handle command dispatching
+	 * logic, sending the data to the relevant registered command object.
+	 * @param sender the sender who has issued the command.e.
+	 * @param commandName the name of the command that has been issued.
+	 * @param command the command string, excluding the "/" (slash) at the beginning if executed from chat.
+	 * @param singleplayer whether this is executed in a singleplayer world.
+	 * @return whether the command was handled.
+	 */
+	boolean dispatch(Sender sender, String commandName, String command, boolean singleplayer);
 }
