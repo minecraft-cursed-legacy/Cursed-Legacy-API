@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "io.github.minecraftcursedlegacy.mixin.command",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MixinMinecraft"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
