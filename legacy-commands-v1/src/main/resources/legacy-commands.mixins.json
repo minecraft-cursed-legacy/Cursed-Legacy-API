@@ -6,6 +6,7 @@
     "MixinMinecraft"
   ],
   "server": [
+    "MixinCommandManager",
     "MixinServerPlayPacketHandler"
   ],
   "injectors": {
