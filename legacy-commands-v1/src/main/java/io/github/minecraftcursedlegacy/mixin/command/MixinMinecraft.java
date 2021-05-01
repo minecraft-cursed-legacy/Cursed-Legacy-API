@@ -12,16 +12,19 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
-public class MixinMinecraft {
-	@Redirect(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;hasLevel()Z", ordinal = 0))
+public abstract class MixinMinecraft {
+	@Shadow public AbstractClientPlayer player;
+
+	@Shadow public abstract boolean isConnectedToServer();
+
+	@Redirect(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;isConnectedToServer()Z", ordinal = 0))
 	private boolean canOpenChatScreen(Minecraft minecraft) {
-		Level level = ((Minecraft) (Object) this).level;
-		return level != null && (DispatcherRegistry.hasSingleplayerCommands() || level.isClient);
+		return true;
 	}
 
 	@Inject(at = @At("HEAD"), method = "handleClientCommand", cancellable = true)
 	private void handleClientCommand(String command, CallbackInfoReturnable<Boolean> info) {
-		if (command.length() > 1 && command.startsWith("/") && !((Minecraft) (Object) this).isConnectedToServer()) {
+		if (command.length() > 1 && command.startsWith("/") && !isConnectedToServer()) {
 			command = command.substring(1);
 			CommandDispatchEvent.SINGLEPLAYER_DISPATCH.invoker().dispatch(CursedCommandSource.singleplayer(player), command);
 			info.setReturnValue(true);
