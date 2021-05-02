@@ -30,6 +30,7 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 class TileRegistry extends Registry<Tile> {
 	private final Map<Tile, Boolean> ticksRandomly = new HashMap<>();
@@ -75,9 +76,11 @@ class TileRegistry extends Registry<Tile> {
 	public Tile getById(Id id) {
 		return super.getById(VanillaIds.correctLegacyTileId(id));
 	}
+	
+	// refactor note: not keeping the old code in the ()V beforeRemap method 'cuz literally no one will be manually invoking that 
 
 	@Override
-	protected void beforeRemap() {
+	protected void beforeRemap(CompoundTag tag) {
 		int size = Tile.BY_ID.length;
 
 		// Clear the tile array
@@ -104,6 +107,8 @@ class TileRegistry extends Registry<Tile> {
 		System.arraycopy(new boolean[size], 0, Tile.IS_AIR, 0, size);
 		System.arraycopy(new int[size], 0, Tile.LUMINANCES, 0, size);
 		System.arraycopy(new boolean[size], 0, Tile.MULTIPLE_STATES, 0, size);
+
+		VanillaIds.fixOldIds(tag, true);
 	}
 
 	@Override

@@ -103,13 +103,17 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		return super.getById(VanillaIds.correctLegacyItemId(id));
 	}
 
+	// refactor note: not keeping the old code in the ()V beforeRemap method 'cuz literally no one will be manually invoking that 
+
 	@Override
-	protected void beforeRemap() {
+	protected void beforeRemap(CompoundTag tag) {
 		int size = ItemType.byId.length;
 		// copy old array for later recipe remapping
 		System.arraycopy(ItemType.byId, 0, this.oldItemTypes, 0, size);
 		// clear array
 		System.arraycopy(new ItemType[size], 0, ItemType.byId, 0, size);
+
+		VanillaIds.fixOldIds(tag, false);
 	}
 
 	@Override
