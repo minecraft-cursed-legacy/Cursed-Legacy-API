@@ -1,5 +1,5 @@
 archivesBaseName = 'legacy-registries-v1'
-version = getSubprojectVersion(project, '1.0.0')
+version = getSubprojectVersion(project, '1.1.0')
 
 moduleDependencies(project, 'legacy-api-base', 'legacy-networking-v0')
 dependencies {

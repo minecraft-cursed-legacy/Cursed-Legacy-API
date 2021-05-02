@@ -25,6 +25,7 @@ package io.github.minecraftcursedlegacy.impl.registry;
 
 import java.util.Map;
 
+@SuppressWarnings("rawtypes")
 public interface SmeltingRecipeSetter {
 	void setRecipes(Map recipes);
 }

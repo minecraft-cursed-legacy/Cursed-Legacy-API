@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.IntFunction;
 
+import javax.annotation.Nullable;
+
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorPlaceableTileItem;
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorRecipeRegistry;
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorShapedRecipe;
@@ -54,26 +56,23 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	ItemTypeRegistry(Id registryName) {
 		super(ItemType.class, registryName, null);
 
+		VanillaIds.initialiseItems();
+
 		// add vanilla item types
 		for (int i = 0; i < ItemType.byId.length; ++i) {
 			ItemType value = ItemType.byId[i];
 
+			@Nullable
+			Tile tile = null;
+
 			if (value instanceof TileItem) {
-				RegistryImpl.T_2_TI.put(Tile.BY_ID[((AccessorTileItem) value).getTileId()], (TileItem) value);
+				RegistryImpl.T_2_TI.put(tile = Tile.BY_ID[((AccessorTileItem) value).getTileId()], (TileItem) value);
 			} else if (value instanceof PlaceableTileItem) {
-				RegistryImpl.T_2_TI.put(Tile.BY_ID[((AccessorPlaceableTileItem) value).getTileId()], (PlaceableTileItem) value);
+				RegistryImpl.T_2_TI.put(tile = Tile.BY_ID[((AccessorPlaceableTileItem) value).getTileId()], (PlaceableTileItem) value);
 			}
 
 			if (value != null) {
-				String idPart = value.getTranslationKey();
-
-				if (idPart == null) {
-					idPart = "itemtype";
-				} else {
-					idPart = idPart.substring(5);
-				}
-
-				this.byRegistryId.put(new Id(idPart + "_" + i), value);
+				this.byRegistryId.put(tile == null ? VanillaIds.getVanillaId(value) : VanillaIds.getVanillaId(tile), value);
 				this.bySerialisedId.put(i, value);
 			}
 		}
@@ -97,6 +96,11 @@ class ItemTypeRegistry extends Registry<ItemType> {
 	@Override
 	protected int getNextSerialisedId() {
 		return RegistryImpl.nextItemTypeId();
+	}
+
+	@Override
+	public ItemType getById(Id id) {
+		return super.getById(VanillaIds.correctLegacyItemId(id));
 	}
 
 	@Override
