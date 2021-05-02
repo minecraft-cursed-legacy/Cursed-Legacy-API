@@ -87,7 +87,7 @@ public interface ChatEvent {
 	 * <ul>
 	 *   <li>SUCCESS</li> to prevent further event handling and immediately send the chat message.
 	 *   <li>FAIL</li> to prevent further event handling and do not send the chat message.
-	 *   <li>PASS</li> to continue further event handling. If all events pass, the chat message will succeed in sending.
+	 *   <li>PASS</li> to continue further event handling. If all events pass, the chat message will successfully send.
 	 */
 	ActionResult onMessageSent(Sender sender, String message);
 }
