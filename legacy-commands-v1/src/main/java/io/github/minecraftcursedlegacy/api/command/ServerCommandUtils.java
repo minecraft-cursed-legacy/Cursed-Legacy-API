@@ -24,12 +24,15 @@
 package io.github.minecraftcursedlegacy.api.command;
 
 import io.github.minecraftcursedlegacy.impl.command.ServerCommandSender;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.server.command.CommandSource;
 
 /**
  * Utilities for server commands. Do not reference this class client side!
  * @since 1.1.0
  */
+@Environment(EnvType.SERVER)
 public class ServerCommandUtils {
 	/**
 	 * Create a {@linkplain Sender sender} from a command source.

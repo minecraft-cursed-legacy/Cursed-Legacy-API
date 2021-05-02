@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandSource;
 
 @Environment(EnvType.SERVER)
 public class ServerCommandSender implements Sender {
-	CommandSource source = null;
+	private final CommandSource source;
 
 	public ServerCommandSender(CommandSource source) {
 		this.source = source;
