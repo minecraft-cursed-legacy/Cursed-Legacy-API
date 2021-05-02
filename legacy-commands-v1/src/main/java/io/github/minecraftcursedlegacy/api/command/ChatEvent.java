@@ -44,7 +44,7 @@ public interface ChatEvent {
 			}
 		}
 
-		return ActionResult.SUCCESS;
+		return ActionResult.PASS;
 	}));
 
 	/**
@@ -59,7 +59,7 @@ public interface ChatEvent {
 			}
 		}
 
-		return ActionResult.SUCCESS;
+		return ActionResult.PASS;
 	}));
 
 	/**
@@ -75,7 +75,7 @@ public interface ChatEvent {
 			}
 		}
 
-		return ActionResult.SUCCESS;
+		return ActionResult.PASS;
 	}));
 
 	/**
@@ -87,7 +87,7 @@ public interface ChatEvent {
 	 * <ul>
 	 *   <li>SUCCESS</li> to prevent further event handling and immediately send the chat message.
 	 *   <li>FAIL</li> to prevent further event handling and do not send the chat message.
-	 *   <li>PASS</li> to continue further event handling. If all events pass, defaults to SUCCESS.
+	 *   <li>PASS</li> to continue further event handling. If all events pass, the chat message will succeed in sending.
 	 */
 	ActionResult onMessageSent(Sender sender, String message);
 }
