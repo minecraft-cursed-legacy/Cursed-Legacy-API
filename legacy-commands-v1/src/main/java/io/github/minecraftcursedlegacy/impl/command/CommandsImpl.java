@@ -25,7 +25,7 @@ package io.github.minecraftcursedlegacy.impl.command;
 
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
 import io.github.minecraftcursedlegacy.api.command.CommandDispatchEvent;
-import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
+import io.github.minecraftcursedlegacy.api.command.dispatcher.DispatcherRegistry;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.fabricmc.api.ModInitializer;
 

@@ -29,8 +29,4 @@ public class ServerCommandSender implements Sender {
 	public void sendCommandFeedback(String message) {
 		this.source.sendFeedback(message);
 	}
-
-	public void sendError(String message) {
-		this.source.sendFeedback("§4"+message);
-	}
 }

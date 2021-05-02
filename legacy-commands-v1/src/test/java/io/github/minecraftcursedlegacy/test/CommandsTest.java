@@ -24,7 +24,7 @@
 package io.github.minecraftcursedlegacy.test;
 
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
-import io.github.minecraftcursedlegacy.api.command.CommandDispatcher;
+import io.github.minecraftcursedlegacy.api.command.dispatcher.CommandDispatcher;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;

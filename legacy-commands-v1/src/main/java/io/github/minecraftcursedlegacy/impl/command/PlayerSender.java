@@ -22,8 +22,4 @@ public class PlayerSender implements Sender {
 	public void sendCommandFeedback(String message) {
 		AccessorMinecraft.getInstance().overlay.addChatMessage(message);
 	}
-
-	public void sendError(String message) {
-		sendCommandFeedback("§4"+message);
-	}
 }

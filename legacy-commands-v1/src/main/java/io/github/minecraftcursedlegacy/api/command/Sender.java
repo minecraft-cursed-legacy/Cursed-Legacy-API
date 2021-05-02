@@ -46,7 +46,9 @@ public interface Sender {
 	 * Sends an error chat message to the command source as feedback.
 	 * @param message the message to send.
 	 */
-	void sendError(String message);
+	default void sendError(String message) {
+		this.sendCommandFeedback("§4"+message);
+	}
 
 	/**
 	 * Creates a new sender from the given player.

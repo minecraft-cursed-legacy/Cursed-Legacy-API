@@ -31,8 +31,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.minecraftcursedlegacy.api.command.ChatEvent;
-import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
 import io.github.minecraftcursedlegacy.api.command.Sender;
+import io.github.minecraftcursedlegacy.api.command.dispatcher.DispatcherRegistry;
 import io.github.minecraftcursedlegacy.api.event.ActionResult;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.AbstractClientPlayer;

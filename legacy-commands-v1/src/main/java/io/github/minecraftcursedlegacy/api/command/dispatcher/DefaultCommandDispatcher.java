@@ -21,10 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.command;
+package io.github.minecraftcursedlegacy.api.command.dispatcher;
 
 import javax.annotation.Nullable;
 
+import io.github.minecraftcursedlegacy.api.command.Sender;
 import net.fabricmc.api.EnvType;
 
 /**

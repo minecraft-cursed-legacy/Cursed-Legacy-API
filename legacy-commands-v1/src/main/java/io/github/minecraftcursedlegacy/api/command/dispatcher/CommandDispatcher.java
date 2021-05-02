@@ -21,8 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.command;
+package io.github.minecraftcursedlegacy.api.command.dispatcher;
 
+import io.github.minecraftcursedlegacy.api.command.Sender;
 import io.github.minecraftcursedlegacy.impl.command.DefaultCommandDispatcherImpl;
 
 /**

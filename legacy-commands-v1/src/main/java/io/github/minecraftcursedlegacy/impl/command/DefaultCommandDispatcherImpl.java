@@ -28,9 +28,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import io.github.minecraftcursedlegacy.api.command.DefaultCommandDispatcher;
-import io.github.minecraftcursedlegacy.api.command.DispatcherRegistry;
 import io.github.minecraftcursedlegacy.api.command.Sender;
+import io.github.minecraftcursedlegacy.api.command.dispatcher.DefaultCommandDispatcher;
+import io.github.minecraftcursedlegacy.api.command.dispatcher.DispatcherRegistry;
 import net.fabricmc.api.EnvType;
 
 /**

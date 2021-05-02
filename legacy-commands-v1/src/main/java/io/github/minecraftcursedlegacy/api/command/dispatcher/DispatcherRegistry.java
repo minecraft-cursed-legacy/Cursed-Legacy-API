@@ -21,10 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.command;
+package io.github.minecraftcursedlegacy.api.command.dispatcher;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.github.minecraftcursedlegacy.api.command.Sender;
 
 /**
  * Registry for for mapping commands to the relevant {@linkplain CommandDispatcher command dispatchers}.
