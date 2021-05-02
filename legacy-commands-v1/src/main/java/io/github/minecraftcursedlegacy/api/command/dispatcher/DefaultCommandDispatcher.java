@@ -1,0 +1,73 @@
+/*
+ * Copyright (c) 2020 The Cursed Legacy Team.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package io.github.minecraftcursedlegacy.api.command.dispatcher;
+
+import javax.annotation.Nullable;
+
+import io.github.minecraftcursedlegacy.api.command.Sender;
+import net.fabricmc.api.EnvType;
+
+/**
+ * Interface to the default command dispatcher in cursed legacy API.
+ * Yes, this is where you register your commands to.
+ * Access the instance from {@code CommandDispatcher.DEFAULT}.
+ * @since 1.1.0
+ */
+public interface DefaultCommandDispatcher extends CommandDispatcher {
+	/**
+	 * Register a command to the command dispatcher.
+	 * @param command the command name.
+	 * @param handler the object in charge of executing the command.
+	 */
+	default void register(String command, Command handler) {
+		this.register(command, handler, null); // register for both singleplayer and multiplayer.
+	}
+
+	/**
+	 * Register a command to the command dispatcher.
+	 * @param command the command name.
+	 * @param handler the object in charge of executing the command.
+	 * @param environment the play environment in which to register the command:
+	 * <ul>
+	 *   <li>CLIENT means it will exist only on singleplayer
+	 *   <li>SERVER means it will exist only on multiplayer
+	 *   <li>null means it will register for both singleplayer and multiplayer.
+	 * <ul>
+	 */
+	void register(String command, Command handler, @Nullable EnvType environment);
+
+	/**
+	 * A simple command for use with the default command dispatcher.
+	 */
+	@FunctionalInterface
+	public interface Command {
+		/**
+		 * Called on command execution.
+		 * @param info info about the command execution.
+		 * @param args the command arguments. {@code args[0]} will always be the command name.
+		 * @return whether the command executed successfully.
+		 */
+		boolean execute(Sender info, String[] args);
+	}
+}
