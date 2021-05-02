@@ -41,7 +41,7 @@ public class CommandsImpl implements ModInitializer {
 			// isClient is only true when a client connected to the server
 			if (message.length() > 1 && message.startsWith("/") && !sender.getPlayer().level.isClient) {
 				message = message.substring(1);
-				String[] args = message.split(" ");
+				String[] args = message.split(" ", 2);
 
 				if (DispatcherRegistry.dispatch(sender, args[0], message, true)) {
 					return ActionResult.FAIL;
@@ -54,7 +54,7 @@ public class CommandsImpl implements ModInitializer {
 		// Server
 		CommandDispatchEvent.INSTANCE.register((sender, command) -> {
 			// isClient is only true when a client connected to the server
-			String[] args = command.split(" ");
+			String[] args = command.split(" ", 2);
 
 			if (DispatcherRegistry.dispatch(sender, args[0], command, true)) {
 				return true;
