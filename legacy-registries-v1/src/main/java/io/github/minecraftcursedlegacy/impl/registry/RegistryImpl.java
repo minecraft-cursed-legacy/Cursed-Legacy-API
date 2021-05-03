@@ -96,7 +96,7 @@ public class RegistryImpl implements ModInitializer {
 		//noinspection ResultOfMethodCallIgnored
 		Tile.BED.hashCode(); // make sure tiles are initialised
 		AccessorEntityRegistry.getIdToClassMap(); // make sure entities are initialised
-		TILE = new TileRegistry(new Id("api:tile")); // TILES BEFORE ITEMS SO ITEM TYPE REMAPPING HAPPENS LATER!
+		TILE = new TileRegistry(new Id("api:tile")); // TILES BEFORE ITEMS SO ITEM TYPE REMAPPING HAPPENS LATER AND TILE IDS ARE PROPERLY ADDED TO THE VANILLA ID SET!
 		ITEM_TYPE = new ItemTypeRegistry(new Id("api:item_type"));
 		ENTITY_TYPE = new EntityTypeRegistry(new Id("api:entity_type"));
 	}

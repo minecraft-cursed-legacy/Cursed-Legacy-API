@@ -188,7 +188,7 @@ public class Registry<T> implements Iterable<T> {
 		CompoundTag result = new CompoundTag(); // don't copy potentially missing entries
 
 		// prepare
-		this.beforeRemap();
+		this.beforeRemap(tag);
 		List<Entry<Id, T>> unmapped = new ArrayList<>();
 		Set<Entry<Id, T>> toMap = this.byRegistryId.entrySet();
 		this.bySerialisedId.clear();
@@ -256,8 +256,19 @@ public class Registry<T> implements Iterable<T> {
 	/**
 	 * Called before registry remapping for this registry.
 	 * Override this to add additional preparations for registry remapping.
+	 * @apiNote called by {@link Registry#beforeRemap(CompoundTag)} in the default implementation. Override that method instead if you need direct access to the registry data tag in preparations.
 	 */
 	protected void beforeRemap() {
+	}
+
+	/**
+	 * Called before registry remapping for this registry.
+	 * Override this to add additional preparations for registry remapping.
+	 * @param tag the tag for this registry retrieved from the registry data file.
+	 * @since 1.1.0
+	 */
+	protected void beforeRemap(CompoundTag tag) {
+		this.beforeRemap();
 	}
 
 	/**

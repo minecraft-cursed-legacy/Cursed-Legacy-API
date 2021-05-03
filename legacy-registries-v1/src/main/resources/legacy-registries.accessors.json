@@ -3,6 +3,7 @@
   "package": "io.github.minecraftcursedlegacy.accessor.registry",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AccessorCompoundTag",
     "AccessorDimensionFile",
     "AccessorEntityRegistry",
     "AccessorPlaceableTileItem",

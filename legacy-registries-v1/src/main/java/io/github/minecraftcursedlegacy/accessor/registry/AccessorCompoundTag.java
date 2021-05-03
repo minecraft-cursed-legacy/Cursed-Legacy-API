@@ -21,11 +21,18 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.registry;
+package io.github.minecraftcursedlegacy.accessor.registry;
 
 import java.util.Map;
 
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+
+import net.minecraft.util.io.CompoundTag;
+
 @SuppressWarnings("rawtypes")
-public interface SmeltingRecipeSetter {
-	void setRecipes(Map recipes);
+@Mixin(CompoundTag.class)
+public interface AccessorCompoundTag {
+	@Accessor("data")
+	Map getData();
 }

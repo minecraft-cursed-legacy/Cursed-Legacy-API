@@ -30,33 +30,28 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
+import net.minecraft.util.io.CompoundTag;
 
 class TileRegistry extends Registry<Tile> {
 	private final Map<Tile, Boolean> ticksRandomly = new HashMap<>();
 	private final Map<Tile, Boolean> isFullOpaque = new HashMap<>();
 	private final Map<Tile, Boolean> hasTileEntity = new HashMap<>();
 	private final Map<Tile, Integer> field_1941 = new HashMap<>();
-	private final Map<Tile, Boolean> field_1942 = new HashMap<>();
-	private final Map<Tile, Integer> field_1943 = new HashMap<>();
-	private final Map<Tile, Boolean> field_1944 = new HashMap<>();
+	private final Map<Tile, Boolean> isAir = new HashMap<>();
+	private final Map<Tile, Integer> luminances = new HashMap<>();
+	private final Map<Tile, Boolean> multipleStates = new HashMap<>();
 
 	TileRegistry(Id registryName) {
 		super(Tile.class, registryName, null);
+
+		VanillaIds.initialiseTiles();
 
 		// add vanilla tiles
 		for (int i = 0; i < Tile.BY_ID.length; ++i) {
 			Tile value = Tile.BY_ID[i];
 
 			if (value != null) {
-				String idPart = value.method_1597();
-
-				if (idPart == null) {
-					idPart = "tile";
-				} else {
-					idPart = idPart.substring(5);
-				}
-
-				this.byRegistryId.put(new Id(idPart + "_" + i), value);
+				this.byRegistryId.put(VanillaIds.getVanillaId(value), value);
 				this.bySerialisedId.put(i, value);
 			}
 		}
@@ -78,7 +73,14 @@ class TileRegistry extends Registry<Tile> {
 	}
 
 	@Override
-	protected void beforeRemap() {
+	public Tile getById(Id id) {
+		return super.getById(VanillaIds.correctLegacyTileId(id));
+	}
+	
+	// refactor note: not keeping the old code in the ()V beforeRemap method 'cuz literally no one will be manually invoking that 
+
+	@Override
+	protected void beforeRemap(CompoundTag tag) {
 		int size = Tile.BY_ID.length;
 
 		// Clear the tile array
@@ -91,9 +93,9 @@ class TileRegistry extends Registry<Tile> {
 				isFullOpaque.put(tile, Tile.FULL_OPAQUE[i]);
 				hasTileEntity.put(tile, Tile.HAS_TILE_ENTITY[i]);
 				field_1941.put(tile, Tile.field_1941[i]);
-				field_1942.put(tile, Tile.IS_AIR[i]);
-				field_1943.put(tile, Tile.LUMINANCES[i]);
-				field_1944.put(tile, Tile.MULTIPLE_STATES[i]);
+				isAir.put(tile, Tile.IS_AIR[i]);
+				luminances.put(tile, Tile.LUMINANCES[i]);
+				multipleStates.put(tile, Tile.MULTIPLE_STATES[i]);
 			}
 		}
 
@@ -105,6 +107,8 @@ class TileRegistry extends Registry<Tile> {
 		System.arraycopy(new boolean[size], 0, Tile.IS_AIR, 0, size);
 		System.arraycopy(new int[size], 0, Tile.LUMINANCES, 0, size);
 		System.arraycopy(new boolean[size], 0, Tile.MULTIPLE_STATES, 0, size);
+
+		VanillaIds.fixOldIds(tag, true);
 	}
 
 	@Override
@@ -124,8 +128,8 @@ class TileRegistry extends Registry<Tile> {
 		Tile.FULL_OPAQUE[newSerialisedId] = isFullOpaque.getOrDefault(remappedValue, false);
 		Tile.HAS_TILE_ENTITY[newSerialisedId] = hasTileEntity.getOrDefault(remappedValue, false);
 		Tile.field_1941[newSerialisedId] = field_1941.getOrDefault(remappedValue, 0);
-		Tile.IS_AIR[newSerialisedId] = field_1942.getOrDefault(remappedValue, false);
-		Tile.LUMINANCES[newSerialisedId] = field_1943.getOrDefault(remappedValue, 0);
-		Tile.MULTIPLE_STATES[newSerialisedId] = field_1944.getOrDefault(remappedValue, false);
+		Tile.IS_AIR[newSerialisedId] = isAir.getOrDefault(remappedValue, false);
+		Tile.LUMINANCES[newSerialisedId] = luminances.getOrDefault(remappedValue, 0);
+		Tile.MULTIPLE_STATES[newSerialisedId] = multipleStates.getOrDefault(remappedValue, false);
 	}
 }
