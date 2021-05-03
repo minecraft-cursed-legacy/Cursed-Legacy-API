@@ -31,7 +31,6 @@ import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
@@ -46,15 +45,51 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 public class ResourceLoader {
 	/**
 	 * Retrieves the resource specified as a JModel.
-	 * @param id the resource id.
+	 * @param id the resource id, including type.
 	 * @param type the subfile type. item or tile usually.
 	 * @return the loaded model object.
 	 */
 	public static JModel getModel(Id id, String type) {
-		InputStream stream = getStream(id, "models/" + type, ".json");
-		return stream == null ? createDefaultModel(id, type) : GSON.fromJson(
-				new InputStreamReader(stream),
-				JModel.class);
+		JModel prelim = getModel(new Id(id.getNamespace(), type + "/" + id.getName()));
+		return prelim == null ? createDefaultModel(id, type) : prelim;
+	}
+
+	/**
+	 * Retrieves the resource specified as a JModel.
+	 * @param id the resource id.
+	 * @return the loaded model object.
+	 */
+	@Nullable
+	private static JModel getModel(Id id) {
+		return MODELS.computeIfAbsent(id, id_ -> {
+			InputStream stream = getStream(id, "models", ".json");
+			JModel result = stream == null ? null : GSON.fromJson( // load from json
+					new InputStreamReader(stream),
+					JModel.class);
+
+			if (result != null) { // if not null, resolve parent stuff
+				// recursive initialisation!
+				Id next = new Id(result.parent);
+				ModelSetup setup = SETUPS.get(next); // get the model setup to check if it's a root java impl or an intermediary step
+
+				if (setup == null) { // if intermediary, we do ye olde recursive function
+					JModel parent = getModel(next);
+
+					// fill in parent values where not set
+					for (Map.Entry<String, String> entry : parent.textures.entrySet()) {
+						result.textures.putIfAbsent(entry.getKey(), entry.getValue());
+					}
+
+					// set model setup
+					result.root = setup;
+				} else {
+					// done!
+					result.root = setup;
+				}
+			}
+
+			return result;
+		});
 	}
 
 	/**
@@ -76,7 +111,7 @@ public class ResourceLoader {
 
 	@Nullable
 	public static String getValidatedTextureLocation(Id provided) {
-		String resourceLocation = getTextureLocation(provided, ".png");
+		String resourceLocation = getResourceLocation(provided, "textures", ".png");
 
 		// validate
 		if (ResourceLoader.class.getClassLoader().getResource(resourceLocation) == null) {
@@ -90,16 +125,13 @@ public class ResourceLoader {
 		SETUPS.put(id, setup);
 	}
 
-	public static ModelSetup getModelSetup(Id id, Supplier<ModelSetup> ifAbsent) {
-		return SETUPS.computeIfAbsent(id, $ -> ifAbsent.get());
-	}
-
 	private static JModel createDefaultModel(Id id, String type) {
 		boolean tile = type.charAt(0) == 't'; // yotefuckinhaw this is gonna backfire in the future isn't it
 		JModel result = new JModel();
 		result.parent = tile ? "tile/cube_all" : "item/generated";
 		result.textures = new HashMap<>();
 		result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
+		result.root = SETUPS.get(new Id(result.parent));
 		return result;
 	}
 
@@ -117,11 +149,8 @@ public class ResourceLoader {
 		return "assets/" + id.getNamespace() + "/" + locator + "/" + id.getName() + extension;
 	}
 
-	private static String getTextureLocation(Id id, String extension) {
-		return "assets/" + id.getNamespace() + "/textures/" + id.getName() + extension;
-	}
-
 	private static final Map<Id, ModelSetup> SETUPS = new HashMap<>();
+	private static final Map<Id, JModel> MODELS = new HashMap<>();
 	private static final Map<String, Map<Id, BufferedImage>> TEXTURES = new HashMap<>();
 	private static final Gson GSON = new Gson();
 }

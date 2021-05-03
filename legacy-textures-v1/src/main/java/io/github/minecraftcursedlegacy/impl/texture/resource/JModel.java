@@ -31,4 +31,5 @@ import java.util.Map;
 public class JModel {
 	public String parent;
 	public Map<String, String> textures;
+	public transient ModelSetup root;
 }
