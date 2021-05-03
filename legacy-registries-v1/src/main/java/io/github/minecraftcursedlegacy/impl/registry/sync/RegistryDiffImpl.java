@@ -21,32 +21,45 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.registry;
+package io.github.minecraftcursedlegacy.impl.registry.sync;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/**
- * Interface look at the difference between a registry before and after remapping.
- * @since 1.1.0
- */
-public interface RegistryDiff<T> {
-	/**
-	 * Retrieves the new serialised id by the old one.
-	 * @param old the old serialised id.
-	 * @return the new serialised id, if present
-	 */
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
+import io.github.minecraftcursedlegacy.api.registry.RegistryDiff;
+
+public class RegistryDiffImpl<T> implements RegistryDiff<T> {
+	public RegistryDiffImpl(BiMap<Integer, T> old) {
+		this.oldBySerialisedId = HashBiMap.create(old.inverse());
+	}
+
+	private final BiMap<T, Integer> oldBySerialisedId;
+	private final Map<Integer, Integer> old2newSerialisedId = new HashMap<>(); // I really wish beta had FastUtil
+
+	public void addEntry(int serialisedNew, T value) {
+		if (this.oldBySerialisedId.containsKey(value)) {
+			this.old2newSerialisedId.put(this.oldBySerialisedId.get(value), serialisedNew);
+		}
+	}
+
+	@Override
 	@Nullable
-	Integer getNewSerialisedId(int old);
-	/**
-	 * Retrieves the object associated with an old serialised id.
-	 * @param old the old serialised id.
-	 * @return the object that was associated with it.
-	 */
-	T getByOldSerialisedId(int old);
-	/**
-	 * Retrieves the old serialised id that was associated with an object.
-	 * @param value the object to retrieve the id for.
-	 * @return the old serialised id that was associated with an object.
-	 */
-	int getOldSerialisedId(T value);
+	public Integer getNewSerialisedId(int old) {
+		return this.old2newSerialisedId.get(old);
+	}
+
+	@Override
+	public T getByOldSerialisedId(int old) {
+		return this.oldBySerialisedId.inverse().get(old);
+	}
+
+	@Override
+	public int getOldSerialisedId(T value) {
+		return this.oldBySerialisedId.get(value);
+	}
 }

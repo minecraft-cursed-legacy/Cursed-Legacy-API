@@ -39,6 +39,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import io.github.minecraftcursedlegacy.impl.registry.RegistryImpl;
+import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryDiffImpl;
 import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.util.io.CompoundTag;
@@ -68,6 +69,8 @@ public class Registry<T> implements Iterable<T> {
 	@Nullable
 	private final T defaultValue;
 	private final Event<RegistryEntryAddedCallback<T>> event;
+	// Remap stuff
+	private RegistryDiffImpl<T> lastDiff;
 	private final Event<RegistryRemappedCallback<T>> remapEvent;
 
 	private int nextId = this.getStartSerialisedId();
@@ -194,6 +197,7 @@ public class Registry<T> implements Iterable<T> {
 		this.beforeRemap();
 		List<Entry<Id, T>> unmapped = new ArrayList<>();
 		Set<Entry<Id, T>> toMap = this.byRegistryId.entrySet();
+		this.lastDiff = new RegistryDiffImpl<>(this.bySerialisedId);
 		this.bySerialisedId.clear();
 
 		// remap serialised ids
@@ -205,6 +209,7 @@ public class Registry<T> implements Iterable<T> {
 
 				int newSerialisedId = tag.getInt(key);
 				this.bySerialisedId.put(newSerialisedId, value);
+				this.lastDiff.addEntry(newSerialisedId, value);
 				this.onRemap(value, newSerialisedId);
 				result.put(key, newSerialisedId); // add to new tag
 			} else {
@@ -237,6 +242,7 @@ public class Registry<T> implements Iterable<T> {
 
 			// readd to registry
 			this.bySerialisedId.put(serialisedId, value);
+			this.lastDiff.addEntry(serialisedId, value);
 			// add to tag
 			tag.put(entry.getKey().toString(), serialisedId);
 			this.onRemap(value, serialisedId);
@@ -266,8 +272,10 @@ public class Registry<T> implements Iterable<T> {
 	/**
 	 * Called before registry remapping for this registry.
 	 * Override this to add finalisations for after registry remapping.
+	 * The default implementation invokes this registry's {@linkplain RegistryRemappedCallback}.
 	 */
 	protected void postRemap() {
+		this.getRemapEvent().invoker().onRemap(this, this.lastDiff);
 	}
 
 	/**
@@ -320,7 +328,7 @@ public class Registry<T> implements Iterable<T> {
 	 * @return the {@linkplain RegistryEntryAddedCallback} event associated with this registry.
 	 * @since 1.1.0
 	 */
-	public final Event<RegistryRemappedCallback<T>> getRegistryEvent() {
+	public final Event<RegistryRemappedCallback<T>> getRemapEvent() {
 		return this.remapEvent;
 	}
 

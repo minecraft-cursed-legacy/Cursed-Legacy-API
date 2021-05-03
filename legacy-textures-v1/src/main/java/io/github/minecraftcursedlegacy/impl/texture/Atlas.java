@@ -26,12 +26,10 @@ package io.github.minecraftcursedlegacy.impl.texture;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.client.texture.TextureManager;
-RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
+
 interface Atlas {
 	String getName();
 

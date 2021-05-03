@@ -65,9 +65,9 @@ public class RegistryImpl implements ModInitializer {
 	}
 
 	public static <T> Event<RegistryRemappedCallback<T>> createRemapEvent(Class<T> clazz) {
-		return EventFactory.createArrayBacked(RegistryRemappedCallback.class, listeners -> registry -> {
+		return EventFactory.createArrayBacked(RegistryRemappedCallback.class, listeners -> (registry, diff) -> {
 			for (RegistryRemappedCallback<T> listener : listeners) {
-				listener.onRemap(registry);
+				listener.onRemap(registry, diff);
 			}
 		});
 	}

@@ -33,6 +33,7 @@ public interface RegistryRemappedCallback<T> {
 	/**
 	 * Called when the registry is remapped.
 	 * @param registry the registry which has been remapped.
+	 * @param diff an interface look into the difference between the old and new registry raw ids.
 	 */
-	void onRemap(Registry<T> registry);
+	void onRemap(Registry<T> registry, RegistryDiff<T> diff);
 }

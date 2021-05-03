@@ -34,14 +34,15 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.primitives.Ints;
 
+import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import io.github.minecraftcursedlegacy.impl.texture.Atlas.FileAtlas;
-import net.minecraft.client.texture.TextureManager;
-import net.minecraft.item.ItemType;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.texture.TextureManager;
 
-public class AtlasMapper {
+public class AtlasMapper implements ModInitializer {
 	private static class ItemAtlasUsage {
 		final Map<Integer, Atlas> atlas = new HashMap<>();
 		Atlas defaultAtlas;
@@ -136,17 +137,21 @@ public class AtlasMapper {
 		return atlas != null ? OptionalInt.of(atlas.getTextureID(manager)) : OptionalInt.empty();
 	}
 
-	public static void onRegistryRemap(ItemType[] oldToItem) {
-		Map<Integer, ItemAtlasUsage> displaced = new HashMap<>();
+	@Override
+	public void onInitialize() {
+		Registries.ITEM_TYPE.getRemapEvent().register((registry, diff) -> {
+			RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
+			Map<Integer, ItemAtlasUsage> displaced = new HashMap<>();
 
-		for (int id : Ints.toArray(ATLAS_MAP.keySet())) {
-			int remappedID = oldToItem[id].id;
+			for (int id : Ints.toArray(ATLAS_MAP.keySet())) {
+				int remappedID = diff.getNewSerialisedId(id);
 
-			if (id != remappedID) {
-				displaced.put(remappedID, ATLAS_MAP.remove(id));
+				if (id != remappedID) {
+					displaced.put(remappedID, ATLAS_MAP.remove(id));
+				}
 			}
-		}
 
-		ATLAS_MAP.putAll(displaced);
+			ATLAS_MAP.putAll(displaced);
+		});
 	}
 }
