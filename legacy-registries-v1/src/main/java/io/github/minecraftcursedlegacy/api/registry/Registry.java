@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Spliterator;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
 
@@ -338,9 +339,22 @@ public class Registry<T> implements Iterable<T> {
 		return this.values().iterator();
 	}
 
+	/**
+	 * Iterate over the registry.
+	 * @param consumer the callback function.
+	 */
 	@Override
 	public void forEach(Consumer<? super T> consumer) {
 		this.values().forEach(consumer);
+	}
+
+	/**
+	 * Iterate over pairs of registry id - tile in this registry.
+	 * @param consumer the callback function.
+	 * @since 1.1.0
+	 */
+	public void forEach(BiConsumer<Id, ? super T> consumer) {
+		this.byRegistryId.forEach(consumer);
 	}
 
 	@Override

@@ -29,14 +29,14 @@ import io.github.minecraftcursedlegacy.impl.texture.AtlasMapper;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
-
+import paulevs.corelib.registry.ModelRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 /**
  * Utility methods for {@link ItemType}s which use textures from other than the main item atlas.
  *
- * @deprecated use the 1.1.0 system, or directly use corelib.
+ * @deprecated use the 1.1.0 model system, or directly use {@linkplain ModelRegistry paulevs' corelib}.
  * @since 0.5.0
  *
  * @author Chocohead

@@ -37,12 +37,12 @@ import com.google.common.primitives.Ints;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import io.github.minecraftcursedlegacy.impl.texture.Atlas.FileAtlas;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.texture.TextureManager;
 
-public class AtlasMapper implements ModInitializer {
+public class AtlasMapper implements ClientModInitializer {
 	private static class ItemAtlasUsage {
 		final Map<Integer, Atlas> atlas = new HashMap<>();
 		Atlas defaultAtlas;
@@ -138,7 +138,7 @@ public class AtlasMapper implements ModInitializer {
 	}
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
 		Registries.ITEM_TYPE.getRemapEvent().register((registry, diff) -> {
 			RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
 			Map<Integer, ItemAtlasUsage> displaced = new HashMap<>();
