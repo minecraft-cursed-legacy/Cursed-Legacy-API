@@ -21,53 +21,29 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.registry.client;
+package io.github.minecraftcursedlegacy.api.registry;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import net.minecraft.client.texture.TextureManager;
-
-interface Atlas {
-	String getName();
-
-	@Environment(EnvType.CLIENT)
-	int getTextureID(TextureManager manager);
-
-	class FileAtlas implements Atlas {
-		private static final Map<String, FileAtlas> ATLASI = new HashMap<>();
-		private final String location;
-
-		public static FileAtlas forAtlas(String atlas) {
-			return ATLASI.computeIfAbsent(atlas, FileAtlas::new);
-		}
-
-		private FileAtlas(String location) {
-			this.location = location;
-		}
-
-		@Override
-		public String getName() {
-			return location;
-		}
-
-		@Override
-		@Environment(EnvType.CLIENT)
-		public int getTextureID(TextureManager manager) {
-			return manager.getTextureId(location);
-		}
-
-		@Override
-		public int hashCode() {
-			return location.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			return this == obj || (obj instanceof FileAtlas && location.equals(((FileAtlas) obj).location));
-		}
-	}
+/**
+ * Interface look at the difference between a registry before and after remapping.
+ * @since 1.1.0
+ */
+public interface RegistryDiff<T> {
+	/**
+	 * Retrieves the new raw id by the old one.
+	 * @param old the old raw id.
+	 * @return the new raw id.
+	 */
+	int getNewRawId(int old);
+	/**
+	 * Retrieves the object associated with an old raw id.
+	 * @param old the old raw id.
+	 * @return the object that was associated with it.
+	 */
+	T getByOldRawId(int old);
+	/**
+	 * Retrieves the old raw id that was associated with an object.
+	 * @param obj the object to retrieve the id for.
+	 * @return the old raw id that was associated with an object.
+	 */
+	int getOldRawId(T obj);
 }

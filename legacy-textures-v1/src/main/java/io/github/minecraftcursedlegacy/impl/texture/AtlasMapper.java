@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.registry.client;
+package io.github.minecraftcursedlegacy.impl.texture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.primitives.Ints;
 
-import io.github.minecraftcursedlegacy.impl.registry.client.Atlas.FileAtlas;
+import io.github.minecraftcursedlegacy.impl.texture.Atlas.FileAtlas;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemType;
 

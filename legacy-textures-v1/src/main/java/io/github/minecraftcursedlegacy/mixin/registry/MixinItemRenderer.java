@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.impl.registry.client.AtlasMapper;
+import io.github.minecraftcursedlegacy.impl.texture.AtlasMapper;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.ItemRenderer;

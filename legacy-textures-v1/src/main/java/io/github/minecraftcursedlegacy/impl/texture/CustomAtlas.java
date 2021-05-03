@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.impl.registry.client;
+package io.github.minecraftcursedlegacy.impl.texture;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

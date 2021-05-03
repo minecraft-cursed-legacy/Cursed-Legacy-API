@@ -36,7 +36,6 @@ import io.github.minecraftcursedlegacy.accessor.registry.AccessorShapelessRecipe
 import io.github.minecraftcursedlegacy.accessor.registry.AccessorTileItem;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
-import io.github.minecraftcursedlegacy.impl.registry.client.AtlasMapper;
 import io.github.minecraftcursedlegacy.impl.registry.sync.RegistryRemapper;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
@@ -197,9 +196,6 @@ class ItemTypeRegistry extends Registry<ItemType> {
 		});
 
 		((SmeltingRecipeSetter) smelting).setRecipes(newRecipes);
-
-		RegistryRemapper.LOGGER.info("Remapping custom texture atlases.");
-		AtlasMapper.onRegistryRemap(this.oldItemTypes);
 	}
 
 	@Override

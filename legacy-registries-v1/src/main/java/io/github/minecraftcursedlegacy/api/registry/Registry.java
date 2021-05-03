@@ -59,6 +59,7 @@ public class Registry<T> implements Iterable<T> {
 		RegistryRemapper.addRegistry(this);
 
 		this.event = RegistryImpl.createEvent(clazz);
+		this.remapEvent = RegistryImpl.createRemapEvent(clazz);
 	}
 
 	protected final BiMap<Id, T> byRegistryId = HashBiMap.create();
@@ -67,6 +68,8 @@ public class Registry<T> implements Iterable<T> {
 	@Nullable
 	private final T defaultValue;
 	private final Event<RegistryEntryAddedCallback<T>> event;
+	private final Event<RegistryRemappedCallback<T>> remapEvent;
+
 	private int nextId = this.getStartSerialisedId();
 	/**
 	 * Whether the registry is locked, and values can no longer be registered to it.
@@ -311,6 +314,14 @@ public class Registry<T> implements Iterable<T> {
 	 */
 	public final Event<RegistryEntryAddedCallback<T>> getEvent() {
 		return this.event;
+	}
+
+	/**
+	 * @return the {@linkplain RegistryEntryAddedCallback} event associated with this registry.
+	 * @since 1.1.0
+	 */
+	public final Event<RegistryRemappedCallback<T>> getRegistryEvent() {
+		return this.remapEvent;
 	}
 
 	@Override
