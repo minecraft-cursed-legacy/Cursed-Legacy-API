@@ -3,7 +3,7 @@
   "id": "modid",
   "version": "${version}",
 
-  "name": "Test Mod",
+  "name": "Texture Test Mod",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "The Cursed Legacy Team"
@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "init": [
-      "io.github.minecraftcursedlegacy.test.MultiTest"
+      "io.github.minecraftcursedlegacy.test.TexturesTest"
     ],
     "postInit": [
-      "io.github.minecraftcursedlegacy.test.MultiTest"
+      "io.github.minecraftcursedlegacy.test.TexturesTest"
     ]
   },
 
@@ -30,9 +30,5 @@
     "fabricloader": "*",
     "api": "*",
     "minecraft": "1.0.0-beta.7.3"
-  },
-  
-  "mixins": [
-    "test.mixins.json"
-  ]
+  }
 }

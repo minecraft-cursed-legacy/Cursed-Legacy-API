@@ -34,7 +34,7 @@ import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
 
-public class MultiTest implements ModInitializer, ModPostInitializer {
+public class TexturesTest implements ModInitializer, ModPostInitializer {
 	private static ItemType item, alsoItem;
 
 	@SuppressWarnings("deprecation")
