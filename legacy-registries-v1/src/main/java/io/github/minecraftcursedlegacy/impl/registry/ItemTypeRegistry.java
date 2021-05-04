@@ -205,6 +205,7 @@ class ItemTypeRegistry extends Registry<ItemType> {
 
 		((SmeltingRecipeSetter) smelting).setRecipes(newRecipes);
 
+		// Invoke remap event
 		super.postRemap();
 	}
 
