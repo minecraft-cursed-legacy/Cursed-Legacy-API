@@ -168,7 +168,7 @@ class VanillaIds {
 		set(ICE, "ice");
 		set(SNOW_BLOCK, "snow_block");
 		set(CACTUS, "cactus");
-		set(CLAY, "clay");
+		set(CLAY, "clay_block");
 		set(REEDS, "reeds");
 		set(JUKEBOX, "jukebox");
 		set(FENCE, "fence");
