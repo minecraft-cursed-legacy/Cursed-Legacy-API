@@ -24,7 +24,6 @@
 package io.github.minecraftcursedlegacy.mixin.registry;
 
 import org.objectweb.asm.Opcodes;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +37,6 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.entity.ItemEntity;
 
 @Mixin(ItemRenderer.class)
-@Deprecated
 abstract class MixinItemRenderer extends EntityRenderer {
 	@Inject(method = "render",
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)

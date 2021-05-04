@@ -36,7 +36,6 @@ import net.minecraft.client.render.HandItemRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemInstance;
 
-@Deprecated
 @Mixin(HandItemRenderer.class)
 abstract class MixinHandItemRenderer {
 	@Shadow
