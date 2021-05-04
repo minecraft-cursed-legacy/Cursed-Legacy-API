@@ -50,8 +50,14 @@ public class ResourceLoader {
 	 * @return the loaded model object.
 	 */
 	public static JModel getModel(Id id, String type) {
+		String rawType = type;
+
+		if (type.hashCode() == "tileitem".hashCode()) {
+			type = "item";
+		}
+
 		JModel prelim = getModel(new Id(id.getNamespace(), type + "/" + id.getName()));
-		return prelim == null ? createDefaultModel(id, type) : prelim;
+		return prelim == null ? createDefaultModel(id, rawType) : prelim;
 	}
 
 	/**
@@ -126,11 +132,18 @@ public class ResourceLoader {
 	}
 
 	private static JModel createDefaultModel(Id id, String type) {
-		boolean tile = type.charAt(0) == 't'; // yotefuckinhaw this is gonna backfire in the future isn't it
+		boolean tileitem = type.charAt(0) == 't'; // yotefuckinhaw this is gonna backfire in the future isn't it
+		boolean tile = tileitem && type.length() == 4;
+		tileitem &= !tile; // cursed boolean nonsense
+
 		JModel result = new JModel();
-		result.parent = tile ? "tile/cube_all" : "item/generated";
-		result.textures = new HashMap<>();
-		result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
+		result.parent = tile ? "tile/cube_all" : (tileitem ? new Id(id.getNamespace(), "tile/" + id.getName()).toString() : "item/generated");
+
+		if (!tileitem) {
+			result.textures = new HashMap<>();
+			result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
+		}
+
 		result.root = SETUPS.get(new Id(result.parent));
 		return result;
 	}

@@ -28,7 +28,7 @@ import io.github.minecraftcursedlegacy.api.client.AtlasMap;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
-import io.github.minecraftcursedlegacy.api.registry.Translations;
+//import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
@@ -52,8 +52,8 @@ public class MultiTest implements ModInitializer, ModPostInitializer {
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);
 
-		Translations.addItemTranslation(item, "Example Item");
-		Translations.addItemTranslation(alsoItem, "Example Item Too");
+		//Translations.addItemTranslation(item, "Example Item");
+		//Translations.addItemTranslation(alsoItem, "Example Item Too");
 	}
 
 	@Override
@@ -61,11 +61,12 @@ public class MultiTest implements ModInitializer, ModPostInitializer {
 		assistRegistryTest(); // Because this ensures initialisation and registration is complete.
 	}
 
+	// TODO move to registry test
 	private static void assistRegistryTest() {
 		Recipes.addShapelessRecipe(new ItemInstance(RegistryTest.item, 2), Tile.DIRT, Tile.SAND);
 		Recipes.addShapedRecipe(new ItemInstance(RegistryTest.tile), "##", '#', Tile.DIRT);
 		
-		Translations.addTileTranslation(RegistryTest.tile, "Example Block");
-		Translations.addItemTranslation(RegistryTest.item, "Example Item");
+		//Translations.addTileTranslation(RegistryTest.tile, "Example Block");
+		//Translations.addItemTranslation(RegistryTest.item, "Example Item");
 	}
 }

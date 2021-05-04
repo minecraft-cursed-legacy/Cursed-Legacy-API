@@ -25,9 +25,11 @@ package io.github.minecraftcursedlegacy.impl.texture;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
 import io.github.minecraftcursedlegacy.impl.texture.resource.JModel;
 import io.github.minecraftcursedlegacy.impl.texture.resource.ResourceLoader;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.item.ItemType;
 import net.minecraft.tile.Tile;
 import paulevs.corelib.model.prefab.FullCubeModel;
 import paulevs.corelib.registry.ModelRegistry;
@@ -36,26 +38,41 @@ public class ModelDiscoverer implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ResourceLoader.addModelSetup(new Id("tile/cube_all"), (id, obj, data) -> {
-			Tile tile = (Tile) obj;
 			String image = getValidatedTextureLocation(data.textures.get("all"));
 
 			if (image != null) {
-				ModelRegistry.addTileModel(tile, new FullCubeModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				if (obj instanceof ItemType) {
+					ItemType item = (ItemType) obj;
+					ModelRegistry.addItemModel(item, new FullCubeModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				} else {
+					Tile tile = (Tile) obj;
+					ModelRegistry.addTileModel(tile, new FullCubeModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				}
 			}
 		});
 
 		ResourceLoader.addModelSetup(new Id("tile/cross"), (id, obj, data) -> {
-			Tile tile = (Tile) obj;
 			String image = getValidatedTextureLocation(data.textures.get("all"));
 
 			if (image != null) {
-				ModelRegistry.addTileModel(tile, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				if (obj instanceof ItemType) {
+					ItemType item = (ItemType) obj;
+					ModelRegistry.addItemModel(item, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				} else {
+					Tile tile = (Tile) obj;
+					ModelRegistry.addTileModel(tile, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+				}
 			}
 		});
 
 		Registries.TILE.forEach((id, tile) -> {
 			JModel model = ResourceLoader.getModel(id, "tile");
-			
+			model.root.setupModel(id, tile, model);
+		});
+
+		Registries.ITEM_TYPE.forEach((id, item) -> {
+			JModel model = ResourceLoader.getModel(id, (item instanceof HasParentId) ? "tileitem" : "item");
+			model.root.setupModel(id, item, model);
 		});
 	}
 
