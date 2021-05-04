@@ -62,4 +62,9 @@ public class RegistryDiffImpl<T> implements RegistryDiff<T> {
 	public int getOldSerialisedId(T value) {
 		return this.oldBySerialisedId.get(value);
 	}
+
+	@Override
+	public String toString() {
+		return "RegistryDiffImpl{oldBySerialisedId=" + this.oldBySerialisedId + ", old2newSerialisedId=" + this.old2newSerialisedId + "}";
+	}
 }
