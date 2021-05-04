@@ -17,8 +17,8 @@
   "icon": "assets/api/icon.png",
   
   "entrypoints": {
-    "init": [
-      "io.github.minecraftcursedlegacy.impl.registry.RegistryImpl"
+    "client": [
+      "io.github.minecraftcursedlegacy.impl.texture.AtlasMapper"
     ]
   },
   
