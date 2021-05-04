@@ -7,6 +7,7 @@ moduleDependencies(project, 'legacy-api-base', 'legacy-networking-v0', 'legacy-r
 
 dependencies {
 	testImplementation project(path: ':legacy-recipes-v0')
+	testImplementation project(path: ':legacy-translations-v0')
 
 	// CoreLib for Tile Models
 	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0') {

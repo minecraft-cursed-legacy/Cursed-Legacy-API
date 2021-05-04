@@ -20,9 +20,6 @@
   "entrypoints": {
     "init": [
       "io.github.minecraftcursedlegacy.test.TexturesTest"
-    ],
-    "postInit": [
-      "io.github.minecraftcursedlegacy.test.TexturesTest"
     ]
   },
 
