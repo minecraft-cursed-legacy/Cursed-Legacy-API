@@ -1,0 +1,6 @@
+{
+  "parent": "tile/cross",
+  "textures": {
+    "cross": "modid:tile/iron_grass"
+  }
+}

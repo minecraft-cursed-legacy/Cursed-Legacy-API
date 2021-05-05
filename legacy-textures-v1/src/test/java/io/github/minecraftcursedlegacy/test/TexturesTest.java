@@ -27,6 +27,7 @@ import io.github.minecraftcursedlegacy.api.client.AtlasMap;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.api.registry.TileItems;
 import io.github.minecraftcursedlegacy.api.registry.Translations;
 //import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
@@ -36,10 +37,12 @@ import net.minecraft.tile.Tile;
 
 public class TexturesTest implements ModInitializer {
 	private static ItemType item, alsoItem;
+	private static Tile cross;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitialize() {
+		// Legacy Atlas Map
 		item = Registries.ITEM_TYPE.register(new Id("modid:item_texture"),
 				id -> new BasicItem(id).setTexturePosition(2, 0).setName("exampleTextureItem"));
 		AtlasMap.registerAtlas(item, "/assets/modid/bc/item_textures.png");
@@ -47,10 +50,15 @@ public class TexturesTest implements ModInitializer {
 		// set with the 1.1.0 model discovery api which uses choco's 0.x api generated atlas impl under the hood
 		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
 
+		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new BasicTile(id, false).name("ironGrass"));
+		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
+
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);
+		Recipes.addShapelessRecipe(new ItemInstance(cross), alsoItem);
 
 		Translations.addItemTranslation(item, "Example Item");
 		Translations.addItemTranslation(alsoItem, "Example Item Too");
+		Translations.addTileTranslation(cross, "Example Cross Model Tile");
 	}
 }

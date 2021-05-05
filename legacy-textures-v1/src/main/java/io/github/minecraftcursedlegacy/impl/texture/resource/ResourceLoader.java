@@ -30,7 +30,6 @@ import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -143,8 +142,9 @@ public class ResourceLoader {
 		return resourceLocation;
 	}
 
-	public static void addModelSetup(Id id, ModelSetup setup) {
+	public static ModelSetup addModelSetup(Id id, ModelSetup setup) {
 		SETUPS.put(id, setup);
+		return setup;
 	}
 
 	private static JModel createDefaultModel(Id id, String type) {

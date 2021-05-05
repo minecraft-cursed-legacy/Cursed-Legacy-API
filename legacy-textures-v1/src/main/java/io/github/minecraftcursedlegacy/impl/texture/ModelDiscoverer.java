@@ -29,6 +29,7 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
 import io.github.minecraftcursedlegacy.impl.texture.resource.JModel;
+import io.github.minecraftcursedlegacy.impl.texture.resource.ModelSetup;
 import io.github.minecraftcursedlegacy.impl.texture.resource.ResourceLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.item.ItemType;
@@ -39,6 +40,15 @@ import paulevs.corelib.registry.ModelRegistry;
 public class ModelDiscoverer implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		ModelSetup itemGenerated = ResourceLoader.addModelSetup(new Id("item/generated"), (id, obj, data) -> {
+			BufferedImage image = ResourceLoader.getTexture(new Id(data.textures.get("")));
+
+			if (image != null) {
+				ItemType item = (ItemType) obj;
+				item.setTexturePosition(AtlasMapper.registerDefaultSprite(((ItemType) item).id, image)); // idk if the root slash is necessary but it exists in corelib's examples
+			}
+		});
+
 		ResourceLoader.addModelSetup(new Id("tile/cube_all"), (id, obj, data) -> {
 			String image = getValidatedTextureLocation(data.textures.get("all"));
 
@@ -64,15 +74,6 @@ public class ModelDiscoverer implements ClientModInitializer {
 					Tile tile = (Tile) obj;
 					ModelRegistry.addTileModel(tile, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
 				}
-			}
-		});
-
-		ResourceLoader.addModelSetup(new Id("item/generated"), (id, obj, data) -> {
-			BufferedImage image = ResourceLoader.getTexture(new Id(data.textures.get("")));
-
-			if (image != null) {
-				ItemType item = (ItemType) obj;
-				item.setTexturePosition(AtlasMapper.registerDefaultSprite(((ItemType) item).id, image)); // idk if the root slash is necessary but it exists in corelib's examples
 			}
 		});
 
