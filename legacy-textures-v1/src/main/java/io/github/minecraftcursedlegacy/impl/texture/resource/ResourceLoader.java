@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -38,6 +39,9 @@ import javax.imageio.ImageIO;
 import com.google.gson.Gson;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
+import io.github.minecraftcursedlegacy.api.registry.Registries;
+import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
+import net.minecraft.tile.Tile;
 
 /**
  * Resource Loader for models and textures.
@@ -59,7 +63,7 @@ public class ResourceLoader {
 
 		Id modelId = new Id(id.getNamespace(), type + "/" + id.getName());
 		JModel prelim = getModel(modelId);
-		
+
 		if (prelim == null) {
 			MODELS.put(modelId, prelim = createDefaultModel(id, rawType));
 		}
@@ -149,17 +153,24 @@ public class ResourceLoader {
 		tileitem &= !tile; // cursed boolean nonsense
 
 		JModel result = new JModel();
+		
+		if (tileitem) { // substitute parent id for tile items
+			// Step 1: Get the ItemType, guaranteed to be a tile item of some sort
+			// Step 2: Get the integer id, and look up the tile it is associated with
+			// Step 3: Get the Id for that Tile
+			id = Registries.TILE.getId(
+					Tile.BY_ID[
+					           ((HasParentId) Registries.ITEM_TYPE.getById(id)).getParentId()
+					           ]
+							);
+		}
+
 		result.parent = tile ? "tile/cube_all" : (tileitem ? new Id(id.getNamespace(), "tile/" + id.getName()).toString() : "item/generated");
 
 		if (tileitem) {
-			try {
-				result.root = MODELS.get(new Id(result.parent)).root;
-			} catch (NullPointerException e) { // TODO remove this once I have tile items working. it is inevitable that the weird tile items will fail here too but we can ignore them because :b:ad
-				System.out.println("e");
-				System.out.println(MODELS);
-				System.out.println(result.parent);
-				throw e;
-			}
+			JModel parent = MODELS.get(new Id(result.parent));
+			result.root = parent.root;
+			result.textures = parent.textures;
 		} else {
 			result.textures = new HashMap<>();
 			result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
@@ -181,7 +192,6 @@ public class ResourceLoader {
 	@Nullable
 	private static URL getURL(Id id, String locator, String extension) {
 		String s = getResourceLocation(id, locator, extension);
-		System.out.println(s);
 		return ResourceLoader.class.getClassLoader().getResource(s);
 	}
 

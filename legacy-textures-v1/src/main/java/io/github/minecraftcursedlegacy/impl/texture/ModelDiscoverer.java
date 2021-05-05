@@ -77,13 +77,17 @@ public class ModelDiscoverer implements ClientModInitializer {
 		});
 
 		Registries.TILE.forEach((id, tile) -> {
-			JModel model = ResourceLoader.getModel(id, "tile");
-			model.root.setupModel(id, tile, model);
+			if (tile != null) {
+				JModel model = ResourceLoader.getModel(id, "tile");
+				model.root.setupModel(id, tile, model);
+			}
 		});
 
 		Registries.ITEM_TYPE.forEach((id, item) -> {
-			JModel model = ResourceLoader.getModel(id, (item instanceof HasParentId) ? "tileitem" : "item");
-			model.root.setupModel(id, item, model);
+			if (item != null) {
+				JModel model = ResourceLoader.getModel(id, (item instanceof HasParentId) ? "tileitem" : "item");
+				model.root.setupModel(id, item, model);
+			}
 		});
 	}
 
