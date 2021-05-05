@@ -158,9 +158,9 @@ public class AtlasMapper implements ClientModInitializer {
 			Map<Integer, ItemAtlasUsage> displaced = new HashMap<>();
 
 			for (int id : Ints.toArray(ATLAS_MAP.keySet())) {
-				int remappedID = diff.getNewSerialisedId(id);
+				Integer remappedID = diff.getNewSerialisedId(id);
 
-				if (id != remappedID) {
+				if (remappedID != null && remappedID != id) {
 					displaced.put(remappedID, ATLAS_MAP.remove(id));
 				}
 			}
