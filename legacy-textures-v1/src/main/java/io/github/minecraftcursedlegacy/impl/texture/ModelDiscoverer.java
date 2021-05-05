@@ -40,7 +40,7 @@ import paulevs.corelib.registry.ModelRegistry;
 public class ModelDiscoverer implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		ModelSetup itemGenerated = ResourceLoader.addModelSetup(new Id("item/generated"), (id, obj, data) -> {
+		ResourceLoader.addModelSetup(new Id("item/generated"), (id, obj, data) -> {
 			BufferedImage image = ResourceLoader.getTexture(new Id(data.textures.get("")));
 
 			if (image != null) {
