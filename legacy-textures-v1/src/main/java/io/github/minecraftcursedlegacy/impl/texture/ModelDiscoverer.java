@@ -23,6 +23,8 @@
 
 package io.github.minecraftcursedlegacy.impl.texture;
 
+import java.awt.image.BufferedImage;
+
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
@@ -52,7 +54,7 @@ public class ModelDiscoverer implements ClientModInitializer {
 		});
 
 		ResourceLoader.addModelSetup(new Id("tile/cross"), (id, obj, data) -> {
-			String image = getValidatedTextureLocation(data.textures.get("all"));
+			String image = getValidatedTextureLocation(data.textures.get("cross"));
 
 			if (image != null) {
 				if (obj instanceof ItemType) {
@@ -62,6 +64,15 @@ public class ModelDiscoverer implements ClientModInitializer {
 					Tile tile = (Tile) obj;
 					ModelRegistry.addTileModel(tile, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
 				}
+			}
+		});
+
+		ResourceLoader.addModelSetup(new Id("item/generated"), (id, obj, data) -> {
+			BufferedImage image = ResourceLoader.getTexture(new Id(data.textures.get("")));
+
+			if (image != null) {
+				ItemType item = (ItemType) obj;
+				item.setTexturePosition(AtlasMapper.registerDefaultSprite(((ItemType) item).id, image)); // idk if the root slash is necessary but it exists in corelib's examples
 			}
 		});
 

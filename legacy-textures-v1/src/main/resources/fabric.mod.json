@@ -18,7 +18,8 @@
   
   "entrypoints": {
     "client": [
-      "io.github.minecraftcursedlegacy.impl.texture.AtlasMapper"
+      "io.github.minecraftcursedlegacy.impl.texture.AtlasMapper",
+      "io.github.minecraftcursedlegacy.impl.texture.ModelDiscoverer"
     ]
   },
   

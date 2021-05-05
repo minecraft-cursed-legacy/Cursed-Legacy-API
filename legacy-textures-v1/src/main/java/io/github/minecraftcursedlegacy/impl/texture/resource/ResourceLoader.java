@@ -41,6 +41,7 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 
 /**
  * Resource Loader for models and textures.
+ * @since 1.1.0
  */
 public class ResourceLoader {
 	/**
@@ -56,8 +57,14 @@ public class ResourceLoader {
 			type = "item";
 		}
 
-		JModel prelim = getModel(new Id(id.getNamespace(), type + "/" + id.getName()));
-		return prelim == null ? createDefaultModel(id, rawType) : prelim;
+		Id modelId = new Id(id.getNamespace(), type + "/" + id.getName());
+		JModel prelim = getModel(modelId);
+		
+		if (prelim == null) {
+			MODELS.put(modelId, prelim = createDefaultModel(id, rawType));
+		}
+
+		return prelim;
 	}
 
 	/**
@@ -68,7 +75,7 @@ public class ResourceLoader {
 	@Nullable
 	private static JModel getModel(Id id) {
 		return MODELS.computeIfAbsent(id, id_ -> {
-			InputStream stream = getStream(id, "models", ".json");
+			InputStream stream = getStream(id_, "models", ".json");
 			JModel result = stream == null ? null : GSON.fromJson( // load from json
 					new InputStreamReader(stream),
 					JModel.class);
@@ -92,6 +99,10 @@ public class ResourceLoader {
 					// done!
 					result.root = setup;
 				}
+
+				if (result.root == null) {
+					throw new IllegalStateException("Could not get built in setup for \"" + result.parent + "\"!");
+				}
 			}
 
 			return result;
@@ -105,10 +116,11 @@ public class ResourceLoader {
 	 * @return the respective buffered image.
 	 */
 	@Nullable
-	public static BufferedImage getTexture(Id id, String type) {
-		return TEXTURES.computeIfAbsent(type, t -> new HashMap<>()).computeIfAbsent(id, id_ -> {
+	public static BufferedImage getTexture(Id id) {
+		return TEXTURES.computeIfAbsent(id, id_ -> {
 			try {
-				return ImageIO.read(getURL(id, "textures/" + type, ".png"));
+				URL url = getURL(id, "textures", ".png");
+				return url == null ? null : ImageIO.read(url);
 			} catch (IOException e) {
 				throw new UncheckedIOException("Execption loading texture", e);
 			}
@@ -139,12 +151,25 @@ public class ResourceLoader {
 		JModel result = new JModel();
 		result.parent = tile ? "tile/cube_all" : (tileitem ? new Id(id.getNamespace(), "tile/" + id.getName()).toString() : "item/generated");
 
-		if (!tileitem) {
+		if (tileitem) {
+			try {
+				result.root = MODELS.get(new Id(result.parent)).root;
+			} catch (NullPointerException e) { // TODO remove this once I have tile items working. it is inevitable that the weird tile items will fail here too but we can ignore them because :b:ad
+				System.out.println("e");
+				System.out.println(MODELS);
+				System.out.println(result.parent);
+				throw e;
+			}
+		} else {
 			result.textures = new HashMap<>();
 			result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
+			result.root = SETUPS.get(new Id(result.parent));
 		}
 
-		result.root = SETUPS.get(new Id(result.parent));
+		if (result.root == null) {
+			throw new IllegalStateException("Could not get built in setup for \"" + result.parent + "\"!");
+		}
+
 		return result;
 	}
 
@@ -155,7 +180,9 @@ public class ResourceLoader {
 
 	@Nullable
 	private static URL getURL(Id id, String locator, String extension) {
-		return ResourceLoader.class.getClassLoader().getResource(getResourceLocation(id, locator, extension));
+		String s = getResourceLocation(id, locator, extension);
+		System.out.println(s);
+		return ResourceLoader.class.getClassLoader().getResource(s);
 	}
 
 	private static String getResourceLocation(Id id, String locator, String extension) {
@@ -164,6 +191,6 @@ public class ResourceLoader {
 
 	private static final Map<Id, ModelSetup> SETUPS = new HashMap<>();
 	private static final Map<Id, JModel> MODELS = new HashMap<>();
-	private static final Map<String, Map<Id, BufferedImage>> TEXTURES = new HashMap<>();
+	private static final Map<Id, BufferedImage> TEXTURES = new HashMap<>();
 	private static final Gson GSON = new Gson();
 }

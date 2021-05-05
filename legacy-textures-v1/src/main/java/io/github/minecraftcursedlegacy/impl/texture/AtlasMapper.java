@@ -23,6 +23,7 @@
 
 package io.github.minecraftcursedlegacy.impl.texture;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +87,7 @@ public class AtlasMapper implements ClientModInitializer {
 		itemAtlas.defaultAtlas = FileAtlas.forAtlas(atlas);
 	}
 
-	private static void ensureSpriteValid(String atlas) {
+	private static void ensureSpriteValid(Object atlas) {
 		if (atlas == null) throw new NullPointerException("Tried to register null sprite");
 	}
 
@@ -123,6 +124,19 @@ public class AtlasMapper implements ClientModInitializer {
 			throw new IllegalArgumentException("Duplicate default atlas definition for item " + itemID);
 		}
 
+		GeneratedAtlas atlas = nextAtlas();
+		itemAtlas.defaultAtlas = atlas;
+		return atlas.allocate(sprite);
+	}
+	
+	public static int registerDefaultSprite(int itemID, BufferedImage sprite) {
+		ensureSpriteValid(sprite);
+		ItemAtlasUsage itemAtlas = ATLAS_MAP.computeIfAbsent(itemID, k -> new ItemAtlasUsage());
+		
+		if (itemAtlas.defaultAtlas != null) {
+			throw new IllegalArgumentException("Duplicate default atlas definition for item " + itemID);
+		}
+		
 		GeneratedAtlas atlas = nextAtlas();
 		itemAtlas.defaultAtlas = atlas;
 		return atlas.allocate(sprite);

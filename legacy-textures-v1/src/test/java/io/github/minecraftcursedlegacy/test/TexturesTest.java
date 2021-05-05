@@ -44,10 +44,8 @@ public class TexturesTest implements ModInitializer {
 				id -> new BasicItem(id).setTexturePosition(2, 0).setName("exampleTextureItem"));
 		AtlasMap.registerAtlas(item, "/assets/modid/bc/item_textures.png");
 
-		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> {
-			ItemType item = new BasicItem(id).setName("exampleTextureItemAlso");
-			return item.setTexturePosition(AtlasMap.registerSprite(item, "/assets/modid/bc/iron_gear.png"));
-		});
+		// set with the 1.1.0 model discovery api which uses choco's 0.x api generated atlas impl under the hood
+		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
 
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);

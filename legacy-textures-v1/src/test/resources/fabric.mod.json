@@ -25,7 +25,8 @@
 
   "depends": {
     "fabricloader": "*",
-    "api": "*",
+    "legacy-textures": "*",
+    "legacy-registries": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
