@@ -33,8 +33,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.texture.TextureManager;
+import paulevs.corelib.CoreLib;
 
-class CustomAtlas implements Atlas {
+class GeneratedAtlas implements Atlas {
 	private static final short MAX_SLOTS = 16 * 16;
 	private final BufferedImage image = FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ? new BufferedImage(16 * 16, 16 * 16, BufferedImage.TYPE_INT_ARGB) : null;
 	private short remainingSlots = MAX_SLOTS;
@@ -52,7 +53,7 @@ class CustomAtlas implements Atlas {
 
 	public int allocate(String sprite) {
 		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			try (InputStream in = CustomAtlas.class.getResourceAsStream(sprite)) {
+			try (InputStream in = GeneratedAtlas.class.getResourceAsStream(sprite)) {
 				return allocate(ImageIO.read(in));
 			} catch (IOException e) {
 				throw new RuntimeException("Error reading in sprite from " + sprite, e);
@@ -94,6 +95,7 @@ class CustomAtlas implements Atlas {
 			manager.method_1089(image, textureID);
 		}
 
+		CoreLib.selectedAtlas = null;
 		return textureID;
 	}
 }

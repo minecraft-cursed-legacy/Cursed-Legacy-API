@@ -49,7 +49,7 @@ public class AtlasMapper implements ClientModInitializer {
 	}
 
 	private static final Map<Integer, ItemAtlasUsage> ATLAS_MAP = new HashMap<>();
-	private static final List<CustomAtlas> CUSTOM_ATLASI = new ArrayList<>();
+	private static final List<GeneratedAtlas> CUSTOM_ATLASI = new ArrayList<>();
 	private static final Logger LOGGER = LogManager.getLogger("Atlas Mapper");
 
 	private static void ensureAtlasValid(String atlas) {
@@ -90,14 +90,14 @@ public class AtlasMapper implements ClientModInitializer {
 		if (atlas == null) throw new NullPointerException("Tried to register null sprite");
 	}
 
-	private static CustomAtlas nextAtlas() {
-		for (CustomAtlas atlas : CUSTOM_ATLASI) {
+	private static GeneratedAtlas nextAtlas() {
+		for (GeneratedAtlas atlas : CUSTOM_ATLASI) {
 			if (atlas.hasRoom()) {
 				return atlas;
 			}
 		}
 
-		CustomAtlas atlas = new CustomAtlas();
+		GeneratedAtlas atlas = new GeneratedAtlas();
 		CUSTOM_ATLASI.add(atlas);
 		return atlas;
 	}
@@ -110,7 +110,7 @@ public class AtlasMapper implements ClientModInitializer {
 			throw new IllegalArgumentException("Duplicate atlas definition for item:meta " + itemID + ':' + meta);
 		}
 
-		CustomAtlas atlas = nextAtlas();
+		GeneratedAtlas atlas = nextAtlas();
 		itemAtlas.put(meta, atlas);
 		return atlas.allocate(sprite);
 	}
@@ -123,7 +123,7 @@ public class AtlasMapper implements ClientModInitializer {
 			throw new IllegalArgumentException("Duplicate default atlas definition for item " + itemID);
 		}
 
-		CustomAtlas atlas = nextAtlas();
+		GeneratedAtlas atlas = nextAtlas();
 		itemAtlas.defaultAtlas = atlas;
 		return atlas.allocate(sprite);
 	}
