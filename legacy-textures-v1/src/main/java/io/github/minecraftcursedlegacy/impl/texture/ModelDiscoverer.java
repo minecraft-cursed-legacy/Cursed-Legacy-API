@@ -29,7 +29,6 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
 import io.github.minecraftcursedlegacy.impl.texture.resource.JModel;
-import io.github.minecraftcursedlegacy.impl.texture.resource.ModelSetup;
 import io.github.minecraftcursedlegacy.impl.texture.resource.ResourceLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.item.ItemType;
@@ -90,6 +89,9 @@ public class ModelDiscoverer implements ClientModInitializer {
 				model.root.setupModel(id, item, model);
 			}
 		});
+
+		//AtlasMapper.writeDebugImages();
+		//System.exit(0);
 	}
 
 	private static String getValidatedTextureLocation(String provided) {

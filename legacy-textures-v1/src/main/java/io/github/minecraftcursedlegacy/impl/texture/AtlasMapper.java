@@ -53,6 +53,10 @@ public class AtlasMapper implements ClientModInitializer {
 	private static final List<GeneratedAtlas> CUSTOM_ATLASI = new ArrayList<>();
 	private static final Logger LOGGER = LogManager.getLogger("Atlas Mapper");
 
+	static void writeDebugImages() {
+		CUSTOM_ATLASI.forEach(GeneratedAtlas::writeDebugImage);
+	}
+
 	private static void ensureAtlasValid(String atlas) {
 		if (atlas == null) throw new NullPointerException("Tried to register null atlas");
 	}

@@ -24,6 +24,7 @@
 package io.github.minecraftcursedlegacy.impl.texture;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -75,8 +76,8 @@ class GeneratedAtlas implements Atlas {
 		sprite.getRGB(0, 0, width, height, rgb, 0, width);
 
 		int slot = MAX_SLOTS - remainingSlots--;
-		int x = slot % 16;
-		int y = slot / 16;
+		int x = (slot % 16) * 16;
+		int y = (slot / 16) * 16;
 
 		image.setRGB(x, y, 16, 16, rgb, 0, width);
 		needsRefresh = true;
@@ -97,5 +98,14 @@ class GeneratedAtlas implements Atlas {
 
 		CoreLib.selectedAtlas = null;
 		return textureID;
+	}
+
+	void writeDebugImage() {
+		File out = new File("atlas_debug_" + this.hashCode() + ".png");
+		try {
+			ImageIO.write(this.image, "png", out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
