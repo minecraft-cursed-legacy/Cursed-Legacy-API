@@ -56,6 +56,7 @@ public class TexturesTest implements ModInitializer {
 		cube = Registries.TILE.register(new Id("modid:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
 		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
 		TileItems.registerTileItem(new Id("modid:malachite_grass"), betterCross);
+		TileItems.registerTileItem(new Id("modid:cursed_legacy_block"), cube);
 
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);
