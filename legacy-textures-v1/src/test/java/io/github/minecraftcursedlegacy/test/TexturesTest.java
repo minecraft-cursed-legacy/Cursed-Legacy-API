@@ -29,7 +29,6 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.api.registry.TileItems;
 import io.github.minecraftcursedlegacy.api.registry.Translations;
-//import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
@@ -39,6 +38,7 @@ import net.minecraft.tile.Tile;
 public class TexturesTest implements ModInitializer {
 	private static ItemType item, alsoItem;
 	private static Tile cross, betterCross;
+	private static Tile cube;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -53,6 +53,7 @@ public class TexturesTest implements ModInitializer {
 
 		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new BasicTile(id, false).name("ironGrass"));
 		betterCross = Registries.TILE.register(new Id("modid:malachite_grass"), id -> new MalachiteGrassTile(id).name("malachiteGrass"));
+		cube = Registries.TILE.register(new Id("modid:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
 		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
 		TileItems.registerTileItem(new Id("modid:malachite_grass"), betterCross);
 
@@ -60,11 +61,13 @@ public class TexturesTest implements ModInitializer {
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);
 		Recipes.addShapelessRecipe(new ItemInstance(cross), alsoItem);
 		Recipes.addShapelessRecipe(new ItemInstance(betterCross), cross);
+		Recipes.addShapelessRecipe(new ItemInstance(cube), ItemType.stick);
 
 		Translations.addItemTranslation(item, "Example Item");
 		Translations.addItemTranslation(alsoItem, "Example Item Too");
 		Translations.addTileTranslation(cross, "Example Cross Model Tile");
 		Translations.addTileTranslation(betterCross, "Malachite Grass");
+		Translations.addTileTranslation(cube, "Cursed Legacy Block");
 	}
 	
 	static class MalachiteGrassTile extends PlantTile {
