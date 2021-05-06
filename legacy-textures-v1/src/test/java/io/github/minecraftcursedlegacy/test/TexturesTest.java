@@ -53,10 +53,10 @@ public class TexturesTest implements ModInitializer {
 		// set with the 1.1.0 model discovery api which uses choco's 0.x api generated atlas impl under the hood
 		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
 
-		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new TallGrassTile(id).name("ironGrass"));
+		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new MalachiteGrassTile(id).name("ironGrass"));
 		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
 
-		betterCross = Registries.TILE.register(new Id("modid:malachite_grass"), id -> new TallGrassTile(id).name("malachiteGrass"));
+		betterCross = Registries.TILE.register(new Id("modid:malachite_grass"), id -> new MalachiteGrassTile(id).name("malachiteGrass"));
 		TileItems.registerTileItem(new Id("modid:malachite_grass"), betterCross);
 
 		cube = Registries.TILE.register(new Id("modid:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
@@ -80,8 +80,8 @@ public class TexturesTest implements ModInitializer {
 		Translations.addTileTranslation(redgrass, "Red Grass");
 	}
 
-	static class TallGrassTile extends PlantTile {
-		TallGrassTile(int id) {
+	static class MalachiteGrassTile extends PlantTile {
+		MalachiteGrassTile(int id) {
 			super(id, 69);
 			this.hardness(0.0F);
 			this.sounds(GRASS_SOUNDS);
