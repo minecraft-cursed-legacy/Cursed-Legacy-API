@@ -33,7 +33,6 @@ import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
-import net.minecraft.tile.GrassTile;
 import net.minecraft.tile.PlantTile;
 import net.minecraft.tile.Tile;
 
