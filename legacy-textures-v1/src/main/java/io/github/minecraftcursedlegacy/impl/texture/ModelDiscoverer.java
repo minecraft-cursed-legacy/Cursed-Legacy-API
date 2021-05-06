@@ -27,13 +27,14 @@ import java.awt.image.BufferedImage;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
-import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
 import io.github.minecraftcursedlegacy.impl.texture.resource.JModel;
 import io.github.minecraftcursedlegacy.impl.texture.resource.ResourceLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.item.ItemType;
+import net.minecraft.item.PlaceableTileItem;
 import net.minecraft.tile.Tile;
 import paulevs.corelib.model.prefab.FullCubeModel;
+import paulevs.corelib.model.prefab.GrasslikeModel;
 import paulevs.corelib.registry.ModelRegistry;
 
 public class ModelDiscoverer implements ClientModInitializer {
@@ -44,7 +45,7 @@ public class ModelDiscoverer implements ClientModInitializer {
 
 			if (image != null) {
 				ItemType item = (ItemType) obj;
-				item.setTexturePosition(AtlasMapper.registerDefaultSprite(((ItemType) item).id, image)); // idk if the root slash is necessary but it exists in corelib's examples
+				item.setTexturePosition(AtlasMapper.registerDefaultSprite(((ItemType) item).id, image));
 			}
 		});
 
@@ -52,12 +53,17 @@ public class ModelDiscoverer implements ClientModInitializer {
 			String image = getValidatedTextureLocation(data.textures.get("all"));
 
 			if (image != null) {
+				// I don't know why. I don't want to know why (well - actually I do, because wtf)
+				// But corelib does not load textures *at all* without a slash
+				// before every texture location specifier
+				image = "/" + image;
+
 				if (obj instanceof ItemType) {
 					ItemType item = (ItemType) obj;
-					ModelRegistry.addItemModel(item, new FullCubeModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+					ModelRegistry.addItemModel(item, new FullCubeModel(image));
 				} else {
 					Tile tile = (Tile) obj;
-					ModelRegistry.addTileModel(tile, new FullCubeModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+					ModelRegistry.addTileModel(tile, new FullCubeModel(image));
 				}
 			}
 		});
@@ -66,12 +72,34 @@ public class ModelDiscoverer implements ClientModInitializer {
 			String image = getValidatedTextureLocation(data.textures.get("cross"));
 
 			if (image != null) {
+				image = "/" + image;
+
 				if (obj instanceof ItemType) {
 					ItemType item = (ItemType) obj;
-					ModelRegistry.addItemModel(item, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+					ModelRegistry.addItemModel(item, new CrossModel(image));
 				} else {
 					Tile tile = (Tile) obj;
-					ModelRegistry.addTileModel(tile, new CrossModel("/" + image)); // idk if the root slash is necessary but it exists in corelib's examples
+					ModelRegistry.addTileModel(tile, new CrossModel(image));
+				}
+			}
+		});
+
+		ResourceLoader.addModelSetup(new Id("tile/cube_bottom_top"), (id, obj, data) -> {
+			String top = getValidatedTextureLocation(data.textures.get("top"));
+			String side = getValidatedTextureLocation(data.textures.get("side"));
+			String bottom = getValidatedTextureLocation(data.textures.get("bottom"));
+
+			if (top != null && side != null && bottom != null) {
+				top = "/" + top;
+				side = "/" + side;
+				bottom = "/" + bottom;
+
+				if (obj instanceof ItemType) {
+					ItemType item = (ItemType) obj;
+					ModelRegistry.addItemModel(item, new GrasslikeModel(top, side, bottom));
+				} else {
+					Tile tile = (Tile) obj;
+					ModelRegistry.addTileModel(tile, new GrasslikeModel(top, side, bottom));
 				}
 			}
 		});
@@ -85,7 +113,7 @@ public class ModelDiscoverer implements ClientModInitializer {
 
 		Registries.ITEM_TYPE.forEach((id, item) -> {
 			if (item != null) {
-				JModel model = ResourceLoader.getModel(id, (item instanceof HasParentId) ? "tileitem" : "item");
+				JModel model = ResourceLoader.getModel(id, (item instanceof PlaceableTileItem) ? "tileitem" : "item");
 				model.root.setupModel(id, item, model);
 			}
 		});
