@@ -46,26 +46,26 @@ public class TexturesTest implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// Choco Atlas Mapping api
-		item = Registries.ITEM_TYPE.register(new Id("modid:item_texture"),
+		item = Registries.ITEM_TYPE.register(new Id("legacy-textures-test:item_texture"),
 				id -> new BasicItem(id).setTexturePosition(2, 0).setName("exampleTextureItem"));
-		AtlasMap.registerAtlas(item, "/assets/modid/bc/item_textures.png");
+		AtlasMap.registerAtlas(item, "/assets/legacy-textures-test/bc/item_textures.png");
 
 		// set with the 1.1.0 model discovery api which uses choco's 0.x api generated atlas impl under the hood
-		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
+		alsoItem = Registries.ITEM_TYPE.register(new Id("legacy-textures-test:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
 
 		// This one doesn't mess with the item texture and uses parented texture (you have to re-override a client side method to do this with PlantTile however)
-		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new TallGrassTile2(id).name("ironGrass"));
-		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
+		cross = Registries.TILE.register(new Id("legacy-textures-test:iron_grass"), id -> new TallGrassTile2(id).name("ironGrass"));
+		TileItems.registerTileItem(new Id("legacy-textures-test:iron_grass"), cross);
 
 		// This one does
-		betterCross = Registries.TILE.register(new Id("modid:malachite_grass"), id -> new TallGrassTile(id).name("malachiteGrass"));
-		TileItems.registerTileItem(new Id("modid:malachite_grass"), betterCross);
+		betterCross = Registries.TILE.register(new Id("legacy-textures-test:malachite_grass"), id -> new TallGrassTile(id).name("malachiteGrass"));
+		TileItems.registerTileItem(new Id("legacy-textures-test:malachite_grass"), betterCross);
 
-		cube = Registries.TILE.register(new Id("modid:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
-		TileItems.registerTileItem(new Id("modid:cursed_legacy_block"), cube);
+		cube = Registries.TILE.register(new Id("legacy-textures-test:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
+		TileItems.registerTileItem(new Id("legacy-textures-test:cursed_legacy_block"), cube);
 
-		redgrass = Registries.TILE.register(new Id("modid:red_grass"), id -> new CustomGrassBlockTile(id).name("redGrass"));
-		TileItems.registerTileItem(new Id("modid:red_grass"), redgrass);
+		redgrass = Registries.TILE.register(new Id("legacy-textures-test:red_grass"), id -> new CustomGrassBlockTile(id).name("redGrass"));
+		TileItems.registerTileItem(new Id("legacy-textures-test:red_grass"), redgrass);
 
 		Recipes.addShapelessRecipe(new ItemInstance(item), Tile.WOOD);
 		Recipes.addShapelessRecipe(new ItemInstance(alsoItem), item);

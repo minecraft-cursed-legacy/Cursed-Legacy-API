@@ -80,8 +80,9 @@ public enum ModelType {
 				]
 			);
 
-			result.parent = new Id(id.getNamespace(), "tile/" + id.getName()).toString();
-			ModelJson parent = ResourceLoader.getModelDirect(new Id(result.parent));
+			Id parentId = new Id(id.getNamespace(), "tile/" + id.getName());
+			result.parent = parentId.toString();
+			ModelJson parent = ResourceLoader.getModelDirect(parentId);
 			result.root = parent.root;
 			result.textures = parent.textures;
 
@@ -107,7 +108,5 @@ public enum ModelType {
 		return id.getNamespace() + ":" + this.getLocation() + "/" + id.getName();
 	}
 
-	public ModelJson createDefaultModel(Id id) {
-		return null; // Must be overridden.
-	}
+	public abstract ModelJson createDefaultModel(Id id);
 }

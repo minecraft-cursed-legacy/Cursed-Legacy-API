@@ -1,6 +1,0 @@
-{
-  "parent": "tile/cross",
-  "textures": {
-    "cross": "modid:tile/malachite_grass"
-  }
-}

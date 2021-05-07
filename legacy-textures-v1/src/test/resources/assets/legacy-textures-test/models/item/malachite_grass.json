@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "": "modid:tile/malachite_grass"
+    "": "legacy-textures-test:tile/malachite_grass"
   }
 }

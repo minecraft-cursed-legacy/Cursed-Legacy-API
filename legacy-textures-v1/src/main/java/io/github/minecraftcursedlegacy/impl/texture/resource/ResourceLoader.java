@@ -88,7 +88,7 @@ public class ResourceLoader {
 					}
 
 					// set model setup
-					result.root = setup;
+					result.root = parent.root;
 				} else {
 					// done!
 					result.root = setup;
@@ -121,7 +121,7 @@ public class ResourceLoader {
 				URL url = getURL(id_, "textures", ".png");
 				return url == null ? null : ImageIO.read(url);
 			} catch (IOException e) {
-				throw new UncheckedIOException("Execption loading texture", e);
+				throw new UncheckedIOException("Execption loading texture " + id_, e);
 			}
 		});
 	}

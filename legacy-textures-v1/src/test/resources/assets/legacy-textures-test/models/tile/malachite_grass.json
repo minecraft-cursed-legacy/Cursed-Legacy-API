@@ -1,0 +1,6 @@
+{
+  "parent": "tile/cross",
+  "textures": {
+    "cross": "legacy-textures-test:tile/malachite_grass"
+  }
+}
