@@ -27,7 +27,7 @@ import java.awt.image.BufferedImage;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registries;
-import io.github.minecraftcursedlegacy.impl.texture.resource.JModel;
+import io.github.minecraftcursedlegacy.impl.texture.resource.ModelJson;
 import io.github.minecraftcursedlegacy.impl.texture.resource.ResourceLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.item.ItemType;
@@ -106,14 +106,14 @@ public class ModelDiscoverer implements ClientModInitializer {
 
 		Registries.TILE.forEach((id, tile) -> {
 			if (tile != null) {
-				JModel model = ResourceLoader.getModel(id, "tile");
+				ModelJson model = ResourceLoader.getModel(id, "tile");
 				model.root.setupModel(id, tile, model);
 			}
 		});
 
 		Registries.ITEM_TYPE.forEach((id, item) -> {
 			if (item != null) {
-				JModel model = ResourceLoader.getModel(id, (item instanceof PlaceableTileItem) ? "tileitem" : "item");
+				ModelJson model = ResourceLoader.getModel(id, (item instanceof PlaceableTileItem) ? "tileitem" : "item");
 				model.root.setupModel(id, item, model);
 			}
 		});

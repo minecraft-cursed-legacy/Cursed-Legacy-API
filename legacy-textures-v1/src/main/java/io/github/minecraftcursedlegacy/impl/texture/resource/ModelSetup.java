@@ -27,5 +27,5 @@ import io.github.minecraftcursedlegacy.api.registry.Id;
 
 @FunctionalInterface
 public interface ModelSetup {
-	void setupModel(Id id, Object object, JModel parameters);
+	void setupModel(Id id, Object object, ModelJson parameters);
 }

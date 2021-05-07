@@ -53,7 +53,7 @@ public class ResourceLoader {
 	 * @param type the subfile type. item or tile usually.
 	 * @return the loaded model object.
 	 */
-	public static JModel getModel(Id id, String type) {
+	public static ModelJson getModel(Id id, String type) {
 		String rawType = type;
 
 		if (type.hashCode() == "tileitem".hashCode()) {
@@ -61,7 +61,7 @@ public class ResourceLoader {
 		}
 
 		Id modelId = new Id(id.getNamespace(), type + "/" + id.getName());
-		JModel prelim = getModel(modelId);
+		ModelJson prelim = getModel(modelId);
 
 		if (prelim == null) {
 			MODELS.put(modelId, prelim = createDefaultModel(id, rawType));
@@ -76,12 +76,12 @@ public class ResourceLoader {
 	 * @return the loaded model object.
 	 */
 	@Nullable
-	private static JModel getModel(Id id) {
+	private static ModelJson getModel(Id id) {
 		return MODELS.computeIfAbsent(id, id_ -> {
 			InputStream stream = getStream(id_, "models", ".json");
-			JModel result = stream == null ? null : GSON.fromJson( // load from json
+			ModelJson result = stream == null ? null : GSON.fromJson( // load from json
 					new InputStreamReader(stream),
-					JModel.class);
+					ModelJson.class);
 
 			if (result != null) { // if not null, resolve parent stuff
 				// recursive initialisation!
@@ -89,7 +89,7 @@ public class ResourceLoader {
 				ModelSetup setup = SETUPS.get(next); // get the model setup to check if it's a root java impl or an intermediary step
 
 				if (setup == null) { // if intermediary, we do ye olde recursive function
-					JModel parent = getModel(next);
+					ModelJson parent = getModel(next);
 
 					// fill in parent values where not set
 					for (Map.Entry<String, String> entry : parent.textures.entrySet()) {
@@ -147,12 +147,12 @@ public class ResourceLoader {
 		return setup;
 	}
 
-	private static JModel createDefaultModel(Id id, String type) {
+	private static ModelJson createDefaultModel(Id id, String type) {
 		boolean tileitem = type.charAt(0) == 't'; // yotefuckinhaw this is gonna backfire in the future isn't it
 		boolean tile = tileitem && type.length() == 4;
 		tileitem &= !tile; // cursed boolean nonsense
 
-		JModel result = new JModel();
+		ModelJson result = new ModelJson();
 		
 		if (tileitem) { // substitute parent id for tile items
 			// Step 1: Get the ItemType, guaranteed to be a tile item of some sort
@@ -168,7 +168,7 @@ public class ResourceLoader {
 		result.parent = tile ? "tile/cube_all" : (tileitem ? new Id(id.getNamespace(), "tile/" + id.getName()).toString() : "item/generated");
 
 		if (tileitem) {
-			JModel parent = MODELS.get(new Id(result.parent));
+			ModelJson parent = MODELS.get(new Id(result.parent));
 			result.root = parent.root;
 			result.textures = parent.textures;
 		} else {
@@ -200,7 +200,7 @@ public class ResourceLoader {
 	}
 
 	private static final Map<Id, ModelSetup> SETUPS = new HashMap<>();
-	private static final Map<Id, JModel> MODELS = new HashMap<>();
+	private static final Map<Id, ModelJson> MODELS = new HashMap<>();
 	private static final Map<Id, BufferedImage> TEXTURES = new HashMap<>();
 	private static final Gson GSON = new Gson();
 }

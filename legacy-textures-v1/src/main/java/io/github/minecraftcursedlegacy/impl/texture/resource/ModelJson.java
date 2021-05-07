@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * A model file. Everyone's favourite 1.16 feature /s.
  */
-public class JModel {
+public class ModelJson {
 	public String parent;
 	public Map<String, String> textures;
 	public transient ModelSetup root;
