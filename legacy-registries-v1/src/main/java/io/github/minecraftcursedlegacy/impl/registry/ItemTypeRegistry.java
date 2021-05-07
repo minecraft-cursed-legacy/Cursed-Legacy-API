@@ -132,8 +132,6 @@ class ItemTypeRegistry extends Registry<ItemType> {
 
 					if (instance != null) {
 						int oldId = instance.itemId;
-
-
 						int newId = this.oldItemTypes[oldId].id;
 
 						// only remap if necessary
@@ -141,7 +139,6 @@ class ItemTypeRegistry extends Registry<ItemType> {
 							// set new id
 							instance.itemId = newId;
 						}
-
 					}
 				}
 
