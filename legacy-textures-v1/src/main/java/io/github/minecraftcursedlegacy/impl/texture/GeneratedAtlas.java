@@ -96,7 +96,7 @@ class GeneratedAtlas implements Atlas {
 			manager.method_1089(image, textureID);
 		}
 
-		CoreLib.selectedAtlas = null;
+		CoreLib.selectedAtlas = null; // Reimplement corelib functionality in disabling corelib atlas when not necessary, since we don't trigger it in this method.
 		return textureID;
 	}
 
