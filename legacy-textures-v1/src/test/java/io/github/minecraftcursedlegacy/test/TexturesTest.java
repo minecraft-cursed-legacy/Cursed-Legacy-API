@@ -23,7 +23,6 @@
 
 package io.github.minecraftcursedlegacy.test;
 
-
 import io.github.minecraftcursedlegacy.api.client.AtlasMap;
 import io.github.minecraftcursedlegacy.api.recipe.Recipes;
 import io.github.minecraftcursedlegacy.api.registry.Id;
