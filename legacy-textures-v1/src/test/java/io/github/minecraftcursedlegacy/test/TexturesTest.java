@@ -30,8 +30,8 @@ import io.github.minecraftcursedlegacy.api.registry.Registries;
 import io.github.minecraftcursedlegacy.api.registry.TileItems;
 import io.github.minecraftcursedlegacy.api.registry.Translations;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import net.minecraft.tile.PlantTile;
@@ -43,10 +43,9 @@ public class TexturesTest implements ModInitializer {
 	private static Tile cross, betterCross;
 	private static Tile cube, redgrass;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onInitialize() {
-		// Legacy Atlas Mapping api
+		// Choco Atlas Mapping api
 		item = Registries.ITEM_TYPE.register(new Id("modid:item_texture"),
 				id -> new BasicItem(id).setTexturePosition(2, 0).setName("exampleTextureItem"));
 		AtlasMap.registerAtlas(item, "/assets/modid/bc/item_textures.png");
@@ -55,7 +54,7 @@ public class TexturesTest implements ModInitializer {
 		alsoItem = Registries.ITEM_TYPE.register(new Id("modid:item_texture_too"), id -> new BasicItem(id).setName("exampleTextureItemAlso"));
 
 		// This one doesn't mess with the item texture and uses parented texture (you have to re-override a client side method to do this with PlantTile however)
-		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT ? new ClientNormalTileRenderingTallGrassTile(id).name("ironGrass") : new TallGrassTile(id).name("ironGrass"));
+		cross = Registries.TILE.register(new Id("modid:iron_grass"), id -> new TallGrassTile2(id).name("ironGrass"));
 		TileItems.registerTileItem(new Id("modid:iron_grass"), cross);
 
 		// This one does
@@ -88,6 +87,18 @@ public class TexturesTest implements ModInitializer {
 			super(id, 69);
 			this.hardness(0.0F);
 			this.sounds(GRASS_SOUNDS);
+		}
+	}
+
+	static class TallGrassTile2 extends TallGrassTile {
+		public TallGrassTile2(int id) {
+			super(id);
+		}
+
+		@Override
+		@Environment(EnvType.CLIENT)
+		public int method_1621() {
+			return 0;
 		}
 	}
 

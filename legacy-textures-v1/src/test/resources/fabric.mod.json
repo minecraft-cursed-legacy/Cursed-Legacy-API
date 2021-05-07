@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "legacy-textures-test",
   "version": "${version}",
 
   "name": "Texture Test Mod",

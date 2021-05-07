@@ -38,9 +38,6 @@ import javax.imageio.ImageIO;
 import com.google.gson.Gson;
 
 import io.github.minecraftcursedlegacy.api.registry.Id;
-import io.github.minecraftcursedlegacy.api.registry.Registries;
-import io.github.minecraftcursedlegacy.impl.registry.HasParentId;
-import net.minecraft.tile.Tile;
 
 /**
  * Resource Loader for models and textures.
@@ -50,21 +47,15 @@ public class ResourceLoader {
 	/**
 	 * Retrieves the resource specified as a JModel.
 	 * @param id the resource id, including type.
-	 * @param type the subfile type. item or tile usually.
+	 * @param type the subfile type.
 	 * @return the loaded model object.
 	 */
-	public static ModelJson getModel(Id id, String type) {
-		String rawType = type;
-
-		if (type.hashCode() == "tileitem".hashCode()) {
-			type = "item";
-		}
-
-		Id modelId = new Id(id.getNamespace(), type + "/" + id.getName());
+	public static ModelJson getModel(Id id, ModelType type) {
+		Id modelId = new Id(id.getNamespace(), type.getLocation() + "/" + id.getName());
 		ModelJson prelim = getModel(modelId);
 
 		if (prelim == null) {
-			MODELS.put(modelId, prelim = createDefaultModel(id, rawType));
+			MODELS.put(modelId, prelim = type.createDefaultModel(id));
 		}
 
 		return prelim;
@@ -112,6 +103,11 @@ public class ResourceLoader {
 		});
 	}
 
+	@Nullable
+	static ModelJson getModelDirect(Id id) {
+		return MODELS.get(id);
+	}
+
 	/**
 	 * Retrieves the resource specified as a BufferedImage, caching results.
 	 * @param id the resource id.
@@ -122,7 +118,7 @@ public class ResourceLoader {
 	public static BufferedImage getTexture(Id id) {
 		return TEXTURES.computeIfAbsent(id, id_ -> {
 			try {
-				URL url = getURL(id, "textures", ".png");
+				URL url = getURL(id_, "textures", ".png");
 				return url == null ? null : ImageIO.read(url);
 			} catch (IOException e) {
 				throw new UncheckedIOException("Execption loading texture", e);
@@ -147,41 +143,9 @@ public class ResourceLoader {
 		return setup;
 	}
 
-	private static ModelJson createDefaultModel(Id id, String type) {
-		boolean tileitem = type.charAt(0) == 't'; // yotefuckinhaw this is gonna backfire in the future isn't it
-		boolean tile = tileitem && type.length() == 4;
-		tileitem &= !tile; // cursed boolean nonsense
-
-		ModelJson result = new ModelJson();
-		
-		if (tileitem) { // substitute parent id for tile items
-			// Step 1: Get the ItemType, guaranteed to be a tile item of some sort
-			// Step 2: Get the integer id, and look up the tile it is associated with
-			// Step 3: Get the Id for that Tile
-			id = Registries.TILE.getId(
-					Tile.BY_ID[
-					           ((HasParentId) Registries.ITEM_TYPE.getById(id)).getParentId()
-					           ]
-							);
-		}
-
-		result.parent = tile ? "tile/cube_all" : (tileitem ? new Id(id.getNamespace(), "tile/" + id.getName()).toString() : "item/generated");
-
-		if (tileitem) {
-			ModelJson parent = MODELS.get(new Id(result.parent));
-			result.root = parent.root;
-			result.textures = parent.textures;
-		} else {
-			result.textures = new HashMap<>();
-			result.textures.put(tile ? "all" : "", id.getNamespace() + ":" + type + "/" + id.getName());
-			result.root = SETUPS.get(new Id(result.parent));
-		}
-
-		if (result.root == null) {
-			throw new IllegalStateException("Could not get built in setup for \"" + result.parent + "\"!");
-		}
-
-		return result;
+	@Nullable
+	static ModelSetup getSetup(Id id) {
+		return SETUPS.get(id);
 	}
 
 	@Nullable

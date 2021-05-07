@@ -42,6 +42,7 @@ public interface RegistryDiff<T> {
 	 * @param old the old serialised id.
 	 * @return the object that was associated with it.
 	 */
+	@Nullable
 	T getByOldSerialisedId(int old);
 	/**
 	 * Retrieves the old serialised id that was associated with an object.

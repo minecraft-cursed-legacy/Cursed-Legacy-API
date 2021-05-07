@@ -26,22 +26,21 @@ package io.github.minecraftcursedlegacy.api.client;
 import java.util.OptionalInt;
 
 import io.github.minecraftcursedlegacy.impl.texture.AtlasMapper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.texture.TextureManager;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.item.ItemType;
 import paulevs.corelib.registry.ModelRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 
 /**
  * Utility methods for {@link ItemType}s which use textures from other than the main item atlas.
  *
- * @deprecated use the 1.1.0 model system, or directly use {@linkplain ModelRegistry paulevs' corelib}.
+ * @discouraged Unless required, the 1.1.0 model system is preferred, or directly use {@linkplain ModelRegistry paulevs' corelib}.
  * @since 0.5.0
  *
  * @author Chocohead
  */
-@Deprecated
 public final class AtlasMap {
 	private AtlasMap() {
 	}
@@ -126,7 +125,10 @@ public final class AtlasMap {
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID.
+	 *
+	 * @deprecated in favour of the 1.1.0 model loading system.
 	 */
+	@Deprecated
 	public static int registerSprite(ItemType item, String sprite) {
 		return registerSprite(item.id, sprite);
 	}
@@ -159,7 +161,10 @@ public final class AtlasMap {
 	 *
 	 * @throws NullPointerException If sprite is <tt>null</tt>.
 	 * @throws IllegalArgumentException If there is already an atlas or sprite registered for the given ID.
+	 *
+	 * @deprecated in favour of the 1.1.0 model loading system.
 	 */
+	@Deprecated
 	public static int registerSprite(int itemID, String sprite) {
 		return AtlasMapper.registerDefaultSprite(itemID, sprite);
 	}

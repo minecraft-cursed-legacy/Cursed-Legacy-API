@@ -91,10 +91,6 @@ public class AtlasMapper implements ClientModInitializer {
 		itemAtlas.defaultAtlas = FileAtlas.forAtlas(atlas);
 	}
 
-	private static void ensureSpriteValid(Object atlas) {
-		if (atlas == null) throw new NullPointerException("Tried to register null sprite");
-	}
-
 	private static GeneratedAtlas nextAtlas() {
 		for (GeneratedAtlas atlas : CUSTOM_ATLASI) {
 			if (atlas.hasRoom()) {
@@ -108,7 +104,10 @@ public class AtlasMapper implements ClientModInitializer {
 	}
 
 	public static int registerSprite(int itemID, int meta, String sprite) {
-		ensureSpriteValid(sprite);
+		if (sprite == null) {
+			throw new NullPointerException("Tried to register null sprite");
+		}
+
 		Map<Integer, Atlas> itemAtlas = ATLAS_MAP.computeIfAbsent(itemID, k -> new ItemAtlasUsage()).atlas;
 
 		if (itemAtlas.containsKey(meta)) {
@@ -121,7 +120,10 @@ public class AtlasMapper implements ClientModInitializer {
 	}
 
 	public static int registerDefaultSprite(int itemID, String sprite) {
-		ensureSpriteValid(sprite);
+		if (sprite == null) {
+			throw new NullPointerException("Tried to register null sprite");
+		}
+
 		ItemAtlasUsage itemAtlas = ATLAS_MAP.computeIfAbsent(itemID, k -> new ItemAtlasUsage());
 
 		if (itemAtlas.defaultAtlas != null) {
@@ -134,7 +136,10 @@ public class AtlasMapper implements ClientModInitializer {
 	}
 	
 	public static int registerDefaultSprite(int itemID, BufferedImage sprite) {
-		ensureSpriteValid(sprite);
+		if (sprite == null) {
+			throw new NullPointerException("Tried to register null sprite");
+		}
+
 		ItemAtlasUsage itemAtlas = ATLAS_MAP.computeIfAbsent(itemID, k -> new ItemAtlasUsage());
 		
 		if (itemAtlas.defaultAtlas != null) {

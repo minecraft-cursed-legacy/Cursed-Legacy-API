@@ -54,6 +54,7 @@ public class RegistryDiffImpl<T> implements RegistryDiff<T> {
 	}
 
 	@Override
+	@Nullable
 	public T getByOldSerialisedId(int old) {
 		return this.oldBySerialisedId.inverse().get(old);
 	}
