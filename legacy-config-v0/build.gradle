@@ -5,7 +5,7 @@ apply plugin: 'java-library'
 
 moduleDependencies(project, 'legacy-api-base')
 dependencies {
-	include api('com.github.valoeghese:ZoesteriaConfig:1.3.6')
+	include api('valoeghese:ZoesteriaConfig:1.3.6')
 }
 
 minecraft {

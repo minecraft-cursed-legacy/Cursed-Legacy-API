@@ -61,7 +61,7 @@ public class TexturesTest implements ModInitializer {
 		betterCross = Registries.TILE.register(new Id("legacy-textures-test:malachite_grass"), id -> new TallGrassTile(id).name("malachiteGrass"));
 		TileItems.registerTileItem(new Id("legacy-textures-test:malachite_grass"), betterCross);
 
-		cube = Registries.TILE.register(new Id("legacy-textures-test:cursed_legacy_block"), id -> new BasicTile(id, false).name("cursedLegacyBlock"));
+		cube = Registries.TILE.register(new Id("legacy-textures-test:cursed_legacy_block"), id -> new BasicTile(id).name("cursedLegacyBlock"));
 		TileItems.registerTileItem(new Id("legacy-textures-test:cursed_legacy_block"), cube);
 
 		redgrass = Registries.TILE.register(new Id("legacy-textures-test:red_grass"), id -> new CustomGrassBlockTile(id).name("redGrass"));
@@ -108,6 +108,12 @@ public class TexturesTest implements ModInitializer {
 
 			this.hardness(0.6F);
 			this.sounds(GRASS_SOUNDS);
+		}
+	}
+
+	class BasicTile extends Tile {
+		BasicTile(int i) {
+			super(i, 69, Material.DIRT);
 		}
 	}
 }
