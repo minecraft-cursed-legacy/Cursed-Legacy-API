@@ -112,7 +112,7 @@ class VanillaIds {
 		set(DISPENSER, "dispenser");
 		set(SANDSTONE, "sandstone");
 		set(NOTEBLOCK, "noteblock");
-		set(BED, "bed");
+		set(BED, "bed", true);
 		set(GOLDEN_RAIL, "powered_rail");
 		set(DETECTOR_RAIL, "detector_rail");
 		set(STICKY_PISTON, "sticky_piston");
@@ -131,7 +131,7 @@ class VanillaIds {
 		set(BLOCK_IRON, "block_iron");
 		set(DOUBLE_STONE_SLAB, "double_stone_slab");
 		set(STONE_SLAB, "stone_slab");
-		set(BRICK, "brick");
+		set(BRICK, "bricks");
 		set(TNT, "tnt");
 		set(BOOKSHELF, "bookshelf");
 		set(MOSSY_COBBLESTONE, "mossy_cobblestone");
@@ -150,14 +150,14 @@ class VanillaIds {
 		set(FURNACE, "furnace");
 		set(FURNACE_LIT, "lit_furnace");
 		set(STANDING_SIGN, "standing_sign");
-		set(DOOR_WOOD, "wooden_door");
+		set(DOOR_WOOD, "wooden_door", true);
 		set(LADDER, "ladder");
 		set(RAIL, "rail");
 		set(STAIRS_STONE, "stone_stairs");
 		set(WALL_SIGN, "wall_sign");
 		set(LEVER, "lever");
 		set(WOODEN_PRESSURE_PLATE, "wooden_pressure_plate");
-		set(DOOR_IRON, "iron_door");
+		set(DOOR_IRON, "iron_door", true);
 		set(STONE_PRESSURE_PLATE, "stone_pressure_plate");
 		set(REDSTONE_ORE, "redstone_ore");
 		set(REDSTONE_ORE_LIT, "lit_redstone_ore");
@@ -168,8 +168,8 @@ class VanillaIds {
 		set(ICE, "ice");
 		set(SNOW_BLOCK, "snow_block");
 		set(CACTUS, "cactus");
-		set(CLAY, "clay");
-		set(REEDS, "reeds");
+		set(CLAY, "clay_block");
+		set(REEDS, "reeds", true);
 		set(JUKEBOX, "jukebox");
 		set(FENCE, "fence");
 		set(PUMPKIN, "pumpkin");
@@ -178,9 +178,9 @@ class VanillaIds {
 		set(GLOWSTONE, "glowstone");
 		set(PORTAL, "portal");
 		set(LIT_PUMPKIN, "lit_pumpkin");
-		set(CAKE, "cake");
-		set(REDSTONE_REPEATER, "redstone_repeater");
-		set(REDSTONE_REPEATER_LIT, "lit_redstone_repeater");
+		set(CAKE, "cake", true);
+		set(REDSTONE_REPEATER, "redstone_repeater", true);
+		set(REDSTONE_REPEATER_LIT, "lit_redstone_repeater", true);
 		set(LOCKED_CHEST, "locked_chest");
 		set(TRAPDOOR, "trapdoor");
 	}
@@ -299,8 +299,15 @@ class VanillaIds {
 	}
 
 	private static void set(Tile tile, String id) {
+		set(tile, id, false);
+	}
+
+	private static void set(Tile tile, String id, boolean alterPlaceableId) {
 		Id id_ = new Id(id);
+		Id item_id_ = alterPlaceableId ? new Id(id + "_block") : id_;
+
 		TILE_IDS.put(tile, id_);
+		ITEM_IDS.put(ItemType.byId[tile.id], item_id_);
 
 		// legacy
 		String idPart = tile.method_1597();
@@ -314,7 +321,7 @@ class VanillaIds {
 		Id legacy = new Id(idPart + "_" + tile.id);
 
 		TILE_LEGACY_COMPAT.put(legacy, id_);
-		ITEM_LEGACY_COMPAT.put(legacy, id_); // for tile items
+		ITEM_LEGACY_COMPAT.put(legacy, item_id_); // for tile items
 	}
 
 	private static void set(ItemType item, String id) {

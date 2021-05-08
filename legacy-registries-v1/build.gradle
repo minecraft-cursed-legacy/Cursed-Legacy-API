@@ -2,5 +2,8 @@ archivesBaseName = 'legacy-registries-v1'
 version = getSubprojectVersion(project, '1.1.0')
 
 moduleDependencies(project, 'legacy-api-base', 'legacy-networking-v0')
+
 dependencies {
+	testImplementation project(path: ':legacy-recipes-v0')
+	testImplementation project(path: ':legacy-translations-v0')
 }

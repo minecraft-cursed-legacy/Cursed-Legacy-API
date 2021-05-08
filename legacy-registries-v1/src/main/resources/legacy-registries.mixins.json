@@ -12,10 +12,6 @@
     "MixinTile",
     "MixinTileItem"
   ],
-  "client": [
-    "MixinHandItemRenderer",
-    "MixinItemRenderer"
-  ],
   "server": [
     "MixinMinecraftServer",
     "MixinServerLoginPacketHandler"

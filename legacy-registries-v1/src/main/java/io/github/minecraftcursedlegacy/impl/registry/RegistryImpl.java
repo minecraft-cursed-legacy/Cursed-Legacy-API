@@ -33,6 +33,7 @@ import io.github.minecraftcursedlegacy.api.networking.PluginChannelRegistry;
 import io.github.minecraftcursedlegacy.api.registry.Id;
 import io.github.minecraftcursedlegacy.api.registry.Registry;
 import io.github.minecraftcursedlegacy.api.registry.RegistryEntryAddedCallback;
+import io.github.minecraftcursedlegacy.api.registry.RegistryRemappedCallback;
 import io.github.minecraftcursedlegacy.impl.Hacks;
 import io.github.minecraftcursedlegacy.impl.registry.sync.RegistrySyncChannelS2C;
 import net.fabricmc.api.ModInitializer;
@@ -59,6 +60,14 @@ public class RegistryImpl implements ModInitializer {
 		return EventFactory.createArrayBacked(RegistryEntryAddedCallback.class, listeners -> (object, id, rawId) -> {
 			for (RegistryEntryAddedCallback<T> listener : listeners) {
 				listener.onEntryAdded(object, id, rawId);
+			}
+		});
+	}
+
+	public static <T> Event<RegistryRemappedCallback<T>> createRemapEvent(Class<T> clazz) {
+		return EventFactory.createArrayBacked(RegistryRemappedCallback.class, listeners -> (registry, diff) -> {
+			for (RegistryRemappedCallback<T> listener : listeners) {
+				listener.onRemap(registry, diff);
 			}
 		});
 	}

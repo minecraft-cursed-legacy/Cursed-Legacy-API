@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "io.github.minecraftcursedlegacy.mixin.texture",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MixinHandItemRenderer",
+    "MixinItemRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

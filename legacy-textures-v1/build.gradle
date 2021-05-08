@@ -1,12 +1,13 @@
 archivesBaseName = 'legacy-textures-v1'
 version = getSubprojectVersion(project, '1.1.0')
 
-moduleDependencies(project, 'legacy-api-base')
+// networking is required by registries
+// including it here cuz I don't think moduleDependencies is recursive
+moduleDependencies(project, 'legacy-api-base', 'legacy-networking-v0', 'legacy-registries-v1')
 
 dependencies {
-	testImplementation project(path: ':legacy-networking-v0') // required by registries
-	testImplementation project(path: ':legacy-registries-v1')
 	testImplementation project(path: ':legacy-recipes-v0')
+	testImplementation project(path: ':legacy-translations-v0')
 
 	// CoreLib for Tile Models
 	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0') {
