@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.minecraftcursedlegacy.api.event.lifecycle.DedicatedServerTickCallback;
+import io.github.minecraftcursedlegacy.api.event.lifecycle.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 
 @Mixin(MinecraftServer.class)
@@ -36,6 +36,6 @@ public class MixinMinecraftServer {
 	// MinecraftServer#tick()
 	@Inject(at = @At("RETURN"), method = "tick")
 	private void onTick(CallbackInfo info) {
-		DedicatedServerTickCallback.EVENT.invoker().onServerTick((MinecraftServer) (Object) this);
+		ServerLifecycleEvents.END_TICK.invoker().onServerTick((MinecraftServer) (Object) this);
 	}
 }

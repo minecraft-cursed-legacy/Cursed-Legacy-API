@@ -24,20 +24,16 @@
 package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.MinecraftServer;
 
 /**
  * Callback for ticks on the dedicated server. Does *not* run in singleplayer!
+ * @deprecated use {@linkplain ServerLifecycleEvents#END_TICK} instead.
  */
 @FunctionalInterface
-public interface DedicatedServerTickCallback {
-	Event<DedicatedServerTickCallback> EVENT = EventFactory.createArrayBacked(DedicatedServerTickCallback.class,
-			listeners -> server -> {
-				for (DedicatedServerTickCallback listener : listeners) {
-					listener.onServerTick(server);
-				}
-			});
+@Deprecated
+public interface DedicatedServerTickCallback extends ServerLifecycleEvents.EndTick {
+	Event<ServerLifecycleEvents.EndTick> EVENT = ServerLifecycleEvents.END_TICK;
 
 	/**
 	 * Called when the dedicated server ticks.

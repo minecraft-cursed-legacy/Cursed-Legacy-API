@@ -23,21 +23,34 @@
 
 package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
-import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.server.MinecraftServer;
 
 /**
- * Callback for ticks on the client.
- * @deprecated use {@linkplain ClientLifecycleEvents#END_TICK} instead.
+ * Lifecycle events for the server.
+ * @since 1.1.0
  */
-@FunctionalInterface
-@Deprecated
-public interface ClientTickCallback extends ClientLifecycleEvents.EndTick {
-	Event<ClientLifecycleEvents.EndTick> EVENT = ClientLifecycleEvents.END_TICK;
-
+@Environment(EnvType.SERVER)
+public class ServerLifecycleEvents {
 	/**
-	 * Called when the client ticks.
-	 * @param client the minecraft client instance.
+	 * Event for the end of the dedicated server tick. Does *not* run in singleplayer!
 	 */
-	void onClientTick(Minecraft client);
+	public static final Event<EndTick> END_TICK = EventFactory.createArrayBacked(EndTick.class,
+			listeners -> server -> {
+				for (EndTick listener : listeners) {
+					listener.onServerTick(server);
+				}
+			});
+
+	@FunctionalInterface
+	public interface EndTick {
+		/**
+		 * Called when the dedicated server ticks.
+		 * @param server the dedicated server instance.
+		 */
+		void onServerTick(MinecraftServer server);
+	}
 }
