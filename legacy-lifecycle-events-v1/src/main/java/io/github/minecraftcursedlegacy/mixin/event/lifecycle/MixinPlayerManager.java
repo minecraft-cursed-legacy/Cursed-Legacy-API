@@ -23,6 +23,8 @@
 
 package io.github.minecraftcursedlegacy.mixin.event.lifecycle;
 
+import javax.annotation.Nullable;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,13 +41,14 @@ import net.minecraft.server.player.ServerPlayer;
 public class MixinPlayerManager {
 	@Inject(at = @At("RETURN"), method = "connectPlayer", cancellable = true)
 	private void onConnectPlayer(ServerLoginPacketHandler handler, String name, CallbackInfoReturnable<ServerPlayer> info) {
+		@Nullable
 		ServerPlayer player = info.getReturnValue();
 
 		if (player != null) {
-			ServerLifecycleEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player);
+			ServerLifecycleEvents.PLAYER_LOGIN.invoker().onPlayerLogin(player, handler);
 
 			// If disconnected, the player has not joined due to a mod cancelling the join.
-			if (player.packetHandler.field_918) {
+			if (handler.closed) {
 				info.setReturnValue(null);
 			}
 		}

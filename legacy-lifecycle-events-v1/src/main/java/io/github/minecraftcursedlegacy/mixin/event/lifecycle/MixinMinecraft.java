@@ -50,7 +50,7 @@ public class MixinMinecraft {
 	}
 
 	@Inject(at = @At("RETURN"), method = "respawn")
-	private void onRespawn(boolean flag, int i) {
+	private void onRespawn(boolean flag, int i, CallbackInfo info) {
 		CommonLifecycleEvents.PLAYER_RESPAWN.invoker().onRespawn(this.player);
 	}
 }

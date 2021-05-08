@@ -28,6 +28,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerLoginPacketHandler;
 import net.minecraft.server.player.ServerPlayer;
 
 /**
@@ -61,13 +62,13 @@ public class ServerLifecycleEvents {
 	 * Event for a player logging in to the server.
 	 */
 	public static final Event<PlayerLogin> PLAYER_LOGIN = EventFactory.createArrayBacked(PlayerLogin.class,
-			listeners -> player -> {
+			listeners -> (player, packetHandler) -> {
 				for (PlayerLogin listener : listeners) {
-					listener.onPlayerLogin(player);
+					listener.onPlayerLogin(player, packetHandler);
 
 					// In case a mod's listener has disconnected the player for some reason
 					// This is the equivalent of cancelling the login, but with vanilla functionality handling it.
-					if (player.packetHandler.field_918) {
+					if (packetHandler.closed) {
 						break;
 					}
 				}
@@ -97,8 +98,10 @@ public class ServerLifecycleEvents {
 		/**
 		 * Called when a player successfully logs in to the server.
 		 * @param player the player that has just logged in.
+		 * @param packetHandler the login packetHandler.
+		 * @apiNote {@linkplain ServerLoginPacketHandler#drop(String)} can be used to prevent the player connecting.
 		 */
-		void onPlayerLogin(ServerPlayer player);
+		void onPlayerLogin(ServerPlayer player, ServerLoginPacketHandler packetHandler);
 	}
 
 	@FunctionalInterface

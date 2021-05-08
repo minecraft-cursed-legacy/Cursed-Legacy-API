@@ -29,9 +29,9 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 public class LifecycleEventsTestServer implements DedicatedServerModInitializer {
 	@Override
 	public void onInitializeServer() {
-		ServerLifecycleEvents.PLAYER_LOGIN.register(player -> {
+		ServerLifecycleEvents.PLAYER_LOGIN.register((player, packetHandler) -> {
 			System.out.println("Player has joined: " + player.name);
-			player.packetHandler.leaveTheGame("U R Bad");
+			//packetHandler.drop("U R Bad"); Uncomment this line to test login packet dropping
 		});
 
 		ServerLifecycleEvents.PLAYER_DISCONNECT.register(player -> {

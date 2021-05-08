@@ -20,13 +20,16 @@
   "entrypoints": {
     "init": [
       "io.github.minecraftcursedlegacy.test.LifecycleEventsTest"
+    ],
+    "server": [
+      "io.github.minecraftcursedlegacy.test.LifecycleEventsTestServer"
     ]
   },
 
   "depends": {
     "fabricloader": "*",
-    "legacy-textures": "*",
-    "legacy-registries": "*",
+    "legacy-api-base": "*",
+    "legacy-lifecycle-events": "*",
     "minecraft": "1.0.0-beta.7.3"
   }
 }
