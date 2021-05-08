@@ -21,36 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.event.lifecycle;
+package io.github.minecraftcursedlegacy.test;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.Minecraft;
+import io.github.minecraftcursedlegacy.api.event.lifecycle.CommonLifecycleEvents;
+import net.fabricmc.api.ModInitializer;
 
-/**
- * Lifecycle events for the client.
- * @since 1.1.0
- */
-@Environment(EnvType.CLIENT)
-public class ClientLifecycleEvents {
-	/**
-	 * Event for the end of the client tick.
-	 */
-	public static final Event<EndTick> END_TICK = EventFactory.createArrayBacked(EndTick.class,
-			listeners -> client -> {
-				for (EndTick listener : listeners) {
-					listener.onClientTick(client);
-				}
-			});
-
-	@FunctionalInterface
-	public interface EndTick {
-		/**
-		 * Called when the client ticks.
-		 * @param client the minecraft client instance.
-		 */
-		void onClientTick(Minecraft client);
+public class LifecycleEventsTest implements ModInitializer {
+	@Override
+	public void onInitialize() {
+		CommonLifecycleEvents.PLAYER_RESPAWN.register(player -> {
+			System.out.println("Player has respawned: " + player.name);
+		});
 	}
 }

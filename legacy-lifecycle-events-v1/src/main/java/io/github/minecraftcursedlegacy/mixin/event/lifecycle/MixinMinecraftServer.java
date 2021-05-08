@@ -21,23 +21,25 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.api.event.lifecycle;
+package io.github.minecraftcursedlegacy.mixin.event.lifecycle;
 
-import net.fabricmc.fabric.api.event.Event;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import io.github.minecraftcursedlegacy.api.event.lifecycle.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 
-/**
- * Callback for ticks on the dedicated server. Does *not* run in singleplayer!
- * @deprecated use {@linkplain ServerLifecycleEvents#END_TICK} instead.
- */
-@FunctionalInterface
-@Deprecated
-public interface DedicatedServerTickCallback extends ServerLifecycleEvents.EndTick {
-	Event<ServerLifecycleEvents.EndTick> EVENT = ServerLifecycleEvents.END_TICK;
+@Mixin(MinecraftServer.class)
+public class MixinMinecraftServer {
+	@Inject(at = @At("HEAD"), method = "tick")
+	private void onStartTick(CallbackInfo info) {
+		ServerLifecycleEvents.START_TICK.invoker().onServerTick((MinecraftServer) (Object) this);
+	}
 
-	/**
-	 * Called when the dedicated server ticks.
-	 * @param server the dedicated server instance.
-	 */
-	void onServerTick(MinecraftServer server);
+	@Inject(at = @At("RETURN"), method = "tick")
+	private void onEndTick(CallbackInfo info) {
+		ServerLifecycleEvents.END_TICK.invoker().onServerTick((MinecraftServer) (Object) this);
+	}
 }

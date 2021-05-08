@@ -21,21 +21,23 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin.event.lifecycle;
+package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.fabricmc.fabric.api.event.Event;
+import net.minecraft.client.Minecraft;
 
-import io.github.minecraftcursedlegacy.api.event.lifecycle.ServerLifecycleEvents;
-import net.minecraft.server.MinecraftServer;
+/**
+ * Callback for ticks on the client.
+ * @deprecated use {@linkplain ClientLifecycleEvents#END_TICK} instead.
+ */
+@FunctionalInterface
+@Deprecated
+public interface ClientTickCallback extends ClientLifecycleEvents.Tick {
+	Event<ClientLifecycleEvents.Tick> EVENT = ClientLifecycleEvents.END_TICK;
 
-@Mixin(MinecraftServer.class)
-public class MixinMinecraftServer {
-	// MinecraftServer#tick()
-	@Inject(at = @At("RETURN"), method = "tick")
-	private void onTick(CallbackInfo info) {
-		ServerLifecycleEvents.END_TICK.invoker().onServerTick((MinecraftServer) (Object) this);
-	}
+	/**
+	 * Called when the client ticks.
+	 * @param client the minecraft client instance.
+	 */
+	void onClientTick(Minecraft client);
 }
