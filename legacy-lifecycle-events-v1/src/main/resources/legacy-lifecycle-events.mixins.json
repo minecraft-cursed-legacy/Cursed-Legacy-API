@@ -6,7 +6,8 @@
     "MixinMinecraft"
   ],
   "server": [
-    "MixinMinecraftServer"
+    "MixinMinecraftServer",
+    "MixinPlayerManager"
   ],
   "injectors": {
     "defaultRequire": 1

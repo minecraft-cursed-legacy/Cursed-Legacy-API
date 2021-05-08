@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "legacy-lifecycle-events-test",
+  "version": "${version}",
+
+  "name": "Lifecycle Events Test Mod",
+  "description": "Test mod for the lifecycle events api",
+  "authors": [
+    "The Cursed Legacy Team"
+  ],
+  "contact": {
+    "issues": "https://github.com/minecraft-cursed-legacy/Cursed-Legacy-API/issues",
+    "sources": "https://github.com/minecraft-cursed-legacy/Cursed-Legacy-API"
+  },
+
+  "license": "MIT",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "init": [
+      "io.github.minecraftcursedlegacy.test.LifecycleEventsTest"
+    ],
+    "server": [
+      "io.github.minecraftcursedlegacy.test.LifecycleEventsTestServer"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": "*",
+    "legacy-api-base": "*",
+    "legacy-lifecycle-events": "*",
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}

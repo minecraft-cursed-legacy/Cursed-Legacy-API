@@ -21,20 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin.event.lifecycle;
+package io.github.minecraftcursedlegacy.test;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import io.github.minecraftcursedlegacy.api.event.lifecycle.CommonLifecycleEvents;
+import net.fabricmc.api.ModInitializer;
 
-import io.github.minecraftcursedlegacy.api.event.lifecycle.ClientTickCallback;
-import net.minecraft.client.Minecraft;
-
-@Mixin(Minecraft.class)
-public class MixinMinecraft {
-	@Inject(at = @At("RETURN"), method = "tick")
-	private void onTick(CallbackInfo info) {
-		ClientTickCallback.EVENT.invoker().onClientTick((Minecraft) (Object) this);
+public class LifecycleEventsTest implements ModInitializer {
+	@Override
+	public void onInitialize() {
+		CommonLifecycleEvents.PLAYER_RESPAWN.register(player -> {
+			System.out.println("Player has respawned: " + player.name);
+		});
 	}
 }

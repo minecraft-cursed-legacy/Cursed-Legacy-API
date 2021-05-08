@@ -21,21 +21,33 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package io.github.minecraftcursedlegacy.mixin.event.lifecycle;
+package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.entity.player.Player;
 
-import io.github.minecraftcursedlegacy.api.event.lifecycle.DedicatedServerTickCallback;
-import net.minecraft.server.MinecraftServer;
+/**
+ * Collection of common events that pertain to the game lifecycle.
+ * @since 1.1.0
+ */
+public class CommonLifecycleEvents {
+	/**
+	 * Event for the player respawning.
+	 */
+	public static final Event<PlayerRespawn> PLAYER_RESPAWN = EventFactory.createArrayBacked(PlayerRespawn.class,
+			listeners -> player -> {
+				for (PlayerRespawn listener : listeners) {
+					listener.onRespawn(player);
+				}
+			});
 
-@Mixin(MinecraftServer.class)
-public class MixinMinecraftServer {
-	// MinecraftServer#tick()
-	@Inject(at = @At("RETURN"), method = "tick")
-	private void onTick(CallbackInfo info) {
-		DedicatedServerTickCallback.EVENT.invoker().onServerTick((MinecraftServer) (Object) this);
+	@FunctionalInterface
+	public interface PlayerRespawn {
+		/**
+		 * Called after the player respawns.
+		 * @param player the player that has respawned.
+		 */
+		void onRespawn(Player player);
 	}
 }

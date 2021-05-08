@@ -24,20 +24,16 @@
 package io.github.minecraftcursedlegacy.api.event.lifecycle;
 
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.Minecraft;
 
 /**
  * Callback for ticks on the client.
+ * @deprecated use {@linkplain ClientLifecycleEvents#END_TICK} instead.
  */
 @FunctionalInterface
-public interface ClientTickCallback {
-	Event<ClientTickCallback> EVENT = EventFactory.createArrayBacked(ClientTickCallback.class,
-			listeners -> client -> {
-				for (ClientTickCallback listener : listeners) {
-					listener.onClientTick(client);
-				}
-			});
+@Deprecated
+public interface ClientTickCallback extends ClientLifecycleEvents.Tick {
+	Event<ClientLifecycleEvents.Tick> EVENT = ClientLifecycleEvents.END_TICK;
 
 	/**
 	 * Called when the client ticks.

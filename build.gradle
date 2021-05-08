@@ -73,6 +73,10 @@ allprojects {
 			name = 'Jitpack'
 			url 'https://jitpack.io/'
 		}
+		maven {
+			name = 'HalfOf2'
+			url = 'https://storage.googleapis.com/devan-maven/'
+		}
 	}
 
 	configurations {
@@ -94,11 +98,9 @@ allprojects {
 		//to change the versions see the gradle.properties file
 		minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-		mappings loom.fromCommit('minecraft-cursed-legacy/Plasma', "build.${project.plasma_build}") {spec ->
-			spec.version = "b1.7.3-${project.plasma_build}"
-		}
+		mappings "io.github.minecraft-cursed-legacy:plasma:b1.7.3-build.${project.plasma_build}"
 
-		modImplementation("com.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
+		modImplementation("io.github.minecraft-cursed-legacy:cursed-fabric-loader:${project.loader_version}") {
 			transitive false //Avoid leaking Loader's dependencies forwards
 		}
 

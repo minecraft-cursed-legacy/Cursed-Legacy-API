@@ -38,7 +38,7 @@ import net.minecraft.entity.ItemEntity;
 
 @Mixin(ItemRenderer.class)
 abstract class MixinItemRenderer extends EntityRenderer {
-	@Inject(method = "render",
+	@Inject(method = "method_1484",
 			at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/Tessellator;INSTANCE:Lnet/minecraft/client/render/Tessellator;", opcode = Opcodes.GETSTATIC)
 	)
 	private void fixAtlas(ItemEntity entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo info) {
