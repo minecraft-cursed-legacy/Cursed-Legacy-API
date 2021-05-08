@@ -82,6 +82,12 @@ public class TexturesTest implements ModInitializer {
 		Translations.addTileTranslation(redgrass, "Red Grass");
 	}
 
+	static class BasicItem extends ItemType {
+		BasicItem(int i) {
+			super(i);
+		}
+	}
+
 	static class TallGrassTile extends PlantTile {
 		TallGrassTile(int id) {
 			super(id, 69);
