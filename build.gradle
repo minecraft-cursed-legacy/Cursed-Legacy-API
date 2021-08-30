@@ -11,7 +11,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'com.github.Chocohead:Fabric-Loom:d823377'
+		classpath 'com.github.Chocohead:Fabric-Loom:361cd1c'
 	}
 }
 
@@ -203,14 +203,6 @@ subprojects {subproject ->
 		test testJar
 	}
 
-	//Attach the subproject to the root project
-	this.dependencies {
-		implementationOnly project(path: ":$name", configuration: 'dev')
-		testImplementation project(path: ":$name", configuration: 'test')
-		afterEvaluate {//Do this after Loom tries to work out how included projects relate to remapJar tasks
-			include project(path: ":$name", configuration: 'out')
-		}
-	}
 
 	//Mark the subproject as a compile time dependency of the root project
 	this.publishing {
@@ -229,4 +221,12 @@ archivesBaseName = archives_base_name
 version = mod_version
 
 dependencies {
+	afterEvaluate {
+		//Attach the subproject to the root project
+		subprojects.each {
+			implementation project(path: ":${it.name}", configuration: "dev")
+			include project("${it.name}:")
+			runtimeOnly project(path: it.name, configuration: "dev")
+		}
+	}
 }

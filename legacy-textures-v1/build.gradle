@@ -10,7 +10,5 @@ dependencies {
 	testImplementation project(path: ':legacy-translations-v0')
 
 	// CoreLib for Tile Models
-	include modApi('com.github.paulevsGitch:B.1.7.3-CoreLib:v.1.3.0') {
-		exclude(group: 'tk.valoeghese') //ZoesteriaConfig has disppeared from here
-	}
+	include modApi(files('corelib-1.3.0.jar'))
 }
