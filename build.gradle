@@ -217,14 +217,15 @@ subprojects {subproject ->
 }
 
 //Subprojects will set these themselves
-archivesBaseName = archives_base_name
-version = mod_version
+archivesBaseName = project.archives_base_name
+version = project.mod_version
 
 dependencies {
 	afterEvaluate {
 		//Attach the subproject to the root project
 		subprojects.each {
-			implementation project(path: ":${it.name}", configuration: "dev")
+			implementationOnly project(path: ":${it.name}", configuration: "dev")
+			testImplementation project(path: ":${it.name}", configuration: 'test')
 			include project("${it.name}:")
 			runtimeOnly project(path: it.name, configuration: "dev")
 		}
