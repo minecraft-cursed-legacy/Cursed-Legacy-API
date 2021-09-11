@@ -1,17 +1,17 @@
 buildscript {
 	repositories {
-		mavenCentral()
 		maven {
 			name = 'Fabric'
 			url = 'https://maven.fabricmc.net/'
 		}
+		mavenCentral()
 		maven { 
 			name = 'Jitpack'
 			url 'https://jitpack.io/'
 		}
 	}
 	dependencies {
-		classpath 'com.github.Chocohead:Fabric-Loom:d823377'
+		classpath 'com.github.Chocohead:Fabric-Loom:9b38aba'
 	}
 }
 
