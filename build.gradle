@@ -11,12 +11,14 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'com.github.Chocohead:Fabric-Loom:9b38aba'
+		classpath 'com.github.Chocohead:Fabric-Loom:3219e42'
 	}
 }
 
 plugins {
 	id 'checkstyle'
+	//From https://gitlab.com/barfuin/gradle-taskinfo, useful for checking the order tasks will run
+	//id 'org.barfuin.gradle.taskinfo' version '1.3.0'
 }
 
 def getSubprojectVersion(project, ver) {
@@ -207,9 +209,7 @@ subprojects {subproject ->
 	this.dependencies {
 		implementationOnly project(path: ":$name", configuration: 'dev')
 		testImplementation project(path: ":$name", configuration: 'test')
-		afterEvaluate {//Do this after Loom tries to work out how included projects relate to remapJar tasks
-			include project(path: ":$name", configuration: 'out')
-		}
+		include project(path: ":$name", configuration: 'out')
 	}
 
 	//Mark the subproject as a compile time dependency of the root project
